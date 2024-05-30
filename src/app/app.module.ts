@@ -37,6 +37,7 @@ import { InvoiceComponent } from './badran/invoice/invoice.component';
 import { InvItemFormDialogComponent } from './badran/inv-item-form-dialog/inv-item-form-dialog.component';
 import { DashboardComponent } from './badran/dashboard/dashboard.component';
 import { NgxPrintModule } from 'ngx-print';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -96,7 +97,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
       useValue: appearance
     },
     { provide: HTTP_INTERCEPTORS , useClass: AuthInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: loaderInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: loaderInterceptor, multi: true },
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]
 })
