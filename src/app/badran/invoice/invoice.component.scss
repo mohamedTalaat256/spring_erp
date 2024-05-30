@@ -1,0 +1,40 @@
+.invoice-container{
+   /*  direction: rtl; */
+    padding: 20px;
+    font-size: 19px;
+    line-height: 29px;
+}
+.inv-title{
+    margin: auto; text-align: center;
+    font-weight: 700;
+}
+
+    
+
+    
+.mat-mdc-cell{
+    border-bottom-color:   rgba(255, 0, 0, 0) ;
+    border-bottom-width: var(--mat-table-row-item-outline-width, 2px);
+    border-bottom-style: solid; 
+    line-height: inherit; 
+    background-color: var(--light-primary) !important;
+}
+tr:nth-child(even) {
+    background-color: #e9f7ff !important;
+  }
+ 
+td:first-child { 
+    border-top-left-radius: 10px; 
+    border-bottom-left-radius: 10px;
+}
+td:last-child { 
+    border-bottom-right-radius: 10px; 
+    border-top-right-radius: 10px; 
+}
+
+
+.second-table th,.second-table td{
+    padding: 8px;
+    border: 1px solid #71b4e3;
+
+}
