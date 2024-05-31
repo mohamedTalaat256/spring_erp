@@ -57,12 +57,12 @@ const TREE_DATA: FoodNode[] = [
       { 
         name: 'أنواع الحسابات المالية',
         icon: 'menu',
-        url: '/admin/invoices_types'
+        url: '/admin/accountTypes'
       },
       { 
         name: 'الشجرة (الحسابات المالية)',
         icon: 'stores',
-        url: '/admin/stores'
+        url: '/admin/accounts'
       },
        { 
         name: 'حسابات العملاء',

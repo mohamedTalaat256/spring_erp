@@ -1,0 +1,109 @@
+<h2 mat-dialog-title class="text-capitalize">{{title}}</h2>
+
+<form (ngSubmit)="onSubmit()" [formGroup]="accountForm" fxLayout="row wrap" fxLayoutGap="15" class="p-5">
+
+ 
+
+       
+
+
+        <mat-form-field  fxFlex="48">
+            <mat-label>اسم الحساب المالي</mat-label>
+            <input matInput formControlName="name" placeholder="اسم الحساب المالي" >
+            <mat-error>
+                <app-validation-msg [control]="accountForm.get('name')" fieldName="اسم الحساب المالي"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="48">
+            <mat-label>نوع الحساب</mat-label>
+            <mat-select formControlName="accountType">
+                <mat-option *ngFor="let i of accountTypes" [value]="i.id">{{i.name}} </mat-option>
+            </mat-select>
+            <mat-error>
+                <app-validation-msg [control]="accountForm.get('accountType')"
+                    fieldName="نوع الحساب"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
+
+        
+       
+
+        <mat-form-field fxFlex="48">
+            <mat-label>هل الحساب أب</mat-label>
+            <mat-select formControlName="isParent" (selectionChange)="isParentChange($event)">
+                <mat-option [value]="1">نعم</mat-option>
+                <mat-option [value]="0">لا</mat-option>
+            </mat-select>
+            <mat-error>
+                <app-validation-msg [control]="accountForm.get('isParent')"
+                    fieldName="الحقل"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="48" *ngIf="showParentAccounts">
+            <mat-label>الحسابات الأب</mat-label>
+            <mat-select formControlName="parentAccountNumber">
+                 
+                <mat-option *ngFor="let parentAccount of parentAccounts" [value]="parentAccount.account_number"> {{parentAccount.name}}</mat-option>
+            </mat-select>
+            <mat-error>
+                <app-validation-msg [control]="accountForm.get('parentAccountNumber')"
+                    fieldName="الحقل"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>  
+
+
+        <mat-form-field fxFlex="48">
+            <mat-label>حالة رصيد اول المدة</mat-label>
+            <mat-select formControlName="startBalanceStatus">
+                <mat-option [value]="1">دائن</mat-option>
+                <mat-option [value]="2">مدين</mat-option>
+                <mat-option [value]="3">متزن</mat-option>
+            </mat-select>
+            <mat-error>
+                <app-validation-msg [control]="accountForm.get('startBalanceStatus')"
+                    fieldName="الحقل"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field fxFlex="48"  >
+            <mat-label>رصيد أول المدة للحساب</mat-label>
+            <input matInput formControlName="startBalance" placeholder="السعر" type="number">
+            <mat-error>
+                <app-validation-msg [control]="accountForm.get('startBalance')" fieldName="رصيد أول المدة للحساب"></app-validation-msg>
+            </mat-error>
+        </mat-form-field> 
+
+  
+
+        
+      
+
+        <mat-form-field fxFlex="48" >
+            <mat-label>ملاحظات</mat-label>
+            <input matInput formControlName="notes" placeholder="ملاحظات">
+            <mat-error>
+                <app-validation-msg [control]="accountForm.get('notes')" fieldName="ملاحظات"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field fxFlex="48">
+            <mat-label>حالة التفعيل</mat-label>
+            <mat-select formControlName="active"> 
+                <mat-option [value]="1">نعم</mat-option>
+                <mat-option [value]="0">لا</mat-option>
+            </mat-select>
+            <mat-error>
+                <app-validation-msg [control]="accountForm.get('active')"
+                    fieldName="حالة التفعيل"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
+ 
+
+    <mat-dialog-actions fxLayoutAlign="center">
+        <button mat-button mat-dialog-close color="danger">الغاء</button>
+        <button [disabled]="!accountForm.valid" mat-raised-button color="primary" type="submit"> حفظ</button>
+    </mat-dialog-actions>
+</form>

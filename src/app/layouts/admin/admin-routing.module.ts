@@ -8,6 +8,8 @@ import { InvUomsComponent } from './components/inventory/inv-uoms/inv-uoms.compo
 import { InvItemCategoriesComponent } from './components/inventory/inv-item-categories/inv-item-categories.component';
 import { InvItemsComponent } from './components/inventory/inv-items/inv-items.component';
 import { StoresComponent } from './components/inventory/stores/stores.component';
+import { AccountTypesComponent } from './components/accounts/account-types/account-types.component';
+import { AccountsComponent } from './components/accounts/accounts/accounts.component';
 
 const routes: Routes = [
   {
@@ -19,6 +21,15 @@ const routes: Routes = [
       {path:'invItemsCategories', component: InvItemCategoriesComponent},
       {path:'invItems', component: InvItemsComponent},
       {path:'stores', component: StoresComponent},
+
+
+      /* account */
+      {path:'accountTypes', component: AccountTypesComponent},
+      {path:'accounts', component: AccountsComponent},
+
+      
+
+
       { path: '**', pathMatch :'full' , component: Page404Component},
     ],
     //canActivate: [adminGuardService]

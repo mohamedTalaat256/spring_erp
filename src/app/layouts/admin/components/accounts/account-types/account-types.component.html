@@ -1,0 +1,54 @@
+<div fxLayout="row">
+
+   
+    <div class="w-100 mt-2 rounded-2">
+
+        <div fxLayout="row" class="my-3 p-1" fxLayoutAlign="space-between center">
+             
+            <h1>أنواع الحسابات</h1>
+        </div> 
+        <div class="w-100 mt-2 rounded-2 shadow-sm">
+
+            <table mat-table [dataSource]="dataSource" style="direction: rtl;">
+
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef> تسلسل </th>
+                    <td mat-cell *matCellDef="let store"> {{store.id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> الوحدة</th>
+                    <td mat-cell *matCellDef="let store"> {{store.name}} </td>
+                </ng-container> 
+
+                <ng-container matColumnDef="relatediternalaccounts">
+                    <th mat-header-cell *matHeaderCellDef> هل الحساب يتم تكويده من شاشته الداخلية ام من خلال الشاشه الرئيسية للحسابات واحد داخلي - صفر من الشاشه الرئيسية	</th>
+                    <td mat-cell *matCellDef="let store">
+                        <mat-chip-row *ngIf="store.relatediternalaccounts" color="success">
+                            نعم
+                        </mat-chip-row>
+                        <mat-chip-row *ngIf="!store.relatediternalaccounts" color="danger">
+                           لا
+                        </mat-chip-row>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="active">
+                    <th mat-header-cell *matHeaderCellDef> حالة التفعيل</th>
+                    <td mat-cell *matCellDef="let store">
+                        <mat-chip-row *ngIf="store.active" color="success">
+                            مفعل
+                        </mat-chip-row>
+                        <mat-chip-row *ngIf="!store.active" color="danger">
+                            غير مفعل
+                        </mat-chip-row>
+                    </td>
+                </ng-container> 
+ 
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </div>
+</div>
