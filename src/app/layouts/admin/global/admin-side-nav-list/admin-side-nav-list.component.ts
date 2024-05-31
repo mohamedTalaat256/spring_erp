@@ -14,10 +14,11 @@ interface FoodNode {
 }
 
 const TREE_DATA: FoodNode[] = [
+ 
   {
     name: 'ضبط المخازن',
     icon: 'store',
-    iconColor: 'primary',
+    iconColor: 'warn',
     children: [
       { 
         name: 'بيانات فئات الفواتير',

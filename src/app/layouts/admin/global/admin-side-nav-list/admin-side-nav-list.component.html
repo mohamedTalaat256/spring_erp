@@ -6,7 +6,10 @@
      
        <!--  <div matListItemTitle><span class="mat-headline-3 m-2 mat-text-primary">LOGO</span></div> -->
     
-
+       <mat-list-item  [routerLink]="['/admin/dashboard']" routerLinkActive="active">
+           <mat-icon matListItemIcon color="primary">dashboard</mat-icon>
+           <div  class="mat-text-dark f-w-bold">لوحة التحكم</div>
+       </mat-list-item>
 
     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
 

@@ -17,6 +17,7 @@ const routes: Routes = [
     component: AdminComponent,
     children: [
       {path:'', component: DashboardComponent},
+      {path:'dashboard', component: DashboardComponent},
       {path:'inv-uoms', component: InvUomsComponent},
       {path:'invItemsCategories', component: InvItemCategoriesComponent},
       {path:'invItems', component: InvItemsComponent},
