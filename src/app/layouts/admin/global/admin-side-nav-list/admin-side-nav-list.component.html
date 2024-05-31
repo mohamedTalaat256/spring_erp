@@ -19,11 +19,11 @@
         
         <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding >
 
-            <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="row" fxFlex="100" fxLayoutAlign="space-between center">
                 <div fxLayout="row">
                     <mat-list-item class="sid-nav-item">
                         <mat-icon matListItemIcon [color]="node.iconColor">{{node.icon}}</mat-icon>
-                        <div matListItemTitle> {{node.name}} </div>
+                        <div class="mat-text-dark f-w-bold"> {{node.name}} </div>
                      </mat-list-item>
                 </div>
                 <div>

@@ -1,0 +1,51 @@
+<h2 mat-dialog-title class="text-capitalize">{{title}}</h2>
+
+<form (ngSubmit)="onSubmit()" [formGroup]="storeForm" fxLayout="column" fxLayoutGap="15" class="p-5">
+ 
+  
+    <mat-form-field>
+        <mat-label>اسم المخزن</mat-label>
+        <input matInput formControlName="name" placeholder="اسم المخزن"  >
+        <mat-error>
+            <app-validation-msg [control]="storeForm.get('name')" fieldName="اسم المخزن" ></app-validation-msg>
+        </mat-error>
+    </mat-form-field>
+
+    
+    <mat-form-field>
+        <mat-label>عنوان المخزن</mat-label>
+        <input matInput formControlName="address" placeholder="عنوان المخزن"  >
+        <mat-error>
+            <app-validation-msg [control]="storeForm.get('address')" fieldName="عنوان المخزن" ></app-validation-msg>
+        </mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field>
+        <mat-label>تليفون المخزن</mat-label>
+        <input matInput formControlName="phone" placeholder="تليفون المخزن"  >
+        <mat-error>
+            <app-validation-msg [control]="storeForm.get('phone')" fieldName="تليفون المخزن" ></app-validation-msg>
+        </mat-error>
+    </mat-form-field>
+
+
+    
+
+    <mat-form-field>
+        <mat-label>حالة التفعيل</mat-label>
+        <mat-select formControlName="active">
+          <mat-option [value]="1">نعم</mat-option>
+          <mat-option [value]="0">لا</mat-option>
+        </mat-select>
+        <mat-error>
+          <app-validation-msg [control]="storeForm.get('active')" fieldName="حالة التفعيل"></app-validation-msg>
+        </mat-error>
+    </mat-form-field>
+ 
+    
+    <mat-dialog-actions fxLayoutAlign="center">
+        <button mat-button mat-dialog-close color="danger">الغاء</button>
+        <button [disabled]="!storeForm.valid" mat-raised-button color="primary" type="submit" > حفظ</button>
+    </mat-dialog-actions>
+</form>

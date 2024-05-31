@@ -41,6 +41,8 @@ import { InvUomsFormDialogComponent } from './layouts/admin/components/inv-uoms-
 import { InvItemCategoriesComponent } from './layouts/admin/components/inv-item-categories/inv-item-categories.component';
 import { InvItemCategoryFormDialogComponent } from './layouts/admin/components/inv-item-category-form-dialog/inv-item-category-form-dialog.component';
 import { InvItemsComponent } from './layouts/admin/components/inv-items/inv-items.component';
+import { StoresComponent } from './layouts/admin/components/stores/stores.component';
+import { StoreFormDialogComponent } from './layouts/admin/components/store-form-dialog/store-form-dialog.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -73,7 +75,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     InvUomsFormDialogComponent,
     InvItemCategoriesComponent,
     InvItemCategoryFormDialogComponent,
-    InvItemsComponent
+    InvItemsComponent,
+    StoresComponent,
+    StoreFormDialogComponent
   ],
   imports: [
     MatSidenavModule,
