@@ -2,7 +2,7 @@
 <mat-list class="mx-3 mt-4 p-3" style="direction: rtl;">
 
     
-<img src="/assets/images/logo.jpg" alt="" style="height: 120px;">
+<img src="/assets/images/logo.png" alt="" style="height: 90px;">
      
        <!--  <div matListItemTitle><span class="mat-headline-3 m-2 mat-text-primary">LOGO</span></div> -->
     
@@ -10,14 +10,14 @@
 
     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
 
-        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding class="mat-bg-light">
             <mat-list-item  [routerLink]="[node.url]" routerLinkActive="active">
              <!--    <mat-icon matListItemIcon [color]="node.iconColor">{{node.icon}}</mat-icon> -->
                 <div matListItemTitle> {{node.name}} </div>
             </mat-list-item>
         </mat-tree-node>
         
-        <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+        <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding >
 
             <div fxLayout="row" fxLayoutAlign="space-between center">
                 <div fxLayout="row">
