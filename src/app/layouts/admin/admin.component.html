@@ -1,13 +1,14 @@
 <div fxFlex="100" fxLayout="row" style="height: 100vh">
     <loading-circular></loading-circular>
-    <div fxFlex.xl ="17" fxFlex.lg="17" fxFlex.sx="5" fxHide.xs class="mat-bg-light">
-        <admin-side-nav-list fxFlex="100"></admin-side-nav-list>
-    </div>
-    <div fxFlex.xl="83" fxFlex.lg="83" fxFlex.sx="95" fxLayout="column" > 
+    <div fxFlex.xl="80" fxFlex.lg="80" fxFlex.sx="90" fxLayout="column" > 
         <admin-toolbar-list></admin-toolbar-list>
         <div class="admin-content m-3" fxFlex="100">
             <router-outlet></router-outlet>
         </div>
     </div>
+    <div fxFlex.xl ="20" fxFlex.lg="20" fxFlex.sx="8" fxHide.xs class="mat-bg-light">
+        <admin-side-nav-list fxFlex="100"></admin-side-nav-list>
+    </div>
+   
     
 </div> 

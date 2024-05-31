@@ -1,0 +1,62 @@
+<div fxLayout="row">
+
+    <button mat-raised-button color="primary" (click)="openAddInvUomDialog()">اضافة جديد</button>
+    <div class="w-100 mt-2 rounded-2">
+
+        <div id="print-section">
+
+            <table mat-table [dataSource]="dataSource" style="direction: rtl;">
+
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef> تسلسل </th>
+                    <td mat-cell *matCellDef="let invUom"> {{invUom.id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> الوحدة</th>
+                    <td mat-cell *matCellDef="let invUom"> {{invUom.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="active">
+                    <th mat-header-cell *matHeaderCellDef> حالة التفعيل</th>
+                    <td mat-cell *matCellDef="let invUom">
+                        <mat-chip-row *ngIf="invUom.active" color="success">
+                            مفعلة
+                        </mat-chip-row>
+                        <mat-chip-row *ngIf="!invUom.active" color="danger">
+                            غير مفعلة
+                        </mat-chip-row>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="isMaster">
+                    <th mat-header-cell *matHeaderCellDef> نوع الوحدة </th>
+                    <td mat-cell *matCellDef="let invUom"> 
+                        
+                        <mat-chip-row *ngIf="invUom.is_master" color="success">
+                            وحدة أب
+                        </mat-chip-row>
+                        <mat-chip-row *ngIf="!invUom.is_master" color="warn">
+                            وحدة تجرئة
+                        </mat-chip-row></td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let invUom">
+
+
+                        <button mat-icon-button (click)="openEditInvUomDialog(invUom)">
+                            <mat-icon color="primary">mode_edit</mat-icon>
+                        </button>
+                       
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </div>
+</div>

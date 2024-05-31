@@ -16,8 +16,6 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import { AuthComponent } from './layouts/auth/auth.component'; 
 import { AuthRoutingModule } from './layouts/auth/auth-routing.module';
-import { AdminToolbarListComponent } from './layouts/admin/global/admin-toolbar-list/admin-toolbar-list.component';
-import { AdminSideNavListComponent } from './layouts/admin/global/admin-side-nav-list/admin-side-nav-list.component';
 import { NgApexchartsModule } from "ng-apexcharts";
 import { RatingStarComponent } from './global/rating-star/rating-star.component';
 import { ValidationMsgComponent } from './global/validation-msg/validation-msg.component';
@@ -25,19 +23,21 @@ import { loaderInterceptor } from './interceptor/loader.interceptor';
 import { TokenInterceptor } from './interceptor/token.interceptor';
 import { LoadingCircularComponent } from './global/loading-circular/loading-circular.component';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
-import { CourseCardComponent } from './global/course-card/course-card.component';
 import { Page404Component } from './global/page404/page404.component';
-import { MyCourseCardComponent } from './global/my-course-card/my-course-card.component';
-import { LectureCardComponent } from './global/lecture-card/lecture-card.component';
 import { toShortText } from './pip/toShortText';
 import { secondsToLength } from './pip/secondsToLength';
-import { InputStarRatingComponent } from './global/input-star-rating/input-star-rating.component';
 import { toCeil } from './pip/toCeil';
-import { InvoiceComponent } from './badran/invoice/invoice.component';
-import { InvItemFormDialogComponent } from './badran/inv-item-form-dialog/inv-item-form-dialog.component';
-import { DashboardComponent } from './badran/dashboard/dashboard.component';
+import { InvoiceComponent } from './layouts/admin/components/invoice/invoice.component';
+import { InvItemFormDialogComponent } from './layouts/admin/components/inv-item-form-dialog/inv-item-form-dialog.component';
+import { DashboardComponent } from './layouts/admin/components/dashboard/dashboard.component';
 import { NgxPrintModule } from 'ngx-print';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { AdminRoutingModule } from './layouts/admin/admin-routing.module';
+import { AdminSideNavListComponent } from './layouts/admin/global/admin-side-nav-list/admin-side-nav-list.component';
+import { AdminToolbarListComponent } from './layouts/admin/global/admin-toolbar-list/admin-toolbar-list.component';
+import { AdminComponent } from './layouts/admin/admin.component';
+import { InvUomsComponent } from './layouts/admin/components/inv-uoms/inv-uoms.component';
+import { InvUomsFormDialogComponent } from './layouts/admin/components/inv-uoms-form-dialog/inv-uoms-form-dialog.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -52,28 +52,28 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     AppComponent,
     AppSideNavbarComponent,
     AppToolbarListComponent,
-    AdminToolbarListComponent,
-    AuthComponent,
-    AdminSideNavListComponent,
+    AuthComponent, 
     RatingStarComponent,
     secondsToLength,
     toShortText,
     toCeil,
     ValidationMsgComponent,
     LoadingCircularComponent,
-    CourseCardComponent,
     Page404Component,
-    MyCourseCardComponent,
-    LectureCardComponent,
-    InputStarRatingComponent,
     InvoiceComponent,
     InvItemFormDialogComponent,
-    DashboardComponent
+    AdminComponent,
+    DashboardComponent,
+    AdminSideNavListComponent,
+    AdminToolbarListComponent,
+    InvUomsComponent,
+    InvUomsFormDialogComponent
   ],
   imports: [
     MatSidenavModule,
     BrowserModule,
     AppRoutingModule,
+    AdminRoutingModule,
     AuthRoutingModule,
     BrowserAnimationsModule,
     FormsModule,

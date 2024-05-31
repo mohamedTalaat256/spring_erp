@@ -27,6 +27,8 @@ import { MatChipsModule} from '@angular/material/chips';
 import { MatNativeDateModule } from '@angular/material/core';
 import {ProgressBarMode, MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatTreeFlatDataSource, MatTreeFlattener, MatTreeModule} from '@angular/material/tree';
+
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 const materials: any = [
   MatSidenavModule,
@@ -59,7 +61,9 @@ const materials: any = [
   MatNativeDateModule,
   MatSliderModule, MatProgressBarModule,
   MatSlideToggleModule,
-  MatAutocompleteModule
+  MatAutocompleteModule,
+  MatSidenavModule,
+  MatTreeModule
 ];
 
 @NgModule({
