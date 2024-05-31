@@ -5,6 +5,8 @@ import { adminGuardService } from 'src/app/guards/admin-guard.guard';
 import { Page404Component } from 'src/app/global/page404/page404.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { InvUomsComponent } from './components/inv-uoms/inv-uoms.component';
+import { InvItemCategoriesComponent } from './components/inv-item-categories/inv-item-categories.component';
+import { InvItemsComponent } from './components/inv-items/inv-items.component';
 
 const routes: Routes = [
   {
@@ -13,6 +15,8 @@ const routes: Routes = [
     children: [
       {path:'', component: DashboardComponent},
       {path:'inv-uoms', component: InvUomsComponent},
+      {path:'invItemsCategories', component: InvItemCategoriesComponent},
+      {path:'invItems', component: InvItemsComponent},
       { path: '**', pathMatch :'full' , component: Page404Component},
     ],
     //canActivate: [adminGuardService]

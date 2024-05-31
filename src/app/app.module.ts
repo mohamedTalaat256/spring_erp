@@ -38,6 +38,9 @@ import { AdminToolbarListComponent } from './layouts/admin/global/admin-toolbar-
 import { AdminComponent } from './layouts/admin/admin.component';
 import { InvUomsComponent } from './layouts/admin/components/inv-uoms/inv-uoms.component';
 import { InvUomsFormDialogComponent } from './layouts/admin/components/inv-uoms-form-dialog/inv-uoms-form-dialog.component';
+import { InvItemCategoriesComponent } from './layouts/admin/components/inv-item-categories/inv-item-categories.component';
+import { InvItemCategoryFormDialogComponent } from './layouts/admin/components/inv-item-category-form-dialog/inv-item-category-form-dialog.component';
+import { InvItemsComponent } from './layouts/admin/components/inv-items/inv-items.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -67,7 +70,10 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     AdminSideNavListComponent,
     AdminToolbarListComponent,
     InvUomsComponent,
-    InvUomsFormDialogComponent
+    InvUomsFormDialogComponent,
+    InvItemCategoriesComponent,
+    InvItemCategoryFormDialogComponent,
+    InvItemsComponent
   ],
   imports: [
     MatSidenavModule,

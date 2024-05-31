@@ -1,0 +1,30 @@
+<h2 mat-dialog-title class="text-capitalize">{{title}}</h2>
+
+<form (ngSubmit)="onSubmit()" [formGroup]="invItemCategoryForm" fxLayout="column" fxLayoutGap="15" class="p-5">
+ 
+  
+    <mat-form-field>
+        <mat-label>اسم الفئة</mat-label>
+        <input matInput formControlName="name" placeholder="اسم الفئة"  >
+        <mat-error>
+            <app-validation-msg [control]="invItemCategoryForm.get('name')" fieldName="اسم الفئة" ></app-validation-msg>
+        </mat-error>
+    </mat-form-field> 
+
+    <mat-form-field>
+        <mat-label>حالة التفعيل</mat-label>
+        <mat-select formControlName="active">
+          <mat-option value="1">نعم</mat-option>
+          <mat-option value="0">لا</mat-option>
+        </mat-select>
+        <mat-error>
+          <app-validation-msg [control]="invItemCategoryForm.get('active')" fieldName="حالة التفعيل"></app-validation-msg>
+        </mat-error>
+    </mat-form-field>
+ 
+    
+    <mat-dialog-actions fxLayoutAlign="center">
+        <button mat-button mat-dialog-close color="danger">الغاء</button>
+        <button [disabled]="!invItemCategoryForm.valid" mat-raised-button color="primary" type="submit" > حفظ</button>
+    </mat-dialog-actions>
+</form>

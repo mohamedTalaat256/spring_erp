@@ -48,6 +48,59 @@ const TREE_DATA: FoodNode[] = [
 
       },
     ],
+  },
+  {
+    name: 'الحسابات',
+    icon: 'monetization_on',
+    iconColor: 'success',
+    children: [
+      { 
+        name: 'أنواع الحسابات المالية',
+        icon: 'menu',
+        url: '/admin/invoices_types'
+      },
+      { 
+        name: 'الشجرة (الحسابات المالية)',
+        icon: 'stores',
+        url: '/admin/stores'
+      },
+       { 
+        name: 'حسابات العملاء',
+        icon: 'text_format',
+        url: '/admin/inv-uoms'
+
+      },
+      { 
+        name: 'حسابات المناديب',
+        icon: 'store',
+        url: '/admin/invItemsCategories'
+
+      },
+      { 
+        name: 'فئات الموردين',
+        icon: 'dashboard',
+        url: '/admin/invItems'
+
+      },
+      { 
+        name: 'حسابات الموردين',
+        icon: 'dashboard',
+        url: '/admin/invItems'
+
+      },
+      { 
+        name: 'شاشة تحيل النقدية',
+        icon: 'dashboard',
+        url: '/admin/invItems'
+
+      },
+      { 
+        name: 'شاشة صرف النقدية',
+        icon: 'dashboard',
+        url: '/admin/invItems'
+
+      },
+    ],
   }
 ];
 

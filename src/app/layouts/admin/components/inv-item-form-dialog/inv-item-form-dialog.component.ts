@@ -2,8 +2,13 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CATEGORIES, CLIENTS, INV_ITEMS, INV_ITEM_UNIT, SALES_ITEM_TYPES, STORES } from '../data/data';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormMode } from 'src/app/constants/constants';
+import { FormMode, ITEM_TYPES } from 'src/app/constants/constants';
 import { Observable, map, startWith } from 'rxjs';
+import { InvItemService } from 'src/app/service/invItem.service';
+import { AppResponse } from 'src/app/model/app_response.model';
+import Swal from 'sweetalert2';
+import { MatSelectChange } from '@angular/material/select';
+import { InvItemForm } from '../../form-controls/inv-item-form';
 
 @Component({
   selector: 'app-inv-item-form-dialog',
@@ -15,41 +20,42 @@ export class InvItemFormDialogComponent {
 
   stores= STORES;
   salesItemTypes= SALES_ITEM_TYPES;
-  categories= CATEGORIES;
-  invItems:any[]= INV_ITEMS;
 
-  invItemsUnits:any[] = INV_ITEM_UNIT;
-  invoiceDetailsForm: FormGroup;
+  ITEM_TYPES= ITEM_TYPES;
+  
+  invItemForm: FormGroup;
   title:string;
 
 
+  invItems:any[]= [];
+  invUomsChild:any[]=[];
+  invUomsParent:any[]=[];
+  invItemsCategories:any[]=[];
+
+
+  doesHasRetailunit: boolean =false;
+  showPricesFeilds: boolean =false;
 
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<InvItemFormDialogComponent>
+    private dialogRef: MatDialogRef<InvItemFormDialogComponent>,
+    private invItemService: InvItemService,
+    private invItemFormControl: InvItemForm
   ){
 
 
     if(this.data.formMode === FormMode.CREATE){
-      this.invoiceDetailsForm =  this.fb.group({
-        productCategoryId: [null, [Validators.required]],
-        unitId:            [null, [Validators.required]],
-        invItemId:         [null, [Validators.required]],
-        amount:            [null, [Validators.required, Validators.min(1)]],
-        price:             [null, [Validators.required, Validators.min(1)]],
-      });
+      this.invItemForm =  this.invItemFormControl.createForm();
     }else{
-      this.invoiceDetailsForm =  this.fb.group({
-        productCategoryId: [this.data.invItem.productCategoryId, [Validators.required]],
-        unitId:            [this.data.invItem.unitId, [Validators.required]],
-        invItemId:         [this.data.invItem.invItemId, [Validators.required]],
-        amount:            [this.data.invItem.amount, [Validators.required, Validators.min(1)]],
-        price:             [this.data.invItem.price, [Validators.required, Validators.min(1)]],
-      });
+      this.invItemForm =  this.invItemForm =  this.invItemFormControl.setForm(this.data.invItem);
     }
 
-
-    
+    console.log(this.data.createData);
+ 
+    this.invUomsChild = this.data.createData.invUomsChild;
+    this.invUomsParent = this.data.createData.invUomsParent;
+    this.invItemsCategories = this.data.createData.invItemsCategories;
+    this.invItems = this.data.createData.invItems;
     
     this.title = this.data.title;
   }
@@ -57,8 +63,10 @@ export class InvItemFormDialogComponent {
 
   filteredIems: Observable<any[]>;
 
-  ngOnInit() {
-    this.filteredIems = this.invoiceDetailsForm.controls['invItemId'].valueChanges.pipe(
+  ngOnInit() { 
+
+
+    this.filteredIems = this.invItemForm.controls['parentInvItemcardId'].valueChanges.pipe(
       startWith(''),
       map(value => {
         const name = typeof value === 'string' ? value : value?.name;
@@ -66,6 +74,9 @@ export class InvItemFormDialogComponent {
       }),
     );
   }
+
+
+  
 
   displayFn(item: any): string {
     
@@ -81,13 +92,20 @@ export class InvItemFormDialogComponent {
   onInvItemChange(itemId){ 
 
     const price = this.invItems.filter(i=> i.id ===itemId )[0].price;
-    this.invoiceDetailsForm.patchValue({
+    this.invItemForm.patchValue({
       price: price
     });
   }
 
   onSubmit(){
+    this.dialogRef.close(this.invItemForm.value);
+  }
+ 
+  doesHasRetailunitChange(event:MatSelectChange){
+    this.doesHasRetailunit = event.value;
+  }
 
-    this.dialogRef.close(this.invoiceDetailsForm.value);
+  retailUomQuntToParentChange(event:MatSelectChange){
+    this.showPricesFeilds = event.value;
   }
 }

@@ -1,68 +1,157 @@
 <h2 mat-dialog-title class="text-capitalize">{{title}}</h2>
 
-<form (ngSubmit)="onSubmit()" [formGroup]="invoiceDetailsForm" fxLayout="column" fxLayoutGap="15" class="p-5">
-    <mat-form-field>
-        <mat-label>فئة الصنف</mat-label>
-        <mat-select formControlName="productCategoryId" > 
-            <mat-option *ngFor="let c of categories" [value]="c.id">{{c.name}} </mat-option>
-        </mat-select>
-        <mat-error>
-            <app-validation-msg [control]="invoiceDetailsForm.get('productCategoryId')" fieldName="فئة الصنف" ></app-validation-msg>
-        </mat-error>
-    </mat-form-field>
+<form (ngSubmit)="onSubmit()" [formGroup]="invItemForm" fxLayout="row wrap" fxLayoutGap="15" class="p-5">
 
-
-    <mat-form-field>
-        <mat-label>الوحدة</mat-label>
-        <mat-select formControlName="unitId"  > 
-            <mat-option *ngFor="let u of invItemsUnits" [value]="u.id">{{u.name}} </mat-option>
-        </mat-select>
-        <mat-error>
-            <app-validation-msg [control]="invoiceDetailsForm.get('unitId')" fieldName="الوحدة" ></app-validation-msg>
-        </mat-error>
-    </mat-form-field>
-
-    <mat-form-field>
-        <mat-label>الصنف</mat-label>
-        <input type="text"
-                 placeholder="الصنف"
-                 matInput
-                 formControlName="invItemId"
-                 [matAutocomplete]="auto" >
-
-          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-
-            <ng-container *ngFor="let item of filteredIems | async; trackBy: displayFn">
-                <mat-option (onSelectionChange)="onInvItemChange(item.id)" [value]="item">{{ item.name }}</mat-option>
-              </ng-container>
-           
-          </mat-autocomplete>
-        <mat-error>
-            <app-validation-msg [control]="invoiceDetailsForm.get('invItemId')" fieldName="الصنف" ></app-validation-msg>
-        </mat-error>
-    </mat-form-field>
-
-
-
-    <mat-form-field>
-        <mat-label>السعر</mat-label>
-        <input matInput formControlName="price" placeholder="السعر" type="number">
-        <mat-error>
-            <app-validation-msg [control]="invoiceDetailsForm.get('price')" fieldName="السعر" ></app-validation-msg>
-        </mat-error>
-    </mat-form-field>
-
-    <mat-form-field>
-        <mat-label>الكمية</mat-label>
-        <input matInput formControlName="amount" placeholder="الكمية" type="number">
-        <mat-error>
-            <app-validation-msg [control]="invoiceDetailsForm.get('amount')" fieldName="الكمية" ></app-validation-msg>
-        </mat-error>
-    </mat-form-field>
  
-    
+
+        <mat-form-field fxFlex="48">
+            <mat-label>الباركود</mat-label>
+            <input matInput formControlName="barCode" placeholder="الباركود" >
+            <mat-error>
+                <app-validation-msg [control]="invItemForm.get('barCode')" fieldName="الباركود"></app-validation-msg>
+            </mat-error>
+        </mat-form-field> 
+
+
+        <mat-form-field  fxFlex="48">
+            <mat-label>اسم الصنف</mat-label>
+            <input matInput formControlName="name" placeholder="اسم الصنف" >
+            <mat-error>
+                <app-validation-msg [control]="invItemForm.get('name')" fieldName="اسم الصنف"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="48">
+            <mat-label>نوع الصنف</mat-label>
+            <mat-select formControlName="itemType">
+                <mat-option *ngFor="let i of ITEM_TYPES" [value]="i.id">{{i.description}} </mat-option>
+            </mat-select>
+            <mat-error>
+                <app-validation-msg [control]="invItemForm.get('itemType')"
+                    fieldName="نوع الصنف"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
+
+        
+        <mat-form-field fxFlex="48">
+            <mat-label>فئة الصنف</mat-label>
+            <mat-select formControlName="invItemcardCategoriesId">
+                <mat-option *ngFor="let c of invItemsCategories" [value]="c.id">{{c.name}} </mat-option>
+            </mat-select>
+            <mat-error>
+                <app-validation-msg [control]="invItemForm.get('invItemcardCategoriesId')"
+                    fieldName="فئة الصنف"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="48">
+            <mat-label>الصنف له اب ؟</mat-label>
+            <mat-select formControlName="parentInvItemcardId">
+                <mat-option value="0">هو أب </mat-option>
+                <mat-option *ngFor="let i of invItems" [value]="i.id">{{i.name}} </mat-option>
+            </mat-select>
+            <mat-error>
+                <app-validation-msg [control]="invItemForm.get('parentInvItemcardId')"
+                    fieldName="الحقل"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>  
+
+        <mat-form-field fxFlex="48">
+            <mat-label>وحدة قياس الأب</mat-label>
+            <mat-select formControlName="retailUomQuntToParent" (selectionChange)="retailUomQuntToParentChange($event)"> 
+                <mat-option *ngFor="let i of invUomsParent" [value]="i.id">{{i.name}} </mat-option>
+            </mat-select>
+            <mat-error>
+                <app-validation-msg [control]="invItemForm.get('retailUomQuntToParent')"
+                    fieldName="وحدة قياس الأب"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
+
+ 
+        <mat-form-field fxFlex="48">
+            <mat-label>هل للصنف وحدة تجزئة ابن</mat-label>
+            <mat-select formControlName="doesHasRetailunit" (selectionChange)="doesHasRetailunitChange($event)"> 
+                <mat-option value="1">نعم</mat-option>
+                <mat-option value="0">لا</mat-option>
+            </mat-select>
+            <mat-error>
+                <app-validation-msg [control]="invItemForm.get('doesHasRetailunit')"
+                    fieldName="الحقل"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field fxFlex="48" *ngIf="doesHasRetailunit">
+            <mat-label>وحدة القياس التجزئة الابن بالنسبة للأب</mat-label>
+            <mat-select formControlName="retailUomId" > 
+                <mat-option *ngFor="let i of invUomsChild" [value]="i.id">{{i.name}} </mat-option>
+            </mat-select>
+            <mat-error>
+                <app-validation-msg [control]="invItemForm.get('retailUomId')"
+                    fieldName="الحقل"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
+        
+        <mat-form-field fxFlex="48" *ngIf="showPricesFeilds">
+            <mat-label>سعر القطاعي بوحدة</mat-label>
+            <input matInput formControlName="priceRetail" placeholder="السعر" type="number">
+            <mat-error>
+                <app-validation-msg [control]="invItemForm.get('priceRetail')" fieldName="سعر القطاعي"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="48" *ngIf="showPricesFeilds">
+            <mat-label>سعر النص جملة بوحدة</mat-label>
+            <input matInput formControlName="nosGomlaPrice" placeholder="السعر" type="number">
+            <mat-error>
+                <app-validation-msg [control]="invItemForm.get('nosGomlaPrice')" fieldName="سعر القطاعي"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="48" *ngIf="showPricesFeilds">
+            <mat-label>سعر جملة بوحدة</mat-label>
+            <input matInput formControlName="gomlaPrice" placeholder="السعر" type="number">
+            <mat-error>
+                <app-validation-msg [control]="invItemForm.get('gomlaPrice')" fieldName="سعر القطاعي"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="48" *ngIf="showPricesFeilds">
+            <mat-label>سعر تكلفة الشراء لوحدة</mat-label>
+            <input matInput formControlName="costPrice" placeholder="السعر" type="number">
+            <mat-error>
+                <app-validation-msg [control]="invItemForm.get('costPrice')" fieldName="سعر القطاعي"></app-validation-msg>
+            </mat-error>
+        </mat-form-field> 
+
+        <mat-form-field fxFlex="48">
+            <mat-label>هل للصنف سعر ثابت</mat-label>
+            <mat-select formControlName="hasFixcedPrice"> 
+                <mat-option value="1">نعم</mat-option>
+                <mat-option value="0">لا وقابل للتغير بالفواتير</mat-option>
+            </mat-select>
+            <mat-error>
+                <app-validation-msg [control]="invItemForm.get('hasFixcedPrice')"
+                    fieldName="الحقل"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
+ 
+       
+        <mat-form-field fxFlex="48">
+            <mat-label>حالة التفعيل</mat-label>
+            <mat-select formControlName="active"> 
+                <mat-option value="1">نعم</mat-option>
+                <mat-option value="0">لا</mat-option>
+            </mat-select>
+            <mat-error>
+                <app-validation-msg [control]="invItemForm.get('active')"
+                    fieldName="حالة التفعيل"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
+ 
+
     <mat-dialog-actions fxLayoutAlign="center">
         <button mat-button mat-dialog-close color="danger">الغاء</button>
-        <button [disabled]="!invoiceDetailsForm.valid" mat-raised-button color="primary" type="submit" > حفظ</button>
+        <button [disabled]="!invItemForm.valid" mat-raised-button color="primary" type="submit"> حفظ</button>
     </mat-dialog-actions>
 </form>

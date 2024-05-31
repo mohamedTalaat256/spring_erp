@@ -2,10 +2,10 @@
 
 export const baseURL = 'http://localhost/erp/api'
 export const imagePlaceholder: string = '/assets/images/image_placeholder.png';
-export const profileImagesUrls='http://localhost:8090/media/images/'; 
-export const imagesUrls='http://localhost:8090/media/images/'; 
-export const VIDEOS_URL='http://localhost:8090/media/videos/';
-export const LECTURE_STREAM_URL= baseURL+'/lectures/stream/';
+export const profileImagesUrls = 'http://localhost:8090/media/images/';
+export const imagesUrls = 'http://localhost:8090/media/images/';
+export const VIDEOS_URL = 'http://localhost:8090/media/videos/';
+export const LECTURE_STREAM_URL = baseURL + '/lectures/stream/';
 
 export enum adminUrls {
     dasboard = "/admin/dasboard",
@@ -43,9 +43,20 @@ export const EMPTY_PROFILE = {
 };
 
 
+ 
 
 
-export enum constant {
-    CURRENT_LECTURE_INDEX = 'CURRENT_LECTURE_INDEX',
-
-}
+export const ITEM_TYPES = [
+    {
+        id: 1,
+        description: "مخزني"
+    },
+    {
+        id: 2,
+        description: "استهلاكي"
+    },
+    {
+        id: 3,
+        description: "عهدة"
+    }
+]

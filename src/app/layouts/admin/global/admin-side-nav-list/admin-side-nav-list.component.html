@@ -1,15 +1,18 @@
+
 <mat-list class="mx-3 mt-4 p-3" style="direction: rtl;">
 
-    <mat-list-item>
-        <div matListItemTitle><span class="mat-headline-3 m-2 mat-text-primary">LOGO</span></div>
-    </mat-list-item>
+    
+<img src="/assets/images/logo.jpg" alt="" style="height: 120px;">
+     
+       <!--  <div matListItemTitle><span class="mat-headline-3 m-2 mat-text-primary">LOGO</span></div> -->
+    
 
 
     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
 
         <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
             <mat-list-item  [routerLink]="[node.url]" routerLinkActive="active">
-                <mat-icon matListItemIcon [color]="node.iconColor">{{node.icon}}</mat-icon>
+             <!--    <mat-icon matListItemIcon [color]="node.iconColor">{{node.icon}}</mat-icon> -->
                 <div matListItemTitle> {{node.name}} </div>
             </mat-list-item>
         </mat-tree-node>
@@ -19,7 +22,7 @@
             <div fxLayout="row" fxLayoutAlign="space-between center">
                 <div fxLayout="row">
                     <mat-list-item class="sid-nav-item">
-                        <mat-icon matListItemIcon>{{node.icon}}</mat-icon>
+                        <mat-icon matListItemIcon [color]="node.iconColor">{{node.icon}}</mat-icon>
                         <div matListItemTitle> {{node.name}} </div>
                      </mat-list-item>
                 </div>
@@ -37,54 +40,7 @@
         </mat-tree-node>
     </mat-tree>
 
-    <mat-list-item [routerLink]="['/admin/courses']" routerLinkActive="active">
-        <mat-icon matListItemIcon color="primary">book</mat-icon>
-        <div matListItemTitle class="sid-nav-item">{{'courses' | translate}}</div>
-    </mat-list-item>
-
-    <mat-list-item [routerLink]="['/admin/users']" routerLinkActive="active">
-        <mat-icon matListItemIcon color="primary">group</mat-icon>
-        <div matListItemTitle class="sid-nav-item">Users</div>
-    </mat-list-item>
-
-    <mat-list-item [routerLink]="['/admin/faculties']" routerLinkActive="active">
-        <mat-icon matListItemIcon color="dark">school</mat-icon>
-        <div matListItemTitle class="sid-nav-item">{{'faculties'|translate}}</div>
-    </mat-list-item>
-
-    <mat-list-item [routerLink]="['/admin/academic-specializations']" routerLinkActive="active">
-        <mat-icon matListItemIcon color="success">my_library_books</mat-icon>
-        <div matListItemTitle class="sid-nav-item">{{'specializations'|translate}}</div>
-    </mat-list-item>
-
-    <mat-list-item [routerLink]="['/admin/univeristies']" routerLinkActive="active">
-        <mat-icon matListItemIcon color="primary">location_city</mat-icon>
-        <div matListItemTitle class="sid-nav-item">{{'univeristies'|translate}}</div>
-    </mat-list-item>
-
-    <mat-list-item>
-        <mat-icon matListItemIcon color="primary">equalizer</mat-icon>
-        <div matListItemTitle class="sid-nav-item">Analytics</div>
-    </mat-list-item>
-
-    <mat-list-item>
-        <mat-icon matListItemIcon color="warn">star</mat-icon>
-        <div matListItemTitle class="sid-nav-item">Rewards</div>
-    </mat-list-item>
-    <mat-list-item>
-        <mat-icon matListItemIcon color="danger">schedule</mat-icon>
-        <div matListItemTitle class="sid-nav-item">Schedule</div>
-    </mat-list-item>
-    <mat-list-item>
-        <mat-icon matListItemIcon color="success">message</mat-icon>
-        <div matListItemTitle class="sid-nav-item">Messages</div>
-    </mat-list-item>
-
-    <mat-list-item>
-        <mat-icon matListItemIcon color="accent">settings</mat-icon>
-        <div matListItemTitle class="sid-nav-item">Prefrences</div>
-    </mat-list-item>
-
+ 
 
 
 
