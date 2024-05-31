@@ -2,7 +2,12 @@
 
    
     <div class="w-100 mt-2 rounded-2">
-        <button mat-raised-button color="primary" (click)="openAddInvItemCategoryDialog()">اضافة جديد</button>
+
+        <div fxLayout="row" class="my-3 p-1" fxLayoutAlign="space-between center">
+            <button mat-raised-button color="primary" (click)="openAddInvItemCategoryDialog()">اضافة جديد</button>
+            <h1>فئات الأصناف</h1>
+        </div> 
+        
         <div class="w-100 mt-2 rounded-2 shadow-sm">
 
             <table mat-table [dataSource]="dataSource" style="direction: rtl;">
@@ -28,9 +33,6 @@
                         </mat-chip-row>
                     </td>
                 </ng-container>
-
-   
-
 
                 <ng-container matColumnDef="actions">
                     <th mat-header-cell *matHeaderCellDef></th>

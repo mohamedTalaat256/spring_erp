@@ -20,6 +20,7 @@ export class InvItemCategoryForm {
   }
   
   setForm(data: InvItemCategory) {
+    console.log(data);
     return this.fb.group(
       {
         id:        [data.id],

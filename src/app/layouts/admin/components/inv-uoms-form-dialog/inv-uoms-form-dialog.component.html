@@ -14,8 +14,8 @@
     <mat-form-field>
         <mat-label>نوع الوحدة</mat-label>
         <mat-select formControlName="is_master">
-          <mat-option value="1">وحدة اب</mat-option>
-          <mat-option value="0">وحدة تجزئة</mat-option>
+          <mat-option [value]="1">وحدة اب</mat-option>
+          <mat-option [value]="0">وحدة تجزئة</mat-option>
         </mat-select>
         <mat-error>
           <app-validation-msg [control]="invUomForm.get('is_master')" fieldName="نوع الوحدة"></app-validation-msg>
@@ -25,8 +25,8 @@
     <mat-form-field>
         <mat-label>حالة التفعيل</mat-label>
         <mat-select formControlName="active">
-          <mat-option value="1">نعم</mat-option>
-          <mat-option value="0">لا</mat-option>
+          <mat-option [value]="1">نعم</mat-option>
+          <mat-option [value]="0">لا</mat-option>
         </mat-select>
         <mat-error>
           <app-validation-msg [control]="invUomForm.get('active')" fieldName="حالة التفعيل"></app-validation-msg>

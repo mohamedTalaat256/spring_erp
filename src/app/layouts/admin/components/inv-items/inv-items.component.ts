@@ -20,10 +20,7 @@ export class InvItemsComponent implements OnInit {
   constructor(public dialog: MatDialog, private invItemService: InvItemService) { }
 
   invItems: InvItem[] = [];
-
   createData: any;
-
-
 
   displayedColumns: string[] = [
     'id',
@@ -38,28 +35,7 @@ export class InvItemsComponent implements OnInit {
   ngOnInit(): void { 
     this.findAll();
   }
-
-/* 
-  findAll() {
-    this.invItemService.findAll().subscribe({
-      next: (response: AppResponse) => {
-        if (response.ok) {
-          this.invItems = response.data.invItems;
-          this.dataSource = new MatTableDataSource<any>(this.invItems);
-        }
-      },
-      error: (error: Error) => {
-        Swal.fire({
-          icon: "error",
-          title: error.message,
-          showConfirmButton: true
-        });
-      }
-
-    });
-  } */
-
-    
+ 
   findAll() {
     this.invItemService.findAll().subscribe({
       next: (response: AppResponse) => {
@@ -85,8 +61,6 @@ export class InvItemsComponent implements OnInit {
 
     });
   }
-
-
 
 
   openAddInvItemDialog() {

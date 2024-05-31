@@ -47,7 +47,7 @@
         <mat-form-field fxFlex="48">
             <mat-label>الصنف له اب ؟</mat-label>
             <mat-select formControlName="parentInvItemcardId">
-                <mat-option value="0">هو أب </mat-option>
+                <mat-option [value]="0">هو أب </mat-option>
                 <mat-option *ngFor="let i of invItems" [value]="i.id">{{i.name}} </mat-option>
             </mat-select>
             <mat-error>
@@ -71,8 +71,8 @@
         <mat-form-field fxFlex="48">
             <mat-label>هل للصنف وحدة تجزئة ابن</mat-label>
             <mat-select formControlName="doesHasRetailunit" (selectionChange)="doesHasRetailunitChange($event)"> 
-                <mat-option value="1">نعم</mat-option>
-                <mat-option value="0">لا</mat-option>
+                <mat-option [value]="1">نعم</mat-option>
+                <mat-option [value]="0">لا</mat-option>
             </mat-select>
             <mat-error>
                 <app-validation-msg [control]="invItemForm.get('doesHasRetailunit')"
@@ -127,8 +127,8 @@
         <mat-form-field fxFlex="48">
             <mat-label>هل للصنف سعر ثابت</mat-label>
             <mat-select formControlName="hasFixcedPrice"> 
-                <mat-option value="1">نعم</mat-option>
-                <mat-option value="0">لا وقابل للتغير بالفواتير</mat-option>
+                <mat-option [value]="1">نعم</mat-option>
+                <mat-option [value]="0">لا وقابل للتغير بالفواتير</mat-option>
             </mat-select>
             <mat-error>
                 <app-validation-msg [control]="invItemForm.get('hasFixcedPrice')"
@@ -140,8 +140,8 @@
         <mat-form-field fxFlex="48">
             <mat-label>حالة التفعيل</mat-label>
             <mat-select formControlName="active"> 
-                <mat-option value="1">نعم</mat-option>
-                <mat-option value="0">لا</mat-option>
+                <mat-option [value]="1">نعم</mat-option>
+                <mat-option [value]="0">لا</mat-option>
             </mat-select>
             <mat-error>
                 <app-validation-msg [control]="invItemForm.get('active')"

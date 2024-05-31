@@ -2,7 +2,10 @@
 
    
     <div class="w-100 mt-2 rounded-2">
-        <button mat-raised-button color="primary" (click)="openAddInvItemDialog()">اضافة جديد</button>
+        <div fxLayout="row" class="my-3 p-1" fxLayoutAlign="space-between center">
+            <button mat-raised-button color="primary" (click)="openAddInvItemDialog()">اضافة جديد</button>
+            <h1>بيانات الأصناف</h1>
+        </div> 
         <div class="w-100 mt-2 rounded-2 shadow-sm">
 
             <table mat-table [dataSource]="dataSource" style="direction: rtl;">
