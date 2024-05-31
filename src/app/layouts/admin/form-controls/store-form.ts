@@ -16,7 +16,7 @@ export class StoreForm {
         id:       [null],
         name:     [null, [Validators.required, Validators.maxLength(255)]],
         address: [null, [Validators.required]],
-        phone: [null, [Validators.required]],
+        phones: [null, [Validators.required]],
         active:   [null, [Validators.required]],
       }
     );
@@ -28,7 +28,7 @@ export class StoreForm {
         id:        [data.id],
         name:      [data.name, [Validators.required, Validators.maxLength(255)]],
         address:   [data.address, [Validators.required]],
-        phone:     [data.phone, [Validators.required]],
+        phones:     [data.phone, [Validators.required]],
         active:    [data.active, [Validators.required]],
       }
     );

@@ -28,7 +28,7 @@ import { toShortText } from './pip/toShortText';
 import { secondsToLength } from './pip/secondsToLength';
 import { toCeil } from './pip/toCeil';
 import { InvoiceComponent } from './layouts/admin/components/invoice/invoice.component';
-import { InvItemFormDialogComponent } from './layouts/admin/components/inv-item-form-dialog/inv-item-form-dialog.component';
+import { InvItemFormDialogComponent } from './layouts/admin/components/inventory/inv-item-form-dialog/inv-item-form-dialog.component';
 import { DashboardComponent } from './layouts/admin/components/dashboard/dashboard.component';
 import { NgxPrintModule } from 'ngx-print';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
@@ -36,13 +36,13 @@ import { AdminRoutingModule } from './layouts/admin/admin-routing.module';
 import { AdminSideNavListComponent } from './layouts/admin/global/admin-side-nav-list/admin-side-nav-list.component';
 import { AdminToolbarListComponent } from './layouts/admin/global/admin-toolbar-list/admin-toolbar-list.component';
 import { AdminComponent } from './layouts/admin/admin.component';
-import { InvUomsComponent } from './layouts/admin/components/inv-uoms/inv-uoms.component';
-import { InvUomsFormDialogComponent } from './layouts/admin/components/inv-uoms-form-dialog/inv-uoms-form-dialog.component';
-import { InvItemCategoriesComponent } from './layouts/admin/components/inv-item-categories/inv-item-categories.component';
-import { InvItemCategoryFormDialogComponent } from './layouts/admin/components/inv-item-category-form-dialog/inv-item-category-form-dialog.component';
-import { InvItemsComponent } from './layouts/admin/components/inv-items/inv-items.component';
-import { StoresComponent } from './layouts/admin/components/stores/stores.component';
-import { StoreFormDialogComponent } from './layouts/admin/components/store-form-dialog/store-form-dialog.component';
+import { InvUomsComponent } from './layouts/admin/components/inventory/inv-uoms/inv-uoms.component';
+import { InvUomsFormDialogComponent } from './layouts/admin/components/inventory/inv-uoms-form-dialog/inv-uoms-form-dialog.component';
+import { InvItemCategoriesComponent } from './layouts/admin/components/inventory/inv-item-categories/inv-item-categories.component';
+import { InvItemCategoryFormDialogComponent } from './layouts/admin/components/inventory/inv-item-category-form-dialog/inv-item-category-form-dialog.component';
+import { InvItemsComponent } from './layouts/admin/components/inventory/inv-items/inv-items.component';
+import { StoresComponent } from './layouts/admin/components/inventory/stores/stores.component';
+import { StoreFormDialogComponent } from './layouts/admin/components/inventory/store-form-dialog/store-form-dialog.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'

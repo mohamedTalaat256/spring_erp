@@ -4,10 +4,10 @@ import { AdminComponent } from './admin.component';
 import { adminGuardService } from 'src/app/guards/admin-guard.guard';
 import { Page404Component } from 'src/app/global/page404/page404.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { InvUomsComponent } from './components/inv-uoms/inv-uoms.component';
-import { InvItemCategoriesComponent } from './components/inv-item-categories/inv-item-categories.component';
-import { InvItemsComponent } from './components/inv-items/inv-items.component';
-import { StoresComponent } from './components/stores/stores.component';
+import { InvUomsComponent } from './components/inventory/inv-uoms/inv-uoms.component';
+import { InvItemCategoriesComponent } from './components/inventory/inv-item-categories/inv-item-categories.component';
+import { InvItemsComponent } from './components/inventory/inv-items/inv-items.component';
+import { StoresComponent } from './components/inventory/stores/stores.component';
 
 const routes: Routes = [
   {

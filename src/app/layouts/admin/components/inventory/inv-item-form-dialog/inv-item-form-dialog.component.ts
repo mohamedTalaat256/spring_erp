@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CATEGORIES, CLIENTS, INV_ITEMS, INV_ITEM_UNIT, SALES_ITEM_TYPES, STORES } from '../data/data';
+import { CATEGORIES, CLIENTS, INV_ITEMS, INV_ITEM_UNIT, SALES_ITEM_TYPES, STORES } from '../../data/data';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormMode, ITEM_TYPES } from 'src/app/constants/constants';
 import { Observable, map, startWith } from 'rxjs';
@@ -8,7 +8,7 @@ import { InvItemService } from 'src/app/service/invItem.service';
 import { AppResponse } from 'src/app/model/app_response.model';
 import Swal from 'sweetalert2';
 import { MatSelectChange } from '@angular/material/select';
-import { InvItemForm } from '../../form-controls/inv-item-form';
+import { InvItemForm } from '../../../form-controls/inv-item-form';
 
 @Component({
   selector: 'app-inv-item-form-dialog',

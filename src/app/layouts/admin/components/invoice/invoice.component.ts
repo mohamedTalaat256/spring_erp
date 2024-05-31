@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CATEGORIES, CLIENTS, INV_ITEMS, INV_ITEM_UNIT, SALES_ITEM_TYPES, STORES } from '../data/data';
 import { FormMode } from 'src/app/constants/constants';
-import { InvItemFormDialogComponent } from '../inv-item-form-dialog/inv-item-form-dialog.component';
+import { InvItemFormDialogComponent } from '../inventory/inv-item-form-dialog/inv-item-form-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, map, startWith, take } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';

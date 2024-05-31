@@ -5,7 +5,7 @@ import { FormMode } from 'src/app/constants/constants';
 import { AppResponse } from 'src/app/model/app_response.model';
 import Swal from 'sweetalert2';
 import { InvItemCategoryService } from 'src/app/service/invItemCategory.service';
-import { InvItemCategoryForm } from '../../form-controls/inv-item-category-form';
+import { InvItemCategoryForm } from '../../../form-controls/inv-item-category-form';
 
 
 @Component({

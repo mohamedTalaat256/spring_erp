@@ -20,7 +20,7 @@ export class StoresComponent {
 
   stores:Store[]=[];
 
-  displayedColumns: string[] = ['id', 'name', 'address', 'phone','active',  'actions'];
+  displayedColumns: string[] = ['id', 'name', 'address', 'phones','active',  'actions'];
   dataSource = new MatTableDataSource<Store>(this.stores);
 
   ngOnInit(): void {

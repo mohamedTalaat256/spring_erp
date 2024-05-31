@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormMode } from 'src/app/constants/constants';
-import { InvUomForm } from '../../form-controls/inv-oum-form';
+import { InvUomForm } from '../../../form-controls/inv-oum-form';
 import { InvUomService } from 'src/app/service/invUom.service';
 import { AppResponse } from 'src/app/model/app_response.model';
 import Swal from 'sweetalert2';
