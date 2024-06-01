@@ -11,6 +11,7 @@ import { StoresComponent } from './components/inventory/stores/stores.component'
 import { AccountTypesComponent } from './components/accounts/account-types/account-types.component';
 import { AccountsComponent } from './components/accounts/accounts/accounts.component';
 import { SuppliersOrdersComponent } from './components/suppliersOrders/suppliers-orders/suppliers-orders.component';
+import { SupplierOrderDetailsComponent } from './components/suppliersOrders/supplier-order-details/supplier-order-details.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,7 @@ const routes: Routes = [
       /* suppliers orders */
 
       {path:'suppliersOrders', component: SuppliersOrdersComponent},
+      {path:'supplierOrderDetails', component: SupplierOrderDetailsComponent},
 
       
 

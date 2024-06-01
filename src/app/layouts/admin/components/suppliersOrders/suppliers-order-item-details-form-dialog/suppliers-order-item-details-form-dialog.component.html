@@ -1,0 +1,59 @@
+<h2 mat-dialog-title class="text-capitalize">{{title}}</h2>
+
+<form (ngSubmit)="onSubmit()" [formGroup]="newInvItemForm" class="p-5">
+
+    <div fxLayout="row wrap" fxLayoutGap="10">
+
+
+        <mat-form-field fxFlex="100">
+            <mat-label>الصنف</mat-label>
+
+            <input type="text" placeholder="الصنف" matInput [formControl]="invItemFormControl"
+                [matAutocomplete]="supplierAutoComplete">
+
+            <mat-autocomplete #supplierAutoComplete="matAutocomplete" [displayWith]="invItemDisplayFn"
+                (optionSelected)="selectedInvItem($event)">
+                <ng-container *ngFor="let option of filteredInvItems | async; trackBy: invItemDisplayFn">
+                    <mat-option [value]="option">{{ option.name }}</mat-option>
+                </ng-container>
+            </mat-autocomplete>
+
+            <app-validation-msg [control]="newInvItemForm.get('supplierCode')"
+                fieldName="المورد"></app-validation-msg>
+
+        </mat-form-field>
+
+
+
+       <!--  <mat-form-field fxFlex="48">
+            <mat-label>نوع الفاتورة</mat-label>
+            <mat-select formControlName="pillType">
+                <mat-option [value]="1">كاش</mat-option>
+                <mat-option [value]="2">اّجل</mat-option>
+            </mat-select>
+            <mat-error>
+                <app-validation-msg [control]="supplierOrderForm.get('pillType')"
+                    fieldName="نوع الفاتورة"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field fxFlex="100">
+            <mat-label>ملاحظات</mat-label>
+            <textarea matInput formControlName="notes" placeholder="ملاحظات"></textarea>
+
+            <mat-error>
+                <app-validation-msg [control]="supplierOrderForm.get('notes')" fieldName="ملاحظات"></app-validation-msg>
+            </mat-error>
+        </mat-form-field> -->
+
+
+    </div>
+
+
+
+    <mat-dialog-actions fxLayoutAlign="center">
+        <button mat-button mat-dialog-close color="danger">الغاء</button>
+        <button mat-raised-button color="primary" type="submit"> حفظ</button>
+    </mat-dialog-actions>
+</form>

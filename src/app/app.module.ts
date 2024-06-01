@@ -47,6 +47,9 @@ import { AccountTypesComponent } from './layouts/admin/components/accounts/accou
 import { AccountsComponent } from './layouts/admin/components/accounts/accounts/accounts.component';
 import { AccountFormDialogComponent } from './layouts/admin/components/accounts/account-form-dialog/account-form-dialog.component';
 import { SuppliersOrdersComponent } from './layouts/admin/components/suppliersOrders/suppliers-orders/suppliers-orders.component';
+import { SuppliersOrderFormDialogComponent } from './layouts/admin/components/suppliersOrders/suppliers-order-form-dialog/suppliers-order-form-dialog.component';
+import { SupplierOrderDetailsComponent } from './layouts/admin/components/suppliersOrders/supplier-order-details/supplier-order-details.component';
+import { SuppliersOrderItemDetailsFormDialogComponent } from './layouts/admin/components/suppliersOrders/suppliers-order-item-details-form-dialog/suppliers-order-item-details-form-dialog.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -85,7 +88,10 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     AccountTypesComponent,
     AccountsComponent,
     AccountFormDialogComponent,
-    SuppliersOrdersComponent
+    SuppliersOrdersComponent,
+    SuppliersOrderFormDialogComponent,
+    SupplierOrderDetailsComponent,
+    SuppliersOrderItemDetailsFormDialogComponent
   ],
   imports: [
     MatSidenavModule,

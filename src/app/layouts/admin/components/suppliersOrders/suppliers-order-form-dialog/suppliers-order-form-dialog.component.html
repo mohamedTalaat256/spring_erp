@@ -1,0 +1,91 @@
+<h2 mat-dialog-title class="text-capitalize">{{title}}</h2>
+
+<form (ngSubmit)="onSubmit()" [formGroup]="supplierOrderForm"  class="p-5">
+
+    <div fxLayout="row wrap" fxLayoutGap="10">
+
+    <mat-form-field fxFlex="48">
+        <mat-label>تاريخ الفاتورة</mat-label>
+        <input matInput [matDatepicker]="orderDatePicker" formControlName="orderDate">
+        <mat-datepicker-toggle matIconSuffix [for]="orderDatePicker">
+            <mat-icon matDatepickerToggleIcon>date_range</mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #orderDatePicker></mat-datepicker>
+        <mat-error>
+            <app-validation-msg [control]="supplierOrderForm.get('orderDate')"
+                [fieldName]="'date_of_birth'"></app-validation-msg>
+        </mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field fxFlex="48">
+        <mat-label>رقم الفاتورة المسجل بأصل فاتورة المشتريات</mat-label>
+        <input matInput formControlName="docNo" placeholder="رقم الفاتورة المسجل بأصل فاتورة المشتريات">
+        <mat-error>
+            <app-validation-msg [control]="supplierOrderForm.get('docNo')"
+                fieldName="رقم الفاتورة"></app-validation-msg>
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="100">
+        <mat-label>المورد</mat-label>
+
+        <input type="text"   placeholder="المورد" matInput
+            [formControl]="supplierFormControl" [matAutocomplete]="supplierAutoComplete">
+
+        <mat-autocomplete #supplierAutoComplete="matAutocomplete" [displayWith]="supplierDisplayFn"  (optionSelected)="selectedSupllier($event)">
+            <ng-container *ngFor="let option of filteredSuppliers | async; trackBy: supplierDisplayFn">
+                <mat-option [value]="option">{{ option.name }}</mat-option>
+            </ng-container>
+        </mat-autocomplete>
+
+        <app-validation-msg [control]="supplierOrderForm.get('supplierCode')" fieldName="المورد"></app-validation-msg>
+
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48">
+    <mat-label>بيانات المخازن</mat-label>
+    <input type="text"  placeholder="المخزن" matInput [formControl]="storeFormControl" [matAutocomplete]="storeAutoComplete">
+
+    <mat-autocomplete #storeAutoComplete="matAutocomplete" [displayWith]="storeDisplayFn" (optionSelected)="selectedStore($event)">
+        <ng-container *ngFor="let option of filteredStores | async; trackBy: storeDisplayFn">
+            <mat-option [value]="option">{{ option.name }}</mat-option>
+        </ng-container>
+    </mat-autocomplete>
+    <app-validation-msg [control]="supplierOrderForm.get('storeId')" fieldName="المخزن"></app-validation-msg>
+
+    </mat-form-field>
+
+
+
+
+    <mat-form-field fxFlex="48">
+        <mat-label>نوع الفاتورة</mat-label>
+        <mat-select formControlName="pillType">
+            <mat-option [value]="1">كاش</mat-option>
+            <mat-option [value]="2">اّجل</mat-option>
+        </mat-select>
+        <mat-error>
+            <app-validation-msg [control]="supplierOrderForm.get('pillType')"
+                fieldName="نوع الفاتورة"></app-validation-msg>
+        </mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field fxFlex="100">
+        <mat-label>ملاحظات</mat-label>
+        <textarea matInput formControlName="notes" placeholder="ملاحظات"></textarea>
+         
+        <mat-error>
+            <app-validation-msg [control]="supplierOrderForm.get('notes')" fieldName="ملاحظات"></app-validation-msg>
+        </mat-error>
+    </mat-form-field>
+    </div>
+
+
+
+    <mat-dialog-actions fxLayoutAlign="center">
+        <button mat-button mat-dialog-close color="danger">الغاء</button>
+        <button mat-raised-button    color="primary" type="submit"> حفظ</button>
+    </mat-dialog-actions>
+</form>

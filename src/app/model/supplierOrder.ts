@@ -2,6 +2,7 @@
 export interface SupplierOrder{
      
     id: number,
+    order_date: string,
     order_type: number, //	1-Burshase 2-return on same pill 3-return on general	
     auto_serial: number,
     DOC_NO: string,

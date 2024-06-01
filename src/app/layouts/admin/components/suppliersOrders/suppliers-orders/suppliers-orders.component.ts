@@ -1,16 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { take } from 'rxjs';
+import { Observable, map, startWith, take } from 'rxjs';
 import { FormMode } from 'src/app/constants/constants';
 import Swal from 'sweetalert2';
 import { AppResponse } from 'src/app/model/app_response.model';
-import { AccountService } from 'src/app/service/account.service';
-import { Account } from 'src/app/model/accounty';
-import { AccountType } from 'src/app/model/account-type';
+import { Account } from 'src/app/model/accounty'; 
 import { MatPaginator } from '@angular/material/paginator';
 import { SupplierOrder } from 'src/app/model/supplierOrder';
 import { SupplierOrderService } from 'src/app/service/supplierOrder.service';
+import { FormControl, FormGroup } from '@angular/forms';
+import { SuppliersOrderFormDialogComponent } from '../suppliers-order-form-dialog/suppliers-order-form-dialog.component';
 
 @Component({
   selector: 'app-suppliers-orders',
@@ -19,8 +19,17 @@ import { SupplierOrderService } from 'src/app/service/supplierOrder.service';
 })
 export class SuppliersOrdersComponent {
 
-  accounts: Account[] = []; 
+  supplierFormControl = new FormControl<string | any>(''); 
+  storeFormControl = new FormControl<string | any>('');
+
+  
+  suppliers: any[] = [];
+  filteredSuppliers: Observable<any[]>;
+  filteredStores: Observable<any[]>;
+
+  stores: any[] = []; 
   supplierOrders: SupplierOrder[] = []; 
+
   createData: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -46,17 +55,23 @@ export class SuppliersOrdersComponent {
 
   ngOnInit(): void {
     this.findAll();
+    this.setFilters();
+
+    
   }
 
   findAll() {
     this.supplierOrderService.findAll().subscribe({
       next: (response: AppResponse) => {
         if (response.ok) {
-          this.accounts = response.data.accounts;
+          this.suppliers = response.data.suppliers;
           this.supplierOrders = response.data.suppliersOrders;
+          this.stores = response.data.stores;
          
           this.dataSource = new MatTableDataSource<SupplierOrder>(this.supplierOrders);
           this.dataSource.paginator = this.paginator;
+
+        
         }
       },
       error: (error: Error) => {
@@ -70,20 +85,24 @@ export class SuppliersOrdersComponent {
     });
   }
 
+  onSubmit(){}
+
 
   openAddInvItemDialog() {
 
     const data = {
-      title: 'اضافة حساب جديد',
-      formMode: FormMode.CREATE
+      title: 'اضافة فاتورة مشتريات من مورد',
+      formMode: FormMode.CREATE,
+      suppliers: this.suppliers,
+      stores: this.stores
     };
-    /* const dialogRef = this.dialog.open(AccountFormDialogComponent, {
-      width: '80%',
+    /* const dialogRef = */ this.dialog.open(SuppliersOrderFormDialogComponent, {
+      width: '650px',
       height: 'auto',
       data: data
     });
 
-    dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
+   /*  dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
       if (result) {
         this.accounts.push(result);
         this.dataSource = new MatTableDataSource<Account>(this.accounts);
@@ -112,4 +131,46 @@ export class SuppliersOrdersComponent {
       }
     }); */
   }
+
+
+
+
+  setFilters(){
+    this.filteredSuppliers = this.supplierFormControl.valueChanges.pipe(
+      startWith(''),
+      map(value => {
+        const name = typeof value === 'string' ? value : value?.name;
+        return name ? this._supplierFilter(name as string) : this.suppliers.slice();
+      }),
+    );
+    this.filteredStores = this.storeFormControl.valueChanges.pipe(
+      startWith(''),
+      map(value => {
+        const name = typeof value === 'string' ? value : value?.name;
+        return name ? this._storeFilter(name as string) : this.stores.slice();
+      }),
+    );
+
+  } 
+  
+  supplierDisplayFn(supplier: any): string {
+    return supplier && supplier.name ? supplier.name : '';
+  }
+
+  private _supplierFilter(name: string): any[] {
+    const filterValue = name.toLowerCase();
+    return this.suppliers.filter(option => option.name.toLowerCase().includes(filterValue));
+  }
+
+
+  storeDisplayFn(store: any): string {
+    return store && store.name ? store.name : '';
+  }
+
+  private _storeFilter(name: string): any[] {
+    const filterValue = name.toLowerCase();
+    return this.stores.filter(option => option.name.toLowerCase().includes(filterValue));
+  }
+
+
 }
