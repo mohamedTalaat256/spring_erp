@@ -18,34 +18,42 @@
                 </ng-container>
             </mat-autocomplete>
 
-            <app-validation-msg [control]="newInvItemForm.get('supplierCode')"
-                fieldName="المورد"></app-validation-msg>
+            <app-validation-msg [control]="invItemFormControl" fieldName="الصنف"></app-validation-msg>
 
         </mat-form-field>
 
+ 
+        <mat-form-field fxFlex="100">
+            <mat-label>الوحدة</mat-label>
+            <mat-select formControlName="uom_id_Add">
 
+                <mat-option *ngIf="itemUoms.does_has_retailunit===1"  [value]="itemUoms.uom_id"> {{ itemUoms.parent_uom_name  }} (وحده اب)</mat-option>
+                <mat-option *ngIf="itemUoms.does_has_retailunit===1"  [value]="itemUoms.retail_uom_id">{{ itemUoms.retial_uom_name  }} (وحدة تجزئة)</mat-option>
 
-       <!--  <mat-form-field fxFlex="48">
-            <mat-label>نوع الفاتورة</mat-label>
-            <mat-select formControlName="pillType">
-                <mat-option [value]="1">كاش</mat-option>
-                <mat-option [value]="2">اّجل</mat-option>
+                <mat-option *ngIf="itemUoms.does_has_retailunit!==1" [value]="itemUoms.uom_id">{{ itemUoms.parent_uom_name  }} (وحده اب)</mat-option>
             </mat-select>
             <mat-error>
-                <app-validation-msg [control]="supplierOrderForm.get('pillType')"
-                    fieldName="نوع الفاتورة"></app-validation-msg>
+                <app-validation-msg [control]="newInvItemForm.get('uom_id_Add')"
+                    fieldName="الوحدة"></app-validation-msg>
             </mat-error>
         </mat-form-field>
 
-
         <mat-form-field fxFlex="100">
-            <mat-label>ملاحظات</mat-label>
-            <textarea matInput formControlName="notes" placeholder="ملاحظات"></textarea>
+            <mat-label>الكمية المستلمة</mat-label>
+            <input matInput formControlName="quantity_add" placeholder="الكمية المستلمة" type="number">
 
             <mat-error>
-                <app-validation-msg [control]="supplierOrderForm.get('notes')" fieldName="ملاحظات"></app-validation-msg>
+                <app-validation-msg [control]="newInvItemForm.get('quantity_add')" fieldName="الكمية المستلمة"></app-validation-msg>
             </mat-error>
-        </mat-form-field> -->
+        </mat-form-field>
+
+        <mat-form-field fxFlex="100">
+            <mat-label>سعر الوحدة</mat-label>
+            <input matInput formControlName="price_add" placeholder="سعر الوحدة" type="number">
+            <mat-error>
+                <app-validation-msg [control]="newInvItemForm.get('price_add')" fieldName="سعر الوحدة"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
 
 
     </div>

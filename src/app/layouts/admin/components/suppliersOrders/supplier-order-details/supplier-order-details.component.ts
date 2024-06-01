@@ -70,7 +70,6 @@ export class SupplierOrderDetailsComponent implements OnInit {
   }
 
   openAddInvItemDialog() { 
-
     const data = {
       title: 'اضافة صنف الي الفاتورة',
       formMode: FormMode.CREATE
@@ -83,8 +82,6 @@ export class SupplierOrderDetailsComponent implements OnInit {
 
     dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
  
-      
-      
       if(result){
         let index = this.invItems.find(i=> i.id=== result.invItemId);
         if(index){
@@ -150,7 +147,6 @@ export class SupplierOrderDetailsComponent implements OnInit {
 
   onDiscountTypeChange(event:MatSelectChange){
     this.discountType = Number(event.value);
- 
   }
 
   ondiscountValueChange(){ 
@@ -182,8 +178,5 @@ export class SupplierOrderDetailsComponent implements OnInit {
       );
     }
   }
- 
-
-
   
 }

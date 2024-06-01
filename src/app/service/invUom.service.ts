@@ -15,6 +15,11 @@ export class InvUomService {
     return this.http.post<any>(baseURL + '/uoms/save', requestbody);
   }
 
+
+  getItemUoms(itemCode: number){
+    return this.http.get(baseURL + '/uoms/get_item_uoms/'+itemCode);
+  }
+
   public update(requestbody: any): Observable<any> {
     return this.http.put<any>(baseURL + '/uoms/update', requestbody);
   }
