@@ -102,6 +102,58 @@ const TREE_DATA: FoodNode[] = [
 
       },
     ],
+  },
+  {
+    name: 'المشتريات و المخازن',
+    icon: 'menu',
+    iconColor: 'danger',
+    children: [
+      { 
+        name: 'فواتير المشتريات',
+        icon: 'menu',
+        url: '/admin/suppliersOrders'
+      },
+      { 
+        name: 'فواتير مرتجع المشتريات العام',
+        icon: 'stores',
+        url: '/admin/accounts'
+      },
+       { 
+        name: 'جرد المخازن',
+        icon: 'text_format',
+        url: '/admin/inv-uoms'
+
+      },
+       { 
+        name: 'ارصدة الأصناف',
+        icon: 'text_format',
+        url: '/admin/inv-uoms'
+
+      }
+    ],
+  },
+  {
+    name: 'المبيعات',
+    icon: 'shopping_cart',
+    iconColor: 'success',
+    children: [
+      { 
+        name: 'أنواع الحسابات المالية',
+        icon: 'menu',
+        url: '/admin/accountTypes'
+      },
+      { 
+        name: 'الشجرة (الحسابات المالية)',
+        icon: 'stores',
+        url: '/admin/accounts'
+      },
+       { 
+        name: 'حسابات العملاء',
+        icon: 'text_format',
+        url: '/admin/inv-uoms'
+
+      }
+    ],
   }
 ];
 

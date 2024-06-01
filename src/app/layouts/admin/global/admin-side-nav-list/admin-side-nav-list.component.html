@@ -2,10 +2,8 @@
 <mat-list class="mx-3 mt-4 p-3" style="direction: rtl;">
 
     
-<img src="/assets/images/logo.png" alt="" style="height: 90px;">
-     
-       <!--  <div matListItemTitle><span class="mat-headline-3 m-2 mat-text-primary">LOGO</span></div> -->
-    
+<img src="/assets/images/logo.png" class="my-4" alt="logo" style="height: 80px;">
+         
        <mat-list-item  [routerLink]="['/admin/dashboard']" routerLinkActive="active">
            <mat-icon matListItemIcon color="primary">dashboard</mat-icon>
            <div  class="mat-text-dark f-w-bold">لوحة التحكم</div>
@@ -15,8 +13,7 @@
 
         <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding class="mat-bg-light">
             <mat-list-item  [routerLink]="[node.url]" routerLinkActive="active">
-             <!--    <mat-icon matListItemIcon [color]="node.iconColor">{{node.icon}}</mat-icon> -->
-                <div matListItemTitle> {{node.name}} </div>
+                <div matListItemTitle fxHide.sm fxHide.xs > {{node.name}} </div>
             </mat-list-item>
         </mat-tree-node>
         
@@ -26,10 +23,10 @@
                 <div fxLayout="row">
                     <mat-list-item class="sid-nav-item">
                         <mat-icon matListItemIcon [color]="node.iconColor">{{node.icon}}</mat-icon>
-                        <div class="mat-text-dark f-w-bold"> {{node.name}} </div>
+                        <div class="mat-text-dark f-w-bold" fxHide.sm fxHide.xs> {{node.name}} </div>
                      </mat-list-item>
                 </div>
-                <div>
+                <div fxHide.sm fxHide.xs>
                     <button  mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
                         <mat-icon class="mat-icon-rtl-mirror">
                             {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_left'}}
@@ -42,10 +39,5 @@
             </div>
         </mat-tree-node>
     </mat-tree>
-
- 
-
-
-
 
 </mat-list>

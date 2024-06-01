@@ -10,6 +10,7 @@ import { InvItemsComponent } from './components/inventory/inv-items/inv-items.co
 import { StoresComponent } from './components/inventory/stores/stores.component';
 import { AccountTypesComponent } from './components/accounts/account-types/account-types.component';
 import { AccountsComponent } from './components/accounts/accounts/accounts.component';
+import { SuppliersOrdersComponent } from './components/suppliersOrders/suppliers-orders/suppliers-orders.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,10 @@ const routes: Routes = [
       /* account */
       {path:'accountTypes', component: AccountTypesComponent},
       {path:'accounts', component: AccountsComponent},
+
+      /* suppliers orders */
+
+      {path:'suppliersOrders', component: SuppliersOrdersComponent},
 
       
 
