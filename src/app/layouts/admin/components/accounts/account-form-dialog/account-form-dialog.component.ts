@@ -9,6 +9,7 @@ import { MatSelectChange } from '@angular/material/select';
 import { AccountForm } from '../../../form-controls/account-form';
 import { AccountType } from 'src/app/model/account-type';
 import { Account } from 'src/app/model/accounty';
+import { AccountService } from 'src/app/service/account.service';
 
 @Component({
   selector: 'app-account-form-dialog',
@@ -28,7 +29,8 @@ export class AccountFormDialogComponent {
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<AccountFormDialogComponent>,
-    private accountFormControl: AccountForm
+    private accountFormControl: AccountForm,
+    private accountService: AccountService
   ){
 
 
@@ -54,7 +56,29 @@ export class AccountFormDialogComponent {
  
 
   onSubmit(){
-    console.log(this.accountForm);
+    console.log(this.accountForm.value);
+
+    this.accountService.save(this.accountForm.value).subscribe({
+      next:(response: AppResponse)=>{  
+        if(response.ok){
+          Swal.fire({
+            icon: "success",
+            title: response.message,
+            showConfirmButton: true,
+            timer: 1500
+          });
+          this.dialogRef.close(response.data);
+        }
+      },
+      error:(error: Error)=>{
+        Swal.fire({
+          icon: "error",
+          title: error.message,
+          showConfirmButton: true
+        });
+      }
+
+    });
     //this.dialogRef.close(this.accountForm.value);
   }
  
