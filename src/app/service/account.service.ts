@@ -1,20 +1,22 @@
 import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable } from "rxjs";
 import { Injectable } from "@angular/core";
-import { baseURL } from "../constants/constants";
+import { baseURL, baseURLNew } from "../constants/constants";
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
 
+  
+
   constructor(private http: HttpClient) { }
   
   findAccountTypes(): Observable<any> {
-    return this.http.get(baseURL + '/accountTypes');
+    return this.http.get(baseURLNew + '/account_types');
   }
 
 
   findAll(): Observable<any> {
-    return this.http.get(baseURL + '/accounts');
+    return this.http.get(baseURLNew + '/accounts');
   }
 
  

@@ -48,13 +48,14 @@ export class AccountFormDialogComponent {
   filteredIems: Observable<any[]>;
 
   ngOnInit() { 
-
+    
  
   } 
  
 
   onSubmit(){
-    this.dialogRef.close(this.accountForm.value);
+    console.log(this.accountForm);
+    //this.dialogRef.close(this.accountForm.value);
   }
  
   isParentChange(event:MatSelectChange){

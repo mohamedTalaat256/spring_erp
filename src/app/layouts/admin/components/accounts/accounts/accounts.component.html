@@ -20,21 +20,21 @@
 
                 <ng-container matColumnDef="accountNumber">
                     <th mat-header-cell *matHeaderCellDef> رقم الحساب </th>
-                    <td mat-cell *matCellDef="let account"> {{account.account_number}} </td>
+                    <td mat-cell *matCellDef="let account"> {{account.accountNumber}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="accountType">
                     <th mat-header-cell *matHeaderCellDef> نوع الحساب </th>
-                    <td mat-cell *matCellDef="let account"> {{account.account_type}} </td>
+                    <td mat-cell *matCellDef="let account"> {{account.accountType.name}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="isParent">
                     <th mat-header-cell *matHeaderCellDef> هل أب</th>
                     <td mat-cell *matCellDef="let account">
-                        <mat-chip-row *ngIf="account.is_parent===1" color="primary">
+                        <mat-chip-row *ngIf="account.isParent" color="primary">
                             نعم
                         </mat-chip-row>
-                        <mat-chip-row *ngIf="account.is_parent===0" color="danger">
+                        <mat-chip-row *ngIf="!account.isParent" color="danger">
                             لا
                         </mat-chip-row>
                        
@@ -43,40 +43,34 @@
 
                 <ng-container matColumnDef="parentAccount">
                     <th mat-header-cell *matHeaderCellDef> الحساب الأب</th>
-                    <td mat-cell *matCellDef="let account"> {{account.parent_account_name}} </td>
+                    <td mat-cell *matCellDef="let account"> {{account.parentAccount_name}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="currentBalance">
                     <th mat-header-cell *matHeaderCellDef> الرصيد</th>
                     <td mat-cell *matCellDef="let account">
                         
-                        <span *ngIf="account.current_balance > 0"> مدين ب ({{ account.current_balance*1 }}) جنيه
+                        <span *ngIf="account.currentBalance > 0"> مدين ب ({{ account.currentBalance*1 }}) جنيه
                         </span>
 
-                        <span *ngIf="account.current_balance < 0"> دائن ب ({{ account.current_balance* -1 }}) جنيه
+                        <span *ngIf="account.currentBalance < 0"> دائن ب ({{ account.currentBalance* -1 }}) جنيه
                         </span>
 
-                        <span *ngIf="account.current_balance < 1 && account.current_balance >-1">
+                        <span *ngIf="account.currentBalance < 1 && account.currentBalance >-1">
                             متزن
                         </span>
                    </td>
                 </ng-container>
-
-                <ng-container matColumnDef="UomName">
-                    <th mat-header-cell *matHeaderCellDef> الوحدة الأب</th>
-                    <td mat-cell *matCellDef="let account"> {{account.Uom_name}} </td>
-                </ng-container>
-
-
+ 
                
 
                 <ng-container matColumnDef="active">
                     <th mat-header-cell *matHeaderCellDef> حالة التفعيل</th>
                     <td mat-cell *matCellDef="let account">
-                        <mat-chip-row *ngIf="account.active===1" color="success">
+                        <mat-chip-row *ngIf="account.active" color="success">
                             مفعل
                         </mat-chip-row>
-                        <mat-chip-row *ngIf="account.active ===0" color="danger">
+                        <mat-chip-row *ngIf="!account.active" color="danger">
                             غير مفعل
                         </mat-chip-row>
                     </td>

@@ -50,8 +50,8 @@ export class AccountsComponent implements OnInit {
       next: (response: AppResponse) => {
         if (response.ok) {
           this.accounts = response.data.accounts;
-          this.accountTypes =  response.data.accountTypes;
-          this.parentAccounts = response.data.parentAccounts;
+       this.accountTypes =  response.data.accountTypes;
+          this.parentAccounts = response.data.parentAccounts; 
           this.dataSource = new MatTableDataSource<Account>(this.accounts);
           this.dataSource.paginator = this.paginator;
         }

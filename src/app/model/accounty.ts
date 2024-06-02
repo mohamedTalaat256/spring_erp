@@ -1,17 +1,17 @@
+import { AccountType } from "./account-type";
 
 export interface Account{
      
     id: number,
     name: string,
-    account_type: number,
-    is_parent: boolean,
-    parent_account_number: number,
-    parent_account_name?: number,
-    account_number: number,
-    start_balance_status: number,
-    start_balance: number,
-    current_balance: number,
-    other_table_FK: number,
+    accountType: AccountType,
+    isParent: boolean,
+    parentAccount_number: number,
+    accountNumber: number,
+    startBalanceStatus: number,
+    startBalance: number,
+    currentBalance: number,
+    otherTableFk: number,
     notes: string,
     active: boolean
 
