@@ -50,6 +50,12 @@ import { SuppliersOrdersComponent } from './layouts/admin/components/suppliersOr
 import { SuppliersOrderFormDialogComponent } from './layouts/admin/components/suppliersOrders/suppliers-order-form-dialog/suppliers-order-form-dialog.component';
 import { SupplierOrderDetailsComponent } from './layouts/admin/components/suppliersOrders/supplier-order-details/supplier-order-details.component';
 import { SuppliersOrderItemDetailsFormDialogComponent } from './layouts/admin/components/suppliersOrders/suppliers-order-item-details-form-dialog/suppliers-order-item-details-form-dialog.component';
+import { CustomersComponent } from './layouts/admin/components/customers/customers/customers.component';
+import { CustomerFormDialogComponent } from './layouts/admin/components/customers/customer-form-dialog/customer-form-dialog.component';
+import { SuppliersComponent } from './layouts/admin/components/suppliers/suppliers/suppliers.component';
+import { SupplierFormDialogComponent } from './layouts/admin/components/suppliers/supplier-form-dialog/supplier-form-dialog.component';
+import { SupplierCategoriesComponent } from './layouts/admin/components/suppliers/supplier-categories/supplier-categories.component';
+import { SupplierCategoryFormDialogComponent } from './layouts/admin/components/suppliers/supplier-category-form-dialog/supplier-category-form-dialog.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -91,7 +97,15 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     SuppliersOrdersComponent,
     SuppliersOrderFormDialogComponent,
     SupplierOrderDetailsComponent,
-    SuppliersOrderItemDetailsFormDialogComponent
+    SuppliersOrderItemDetailsFormDialogComponent,
+    CustomersComponent,
+    CustomerFormDialogComponent,
+    SuppliersComponent,
+    SupplierFormDialogComponent,
+    SupplierCategoriesComponent,
+    SupplierCategoryFormDialogComponent
+    
+
   ],
   imports: [
     MatSidenavModule,

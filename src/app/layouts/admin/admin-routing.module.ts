@@ -12,6 +12,9 @@ import { AccountTypesComponent } from './components/accounts/account-types/accou
 import { AccountsComponent } from './components/accounts/accounts/accounts.component';
 import { SuppliersOrdersComponent } from './components/suppliersOrders/suppliers-orders/suppliers-orders.component';
 import { SupplierOrderDetailsComponent } from './components/suppliersOrders/supplier-order-details/supplier-order-details.component';
+import { CustomersComponent } from './components/customers/customers/customers.component';
+import { SupplierCategoriesComponent } from './components/suppliers/supplier-categories/supplier-categories.component';
+import { SuppliersComponent } from './components/suppliers/suppliers/suppliers.component';
 
 const routes: Routes = [
   {
@@ -35,6 +38,16 @@ const routes: Routes = [
       {path:'suppliersOrders', component: SuppliersOrdersComponent},
       {path:'supplierOrderDetails', component: SupplierOrderDetailsComponent},
 
+
+      {path:'suppliers', component: SuppliersComponent},
+      {path:'suppliersCategories', component: SupplierCategoriesComponent},
+
+
+      
+
+      /* customers */
+
+      {path:'customers', component: CustomersComponent},
       
 
 

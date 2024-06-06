@@ -68,7 +68,7 @@ const TREE_DATA: FoodNode[] = [
        { 
         name: 'حسابات العملاء',
         icon: 'text_format',
-        url: '/admin/inv-uoms'
+        url: '/admin/customers'
 
       },
       { 
@@ -80,13 +80,13 @@ const TREE_DATA: FoodNode[] = [
       { 
         name: 'فئات الموردين',
         icon: 'dashboard',
-        url: '/admin/invItems'
+        url: '/admin/suppliersCategories'
 
       },
       { 
         name: 'حسابات الموردين',
         icon: 'dashboard',
-        url: '/admin/invItems'
+        url: '/admin/suppliers'
 
       },
       { 

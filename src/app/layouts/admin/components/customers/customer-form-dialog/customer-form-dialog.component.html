@@ -1,0 +1,81 @@
+<h2 mat-dialog-title class="text-capitalize">{{title}}</h2>
+
+<form (ngSubmit)="onSubmit()" [formGroup]="customerForm"  class="p-5">
+
+    <mat-dialog-content fxLayout="row wrap" fxLayoutGap="15">
+
+        <mat-form-field  fxFlex="48">
+            <mat-label>الاسم</mat-label>
+            <input matInput formControlName="name" placeholder="الاسم" >
+            <mat-error>
+                <app-validation-msg [control]="customerForm.get('name')" fieldName="الاسم "></app-validation-msg>
+            </mat-error>
+        </mat-form-field>   
+
+        <mat-form-field fxFlex="48">
+            <mat-label>حالة رصيد اول المدة</mat-label>
+            <mat-select formControlName="startBalanceStatus" (selectionChange)="balanceStatusChange($event)">
+                <mat-option [value]="1">دائن</mat-option>
+                <mat-option [value]="2">مدين</mat-option>
+                <mat-option [value]="3">متزن</mat-option>
+            </mat-select>
+            <mat-error>
+                <app-validation-msg [control]="customerForm.get('startBalanceStatus')"
+                    fieldName="الحقل"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field fxFlex="48"  >
+            <mat-label>رصيد أول المدة للحساب</mat-label>
+            <input matInput formControlName="startBalance" placeholder="رصيد أول المدة للحساب" type="number" [readonly]="startBalanceReadOnly">
+            <mat-error>
+                <app-validation-msg [control]="customerForm.get('startBalance')" fieldName="رصيد أول المدة للحساب"></app-validation-msg>
+            </mat-error>
+        </mat-form-field> 
+
+        <mat-form-field fxFlex="48" >
+            <mat-label>العنوان</mat-label>
+            <input matInput formControlName="address" placeholder="العنوان">
+            <mat-error>
+                <app-validation-msg [control]="customerForm.get('address')" fieldName="العنوان"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="48" >
+            <mat-label>	الهاتف</mat-label>
+            <input matInput formControlName="phones" placeholder="الهاتف">
+            <mat-error>
+                <app-validation-msg [control]="customerForm.get('phones')" fieldName="الهاتف"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
+
+  
+        <mat-form-field fxFlex="48" >
+            <mat-label>ملاحظات</mat-label>
+            <input matInput formControlName="notes" placeholder="ملاحظات">
+            <mat-error>
+                <app-validation-msg [control]="customerForm.get('notes')" fieldName="ملاحظات"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field fxFlex="48">
+            <mat-label>حالة التفعيل</mat-label>
+            <mat-select formControlName="active"> 
+                <mat-option [value]="1">نعم</mat-option>
+                <mat-option [value]="0">لا</mat-option>
+            </mat-select>
+            <mat-error>
+                <app-validation-msg [control]="customerForm.get('active')"
+                    fieldName="حالة التفعيل"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
+    </mat-dialog-content>
+
+ 
+
+    <mat-dialog-actions fxLayoutAlign="center">
+        <button mat-button mat-dialog-close color="danger">الغاء</button>
+        <button [disabled]="!customerForm.valid" mat-raised-button color="primary" type="submit"> حفظ</button>
+    </mat-dialog-actions>
+</form>
