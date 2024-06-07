@@ -34,8 +34,8 @@ export class CustomerForm {
         startBalance:        [data.startBalance,        [Validators.required]],
         currentBalance:      [data.currentBalance,      [Validators.required]],
         notes:               [data.notes,               [Validators.maxLength(1000)]],
-        phones:              [data.phones,               [Validators.maxLength(1000)]],
-        address:             [data.address,               [Validators.maxLength(1000)]],
+        phones:              [data.phones,              [Validators.maxLength(1000)]],
+        address:             [data.address,             [Validators.maxLength(1000)]],
         active:              [data.active,              [Validators.required]],
       }
     );

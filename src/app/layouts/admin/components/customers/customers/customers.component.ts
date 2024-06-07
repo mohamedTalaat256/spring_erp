@@ -5,10 +5,10 @@ import { take } from 'rxjs';
 import { FormMode } from 'src/app/constants/constants';
 import Swal from 'sweetalert2';
 import { AppResponse } from 'src/app/model/app_response.model';
-  import { AccountService } from 'src/app/service/account.service';
- import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { CustomerFormDialogComponent } from '../customer-form-dialog/customer-form-dialog.component';
 import { Customer } from 'src/app/model/customer';
+import { CustomerService } from 'src/app/service/customer.service';
 
 @Component({
   selector: 'app-customers',
@@ -33,19 +33,19 @@ export class CustomersComponent {
     'actions'];
   dataSource = new MatTableDataSource<Customer>(this.customers);
 
-  constructor(public dialog: MatDialog, private accountService: AccountService) { }
+  constructor(public dialog: MatDialog, private customerService: CustomerService) { }
 
 
 
   ngOnInit(): void {
-    //this.findAll();
+    this.findAll();
   }
 
   findAll() {
-    this.accountService.findAll().subscribe({
+    this.customerService.findAll().subscribe({
       next: (response: AppResponse) => {
         if (response.ok) {
-          this.customers = response.data.accounts;
+          this.customers = response.data;
           
           this.dataSource = new MatTableDataSource<Customer>(this.customers);
           this.dataSource.paginator = this.paginator;
@@ -99,9 +99,17 @@ export class CustomersComponent {
 
     dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
       if (result) {
-        this.customers.push(result);
+        //this.customers.push(result);
+        this.showUpdatedItem(result);
         this.dataSource = new MatTableDataSource<Customer>(this.customers);
       }
     });
+  }
+
+
+  showUpdatedItem(newItem){
+    let indexToUpdate = this.customers.findIndex(item => item.id === newItem.id);
+    this.customers[indexToUpdate] = newItem; 
+   this.customers = Object.assign([], this.customers);
   }
 }

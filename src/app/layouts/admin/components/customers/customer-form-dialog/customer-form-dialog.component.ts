@@ -6,8 +6,8 @@ import { Observable, map, startWith } from 'rxjs';
 import { AppResponse } from 'src/app/model/app_response.model';
 import Swal from 'sweetalert2';
 import { MatSelectChange } from '@angular/material/select';
-import { AccountService } from 'src/app/service/account.service';
 import { CustomerForm } from '../../../form-controls/customer-form';
+import { CustomerService } from 'src/app/service/customer.service';
 
 @Component({
   selector: 'app-customer-form-dialog',
@@ -19,13 +19,14 @@ export class CustomerFormDialogComponent {
   customerForm: FormGroup;
   title:string;
   startBalanceReadOnly: boolean = false;
+  formMode: FormMode;
 
   showParentAccounts: boolean= false;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<CustomerFormDialogComponent>,
     private customerFormControl: CustomerForm,
-    private accountService: AccountService
+    private customerService: CustomerService
   ){
 
 
@@ -35,6 +36,7 @@ export class CustomerFormDialogComponent {
       this.customerForm =  this.customerFormControl.setForm(this.data.customer);
     } 
     this.title = this.data.title;
+    this.formMode = this.data.formMode;
   }
 
 
@@ -46,10 +48,9 @@ export class CustomerFormDialogComponent {
   } 
  
 
-  onSubmit(){
-    console.log(this.customerForm.value);
+  onSubmit(){ 
 
-    this.accountService.save(this.customerForm.value).subscribe({
+    this.customerService.save(this.customerForm.value, this.data.formMode).subscribe({
       next:(response: AppResponse)=>{  
         if(response.ok){
           Swal.fire({

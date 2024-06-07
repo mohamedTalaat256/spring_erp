@@ -1,9 +1,10 @@
+import { Account } from "./accounty";
 
 export interface Customer{
      
     id: number,
     name: string,
-    accountNumber: number,
+    account: Account,
     startBalanceStatus: number,
     startBalance: number,
     currentBalance: number,
