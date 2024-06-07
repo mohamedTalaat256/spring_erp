@@ -49,7 +49,7 @@ export class InvUomsComponent implements OnInit {
 
 
 
-  openAddInvUomDialog() { 
+  openAddInvUomDialog() {
 
     const data = {
       title: 'اضافة وحدة جديدة',
@@ -84,9 +84,15 @@ export class InvUomsComponent implements OnInit {
 
     dialogRef.afterClosed().pipe(take(1)).subscribe(result => {      
       if(result){ 
-        this.invUoms.push(result);
+        this.showUpdatedItem(result);
         this.dataSource = new MatTableDataSource<any>(this.invUoms);
       }
     });
   } 
+
+  showUpdatedItem(newItem){
+    let indexToUpdate = this.invUoms.findIndex(item => item.id === newItem.id);
+    this.invUoms[indexToUpdate] = newItem; 
+   this.invUoms = Object.assign([], this.invUoms);
+  }
 }

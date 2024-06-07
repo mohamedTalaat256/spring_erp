@@ -37,16 +37,17 @@ export class InvUomsFormDialogComponent {
 
   onSubmit(){
 
-    this.invUomService.save(this.invUomForm.value).subscribe({
+    this.invUomService.save(this.invUomForm.value, this.data.formMode ).subscribe({
       next:(response: AppResponse)=>{  
         if(response.ok){
+          this.dialogRef.close(response.data);
           Swal.fire({
             icon: "success",
             title: response.message,
             showConfirmButton: true,
             timer: 1500
           });
-          this.dialogRef.close(response.data);
+         
         }
       },
       error:(error: Error)=>{

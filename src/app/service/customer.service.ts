@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable } from "rxjs";
 import { Injectable } from "@angular/core";
-import { FormMode, baseURL, baseURLNew } from "../constants/constants";
+import { FormMode, baseURL } from "../constants/constants";
 
 @Injectable({ providedIn: 'root' })
 export class CustomerService {
@@ -11,7 +11,7 @@ export class CustomerService {
   constructor(private http: HttpClient) { }
 
   findAll(): Observable<any> {
-    return this.http.get(baseURLNew + '/customers');
+    return this.http.get(baseURL + '/customers');
   }
 
 
@@ -20,11 +20,11 @@ export class CustomerService {
 
     if (formMode === FormMode.CREATE) {
     
-      return this.http.post<any>(baseURLNew + '/customers/create', data);
+      return this.http.post<any>(baseURL + '/customers/create', data);
 
     } else {
        
-      return this.http.put<any>(baseURLNew + '/customers/update', data);
+      return this.http.put<any>(baseURL + '/customers/update', data);
     }
 
 
