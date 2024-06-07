@@ -57,8 +57,6 @@ export class InvItemCategoryFormDialogComponent {
         });
       }
 
-    });
-
-    this.dialogRef.close(this.invItemCategoryForm.value);
+    }); 
   }
 }

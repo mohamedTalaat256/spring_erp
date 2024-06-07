@@ -9,6 +9,7 @@ import { InvItemCategory } from 'src/app/model/invItemCategory';
 import { InvItemService } from 'src/app/service/invItem.service';
 import { InvItem } from 'src/app/model/invItem';
 import { InvItemFormDialogComponent } from '../inv-item-form-dialog/inv-item-form-dialog.component';
+import { InvUom } from 'src/app/model/invUom';
 
 
 @Component({
@@ -20,6 +21,9 @@ export class InvItemsComponent implements OnInit {
   constructor(public dialog: MatDialog, private invItemService: InvItemService) { }
 
   invItems: InvItem[] = [];
+  invItemsCategories: InvItemCategory[] = [];
+  invUomsParent: InvUom[] = [];
+  invUomsChilds: InvUom[] = [];
   createData: any;
 
   displayedColumns: string[] = [
@@ -42,8 +46,9 @@ export class InvItemsComponent implements OnInit {
         if (response.ok) {
           this.invItems = response.data.invItems;
           this.dataSource = new MatTableDataSource<any>(this.invItems);
+
           this.createData={
-            invUomsChild : response.data.invUomsChild,
+            invUomsChild : response.data.invUomsChilds,
             invUomsParent : response.data.invUomsParent,
             invItemsCategories : response.data.invItemsCategories,
             invItems: response.data.invItems
@@ -100,9 +105,16 @@ export class InvItemsComponent implements OnInit {
 
     dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
       if (result) {
-        this.invItems.push(result);
+        this.showUpdatedItem(result); 
         this.dataSource = new MatTableDataSource<InvItem>(this.invItems);
       }
     });
+  }
+
+
+  showUpdatedItem(newItem){
+    let indexToUpdate = this.invItems.findIndex(item => item.id === newItem.id);
+    this.invItems[indexToUpdate] = newItem; 
+   this.invItems = Object.assign([], this.invItems);
   }
 }

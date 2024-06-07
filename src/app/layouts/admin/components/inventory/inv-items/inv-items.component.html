@@ -16,20 +16,20 @@
                 </ng-container>
 
                 <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef> الوحدة</th>
+                    <th mat-header-cell *matHeaderCellDef> الاسم</th>
                     <td mat-cell *matCellDef="let invItem"> {{invItem.name}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="itemType">
                     <th mat-header-cell *matHeaderCellDef> النوع</th>
                     <td mat-cell *matCellDef="let invItem">
-                        <mat-chip-row *ngIf="invItem.item_type ===1" color="primary">
+                        <mat-chip-row *ngIf="invItem.itemType ===1" color="primary">
                             مخزني
                         </mat-chip-row>
-                        <mat-chip-row *ngIf="invItem.item_type ===2" color="danger">
+                        <mat-chip-row *ngIf="invItem.itemType ===2" color="danger">
                             استهلاكي بصلاحية 
                         </mat-chip-row>
-                        <mat-chip-row *ngIf="invItem.item_type ===3" color="success">
+                        <mat-chip-row *ngIf="invItem.itemType ===3" color="success">
                             عهدة
                         </mat-chip-row>
                   </td>
@@ -37,18 +37,18 @@
 
                 <ng-container matColumnDef="invItemcardCategoriesName">
                     <th mat-header-cell *matHeaderCellDef> الفئة</th>
-                    <td mat-cell *matCellDef="let invItem"> {{invItem.inv_itemcard_categories_name}} </td>
+                    <td mat-cell *matCellDef="let invItem"> {{invItem.invItemCategory.name}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="UomName">
                     <th mat-header-cell *matHeaderCellDef> الوحدة الأب</th>
-                    <td mat-cell *matCellDef="let invItem"> {{invItem.Uom_name}} </td>
+                    <td mat-cell *matCellDef="let invItem"> {{invItem.uom.name}} </td>
                 </ng-container>
 
 
                 <ng-container matColumnDef="QTI">
                     <th mat-header-cell *matHeaderCellDef> الكمية</th>
-                    <td mat-cell *matCellDef="let invItem"> {{invItem.All_QUENTITY *1 }} [ {{invItem.Uom_name}} ] </td>
+                    <td mat-cell *matCellDef="let invItem"> {{invItem.allQUENTITY *1 }} ( {{invItem.uom.name}} ) </td>
                 </ng-container>
 
                 <ng-container matColumnDef="active">

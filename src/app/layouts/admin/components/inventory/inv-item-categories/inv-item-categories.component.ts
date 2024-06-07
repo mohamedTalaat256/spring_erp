@@ -83,7 +83,7 @@ export class InvItemCategoriesComponent implements OnInit {
 
     dialogRef.afterClosed().pipe(take(1)).subscribe(result => {      
       if(result){ 
-        this.invItemCategories.push(result);
+        this.showUpdatedItem(result); 
         this.dataSource = new MatTableDataSource<any>(this.invItemCategories);
       }
     });

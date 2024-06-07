@@ -84,9 +84,16 @@ export class StoresComponent {
 
     dialogRef.afterClosed().pipe(take(1)).subscribe(result => {      
       if(result){ 
-        this.stores.push(result);
+        this.showUpdatedItem(result);
         this.dataSource = new MatTableDataSource<any>(this.stores);
       }
     });
   } 
+
+
+  showUpdatedItem(newItem){
+    let indexToUpdate = this.stores.findIndex(item => item.id === newItem.id);
+    this.stores[indexToUpdate] = newItem; 
+   this.stores = Object.assign([], this.stores);
+  }
 }

@@ -38,7 +38,7 @@ export class StoreFormDialogComponent {
 
   onSubmit() {
 
-    this.storeService.save(this.storeForm.value).subscribe({
+    this.storeService.save(this.storeForm.value, this.data.formMode).subscribe({
       next: (response: AppResponse) => {
         if (response.ok) {
           Swal.fire({

@@ -2,13 +2,11 @@
 
 <form (ngSubmit)="onSubmit()" [formGroup]="invItemForm" fxLayout="row wrap" fxLayoutGap="15" class="p-5">
 
- 
-
         <mat-form-field fxFlex="48">
             <mat-label>الباركود</mat-label>
-            <input matInput formControlName="barCode" placeholder="الباركود" >
+            <input matInput formControlName="barcode" placeholder="الباركود" >
             <mat-error>
-                <app-validation-msg [control]="invItemForm.get('barCode')" fieldName="الباركود"></app-validation-msg>
+                <app-validation-msg [control]="invItemForm.get('barcode')" fieldName="الباركود"></app-validation-msg>
             </mat-error>
         </mat-form-field> 
 
@@ -35,34 +33,34 @@
         
         <mat-form-field fxFlex="48">
             <mat-label>فئة الصنف</mat-label>
-            <mat-select formControlName="invItemcardCategoriesId">
+            <mat-select formControlName="invItemCategory">
                 <mat-option *ngFor="let c of invItemsCategories" [value]="c.id">{{c.name}} </mat-option>
             </mat-select>
             <mat-error>
-                <app-validation-msg [control]="invItemForm.get('invItemcardCategoriesId')"
+                <app-validation-msg [control]="invItemForm.get('invItemCategory')"
                     fieldName="فئة الصنف"></app-validation-msg>
             </mat-error>
         </mat-form-field>
 
         <mat-form-field fxFlex="48">
             <mat-label>الصنف له اب ؟</mat-label>
-            <mat-select formControlName="parentInvItemcardId">
+            <mat-select formControlName="parentInvItemCard">
                 <mat-option [value]="0">هو أب </mat-option>
                 <mat-option *ngFor="let i of invItems" [value]="i.id">{{i.name}} </mat-option>
             </mat-select>
             <mat-error>
-                <app-validation-msg [control]="invItemForm.get('parentInvItemcardId')"
+                <app-validation-msg [control]="invItemForm.get('parentInvItemCard')"
                     fieldName="الحقل"></app-validation-msg>
             </mat-error>
         </mat-form-field>  
 
         <mat-form-field fxFlex="48">
             <mat-label>وحدة قياس الأب</mat-label>
-            <mat-select formControlName="retailUomQuntToParent" (selectionChange)="retailUomQuntToParentChange($event)"> 
+            <mat-select formControlName="uom" (selectionChange)="uomChange($event)"> 
                 <mat-option *ngFor="let i of invUomsParent" [value]="i.id">{{i.name}} </mat-option>
             </mat-select>
             <mat-error>
-                <app-validation-msg [control]="invItemForm.get('retailUomQuntToParent')"
+                <app-validation-msg [control]="invItemForm.get('uom')"
                     fieldName="وحدة قياس الأب"></app-validation-msg>
             </mat-error>
         </mat-form-field>
@@ -71,8 +69,8 @@
         <mat-form-field fxFlex="48">
             <mat-label>هل للصنف وحدة تجزئة ابن</mat-label>
             <mat-select formControlName="doesHasRetailunit" (selectionChange)="doesHasRetailunitChange($event)"> 
-                <mat-option [value]="1">نعم</mat-option>
-                <mat-option [value]="0">لا</mat-option>
+                <mat-option [value]="true">نعم</mat-option>
+                <mat-option [value]="false">لا</mat-option>
             </mat-select>
             <mat-error>
                 <app-validation-msg [control]="invItemForm.get('doesHasRetailunit')"
@@ -82,53 +80,99 @@
 
 
         <mat-form-field fxFlex="48" *ngIf="doesHasRetailunit">
-            <mat-label>وحدة القياس التجزئة الابن بالنسبة للأب</mat-label>
-            <mat-select formControlName="retailUomId" > 
+            <mat-label> وحدة القياس التجزئة الابن بالنسبة للأب({{parentUomName}})</mat-label>
+            <mat-select formControlName="retailUom" (selectionChange)="retialUomChange($event)"> 
                 <mat-option *ngFor="let i of invUomsChild" [value]="i.id">{{i.name}} </mat-option>
             </mat-select>
             <mat-error>
-                <app-validation-msg [control]="invItemForm.get('retailUomId')"
+                <app-validation-msg [control]="invItemForm.get('retailUom')"
                     fieldName="الحقل"></app-validation-msg>
             </mat-error>
         </mat-form-field>
-        
-        <mat-form-field fxFlex="48" *ngIf="showPricesFeilds">
-            <mat-label>سعر القطاعي بوحدة</mat-label>
-            <input matInput formControlName="priceRetail" placeholder="السعر" type="number">
+
+
+        <mat-form-field fxFlex="48"  *ngIf="doesHasRetailunit">
+
+             <mat-label>عدد وحدات التجزئة ({{childUomName}}) بالنسبة للأب ({{parentUomName}}) </mat-label>
+
+            <input matInput formControlName="retailUomQuntToParent" placeholder="عدد وحدات التجزئة" type="number">
             <mat-error>
-                <app-validation-msg [control]="invItemForm.get('priceRetail')" fieldName="سعر القطاعي"></app-validation-msg>
+                <app-validation-msg [control]="invItemForm.get('retailUomQuntToParent')" fieldName="عدد وحدات التجزئة"></app-validation-msg>
             </mat-error>
         </mat-form-field>
 
-        <mat-form-field fxFlex="48" *ngIf="showPricesFeilds">
-            <mat-label>سعر النص جملة بوحدة</mat-label>
-            <input matInput formControlName="nosGomlaPrice" placeholder="السعر" type="number">
+        
+        <mat-form-field fxFlex="48" >
+            <mat-label>  سعر القطاعي بوحدة ({{parentUomName}}) </mat-label>
+            <input matInput formControlName="price" placeholder="سعر القطاعي بوحدة ({{parentUomName}})" type="number">
+            <mat-error>
+                <app-validation-msg [control]="invItemForm.get('price')" fieldName="سعر القطاعي"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="48" >
+            <mat-label>  سعر النص جملة بوحدة ({{parentUomName}}) </mat-label>
+            <input matInput formControlName="nosGomlaPrice" placeholder="سعر النص جملة بوحدة ({{parentUomName}}) " type="number">
             <mat-error>
                 <app-validation-msg [control]="invItemForm.get('nosGomlaPrice')" fieldName="سعر القطاعي"></app-validation-msg>
             </mat-error>
         </mat-form-field>
 
-        <mat-form-field fxFlex="48" *ngIf="showPricesFeilds">
-            <mat-label>سعر جملة بوحدة</mat-label>
+        <mat-form-field fxFlex="48" >
+            <mat-label>سعر جملة بوحدة ({{parentUomName}}) </mat-label>
             <input matInput formControlName="gomlaPrice" placeholder="السعر" type="number">
             <mat-error>
                 <app-validation-msg [control]="invItemForm.get('gomlaPrice')" fieldName="سعر القطاعي"></app-validation-msg>
             </mat-error>
         </mat-form-field>
 
-        <mat-form-field fxFlex="48" *ngIf="showPricesFeilds">
-            <mat-label>سعر تكلفة الشراء لوحدة</mat-label>
+        <mat-form-field fxFlex="48" >
+            <mat-label>سعر تكلفة الشراء لوحدة ({{parentUomName}}) </mat-label>
             <input matInput formControlName="costPrice" placeholder="السعر" type="number">
             <mat-error>
                 <app-validation-msg [control]="invItemForm.get('costPrice')" fieldName="سعر القطاعي"></app-validation-msg>
             </mat-error>
         </mat-form-field> 
 
+        <!-- retail -->
+
+        <mat-form-field fxFlex="48" *ngIf="doesHasRetailunit">
+            <mat-label>سعر القطاعي بوحدة ({{childUomName}}) </mat-label>
+            <input matInput formControlName="priceRetail" placeholder="السعر" type="number">
+            <mat-error>
+                <app-validation-msg [control]="invItemForm.get('priceRetail')" fieldName="سعر القطاعي"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="48" *ngIf="doesHasRetailunit">
+            <mat-label>سعر النص جملة بوحدة({{childUomName}})</mat-label>
+            <input matInput formControlName="nosGomlaPriceRetail" placeholder="السعر" type="number">
+            <mat-error>
+                <app-validation-msg [control]="invItemForm.get('nosGomlaPriceRetail')" fieldName="سعر القطاعي"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="48" *ngIf="doesHasRetailunit">
+            <mat-label>سعر جملة بوحدة({{childUomName}})</mat-label>
+            <input matInput formControlName="gomlaPriceRetail" placeholder="السعر" type="number">
+            <mat-error>
+                <app-validation-msg [control]="invItemForm.get('gomlaPriceRetail')" fieldName="سعر القطاعي"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="48" *ngIf="doesHasRetailunit">
+            <mat-label>سعر تكلفة الشراء لوحدة({{childUomName}})</mat-label>
+            <input matInput formControlName="costPriceRetail" placeholder="السعر" type="number">
+            <mat-error>
+                <app-validation-msg [control]="invItemForm.get('costPriceRetail')" fieldName="سعر القطاعي"></app-validation-msg>
+            </mat-error>
+        </mat-form-field> 
+
         <mat-form-field fxFlex="48">
             <mat-label>هل للصنف سعر ثابت</mat-label>
             <mat-select formControlName="hasFixcedPrice"> 
-                <mat-option [value]="1">نعم</mat-option>
-                <mat-option [value]="0">لا وقابل للتغير بالفواتير</mat-option>
+                <mat-option [value]="true">نعم</mat-option>
+                <mat-option [value]="false">لا وقابل للتغير بالفواتير</mat-option>
             </mat-select>
             <mat-error>
                 <app-validation-msg [control]="invItemForm.get('hasFixcedPrice')"
@@ -140,8 +184,8 @@
         <mat-form-field fxFlex="48">
             <mat-label>حالة التفعيل</mat-label>
             <mat-select formControlName="active"> 
-                <mat-option [value]="1">نعم</mat-option>
-                <mat-option [value]="0">لا</mat-option>
+                <mat-option [value]="true">نعم</mat-option>
+                <mat-option [value]="false">لا</mat-option>
             </mat-select>
             <mat-error>
                 <app-validation-msg [control]="invItemForm.get('active')"

@@ -28,7 +28,7 @@ export class StoreForm {
         id:        [data.id],
         name:      [data.name, [Validators.required, Validators.maxLength(255)]],
         address:   [data.address, [Validators.required]],
-        phones:     [data.phone, [Validators.required]],
+        phones:    [data.phones, [Validators.required]],
         active:    [data.active, [Validators.required]],
       }
     );

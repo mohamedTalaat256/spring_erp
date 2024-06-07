@@ -9,47 +9,98 @@ export class InvItemForm {
   constructor(public fb: FormBuilder ) {
   } 
 
+
+  /* 
+   
+    name: string;
+    inv_itemcard_categories_id: number;
+    parent_inv_itemcard_id: number; 
+    does_has_retailunit: boolean;
+    retail_uom: number;
+    uom: number; 
+    retail_uom_quntToParent: number;
+    com_code: string; 
+    active: boolean;
+    date: string;
+    item_code: number;
+    barcode: string;
+    price: number; 
+    nos_gomla_price: number;
+    gomla_price: number;
+    price_retail: number; 
+    nos_gomla_price_retail: number;
+    gomla_price_retail: number;
+    cost_price: number; 
+    cost_price_retail: number;
+    has_fixced_price: boolean; 
+    QUENTITY: number; 
+    QUENTITY_Retail: number;
+    QUENTITY_all_Retails: number; 
+    photo: string; 
+    retail_uom_id: number; 
+    All_QUENTITY: number; 
+  
+  
+  */
+
   createForm() {
     return this.fb.group(
       {
-        id:       [null],
-        barCode:     [null, [Validators.maxLength(255)]],
-        name:     [null, [Validators.required, Validators.maxLength(255)]],
-        itemType:     [null, [Validators.required, Validators.maxLength(255)]],
-        invItemcardCategoriesId:     [null, [Validators.required, Validators.maxLength(255)]],
-        parentInvItemcardId:     [null, [Validators.required, Validators.maxLength(255)]],
-        retailUomQuntToParent:     [null, [Validators.required, Validators.maxLength(255)]],
-        doesHasRetailunit:     [null, [Validators.required, Validators.maxLength(255)]],
-        retailUomId:     [null, [Validators.required, Validators.maxLength(255)]],
-        priceRetail:     [null, [Validators.required, Validators.maxLength(255)]],
-        nosGomlaPrice:     [null, [Validators.required, Validators.maxLength(255)]],
-        gomlaPrice:     [null, [Validators.required, Validators.maxLength(255)]],
-        costPrice:     [null, [Validators.required, Validators.maxLength(255)]],
-        hasFixcedPrice:     [null, [Validators.required, Validators.maxLength(255)]],
-        active:   [null, [Validators.required]],
+        id:                      [null],
+        barcode:                 [null, [Validators.maxLength(255)]],
+        name:                    [null, [Validators.required, Validators.maxLength(255)]],
+        itemType:                [null, [Validators.required ]],
+        invItemCategory:         [null, [Validators.required ]],
+        parentInvItemCard:       [null, [Validators.required ]],
+        uom:                     [null, [Validators.required ]],
+        doesHasRetailunit:       [null, [Validators.required ]],
+        retailUom:               [null, [Validators.required ]],
+        retailUomQuntToParent:   [null, [Validators.required ]],
+
+        price:                   [null, [Validators.required ]],
+        nosGomlaPrice:           [null, [Validators.required ]],
+        gomlaPrice:              [null, [Validators.required ]],
+        costPrice:               [null, [Validators.required ]],
+
+        priceRetail:             [null, [Validators.required ]],
+        nosGomlaPriceRetail:     [null, [Validators.required ]],
+        gomlaPriceRetail:        [null, [Validators.required ]],
+        costPriceRetail:         [null, [Validators.required ]],
+       
+        hasFixcedPrice:          [null, [Validators.required, Validators.maxLength(255)]],
+        active:                  [null, [Validators.required]],
       }
     );
   }
   
   setForm(data: InvItem) {
+    //s/dfsd/f
+
+
     return this.fb.group(
-      {
+      { 
         id:                      [data.id],
-        barCode:                 [data.barcode, [ Validators.maxLength(255)]],
+        barcode:                 [data.barcode, [Validators.maxLength(255)]],
         name:                    [data.name, [Validators.required, Validators.maxLength(255)]],
-        itemType:                [data.item_type, [Validators.required, Validators.maxLength(255)]],
-        invItemcardCategoriesId: [data.inv_itemcard_categories_id, [Validators.required, Validators.maxLength(255)]],
-        parentInvItemcardId:     [data.parent_inv_itemcard_id, [Validators.required, Validators.maxLength(255)]],
-        retailUomQuntToParent:   [data.retail_uom_quntToParent, [Validators.required, Validators.maxLength(255)]],
-        doesHasRetailunit:       [data.does_has_retailunit, [Validators.required, Validators.maxLength(255)]],
-        retailUomId:             [data.retail_uom_id, [Validators.required, Validators.maxLength(255)]],
-        priceRetail:             [data.price_retail, [Validators.required, Validators.maxLength(255)]],
-        nosGomlaPrice:           [data.nos_gomla_price, [Validators.required, Validators.maxLength(255)]],
-        gomlaPrice:              [data.gomla_price, [Validators.required, Validators.maxLength(255)]],
-        costPrice:               [data.cost_price, [Validators.required, Validators.maxLength(255)]],
-        hasFixcedPrice:          [data.has_fixced_price, [Validators.required, Validators.maxLength(255)]],
+        itemType:                [data.itemType, [Validators.required ]],
+        invItemCategory:         [data.invItemCategory?  data.invItemCategory.id: null, [Validators.required ]],
+        parentInvItemCard:       [data.parentInvItemCard? data.parentInvItemCard.id : null, [Validators.required ]],
+        uom:                     [data.uom ? data.uom.id: null, [Validators.required ]],
+        doesHasRetailunit:       [data.doesHasRetailunit, [Validators.required ]],
+        retailUom:               [data.retailUom ? data.retailUom.id: null, [Validators.required ]],
+        retailUomQuntToParent:   [data.retailUomQuntToParent, [Validators.required ]],
+        price:                   [data.price, [Validators.required ]],
+        nosGomlaPrice:           [data.nosGomlaPrice, [Validators.required ]],
+        gomlaPrice:              [data.gomlaPrice, [Validators.required ]],
+        costPrice:               [data.costPrice, [Validators.required ]],
+        priceRetail:             [data.priceRetail, [Validators.required ]],
+        nosGomlaPriceRetail:     [data.nosGomlaPriceRetail, [Validators.required ]],
+        gomlaPriceRetail:        [data.gomlaPriceRetail, [Validators.required ]],
+        costPriceRetail:         [data.costPriceRetail, [Validators.required ]],
+        hasFixcedPrice:          [data.hasFixcedPrice, [Validators.required, Validators.maxLength(255)]],
         active:                  [data.active, [Validators.required]],
       }
+      
     );
   } 
 }

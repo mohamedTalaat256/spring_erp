@@ -14,7 +14,7 @@ export class InvUomForm {
       {
         id:       [null],
         name:     [null, [Validators.required, Validators.maxLength(255)]],
-        is_master: [null, [Validators.required]],
+        isMaster: [null, [Validators.required]],
         active:   [null, [Validators.required]],
       }
     );
@@ -25,7 +25,7 @@ export class InvUomForm {
       {
         id:        [invUom.id],
         name:      [invUom.name, [Validators.required, Validators.maxLength(255)]],
-        is_master: [invUom.is_master, [Validators.required]],
+        isMaster:  [invUom.isMaster, [Validators.required]],
         active:    [invUom.active, [Validators.required]],
       }
     );
