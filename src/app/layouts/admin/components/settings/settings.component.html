@@ -1,0 +1,99 @@
+<h2 mat-dialog-title class="text-capitalize">الاعدادات</h2>
+
+<form (ngSubmit)="onSubmit()" [formGroup]="adminSettingForm" fxLayout="row wrap" fxLayoutGap="15" class="p-5">
+
+
+ 
+  
+    <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100">
+        <mat-label>اسم الشركة</mat-label>
+        <input matInput formControlName="systemName" placeholder="اسم الشركة"  >
+        <mat-error>
+            <app-validation-msg [control]="adminSettingForm.get('systemName')" fieldName="اسم الشركة" ></app-validation-msg>
+        </mat-error>
+    </mat-form-field>
+
+    
+    <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100">
+        <mat-label>عنوان الشركة</mat-label>
+        <input matInput formControlName="address" placeholder="عنوان الشركة"  >
+        <mat-error>
+            <app-validation-msg [control]="adminSettingForm.get('address')" fieldName="عنوان الشركة" ></app-validation-msg>
+        </mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100">
+        <mat-label>تليفون الشركة</mat-label>
+        <input matInput formControlName="phone" placeholder="تليفون الشركة"  >
+        <mat-error>
+            <app-validation-msg [control]="adminSettingForm.get('phone')" fieldName="تليفون الشركة" ></app-validation-msg>
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100">
+        <mat-label>الحساب الاب للعملاء بالشجرة المحاسبية</mat-label>
+        <mat-select formControlName="customerParentAccountNumber">
+            <mat-option *ngFor="let i of parentAccounts" [value]="i.id">{{i.name}} </mat-option>
+        </mat-select>
+        <mat-error>
+            <app-validation-msg [control]="adminSettingForm.get('customerParentAccountNumber')"
+                fieldName="الحساب الاب للعملاء بالشجرة المحاسبية"></app-validation-msg>
+        </mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field  fxFlex="48" fxFlex.sm="100" fxFlex.xs="100">
+        <mat-label>الحساب الاب للموردين بالشجرة المحاسبية</mat-label>
+        <mat-select formControlName="suppliersParentAccountNumber">
+            <mat-option *ngFor="let i of parentAccounts" [value]="i.id">{{i.name}} </mat-option>
+        </mat-select>
+        <mat-error>
+            <app-validation-msg [control]="adminSettingForm.get('suppliersParentAccountNumber')"
+                fieldName="الحساب الاب للموردين بالشجرة المحاسبية"></app-validation-msg>
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field  fxFlex="48" fxFlex.sm="100" fxFlex.xs="100">
+        <mat-label>الحساب الاب للموظفين بالشجرة المحاسبية</mat-label>
+        <mat-select formControlName="employeesParentAccountNumber">
+            <mat-option *ngFor="let i of parentAccounts" [value]="i.id">{{i.name}} </mat-option>
+        </mat-select>
+        <mat-error>
+            <app-validation-msg [control]="adminSettingForm.get('employeesParentAccountNumber')"
+                fieldName="الحساب الاب للموظفين بالشجرة المحاسبية"></app-validation-msg>
+        </mat-error>
+    </mat-form-field>
+
+
+    
+
+
+    <mat-form-field  fxFlex="48" fxFlex.sm="100" fxFlex.xs="100">
+        <mat-label>تليفون الشركة</mat-label>
+        <input matInput formControlName="phone" placeholder="تليفون الشركة"  >
+        <mat-error>
+            <app-validation-msg [control]="adminSettingForm.get('phone')" fieldName="تليفون الشركة" ></app-validation-msg>
+        </mat-error>
+    </mat-form-field>
+
+
+    
+
+    <mat-form-field  fxFlex="48" fxFlex.sm="100" fxFlex.xs="100">
+        <mat-label>حالة التفعيل</mat-label>
+        <mat-select formControlName="active">
+          <mat-option [value]="1">نعم</mat-option>
+          <mat-option [value]="0">لا</mat-option>
+        </mat-select>
+        <mat-error>
+          <app-validation-msg [control]="adminSettingForm.get('active')" fieldName="حالة التفعيل"></app-validation-msg>
+        </mat-error>
+    </mat-form-field>
+ 
+    
+    <mat-dialog-actions fxLayoutAlign="center">
+        <button mat-button mat-dialog-close color="danger">الغاء</button>
+        <button [disabled]="!adminSettingForm.valid" mat-raised-button color="primary" type="submit" > حفظ</button>
+    </mat-dialog-actions>
+</form>

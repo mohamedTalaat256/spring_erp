@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormMode } from 'src/app/constants/constants';
 import { AppResponse } from 'src/app/model/app_response.model';
@@ -37,7 +37,7 @@ export class InvItemCategoryFormDialogComponent {
 
   onSubmit(){
 
-    this.invItemCategoryService.save(this.invItemCategoryForm.value).subscribe({
+    this.invItemCategoryService.save(this.invItemCategoryForm.value, this.data.formMode).subscribe({
       next:(response: AppResponse)=>{  
         if(response.ok){
           Swal.fire({

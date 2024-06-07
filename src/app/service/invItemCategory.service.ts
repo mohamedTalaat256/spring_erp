@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
-import { BehaviorSubject, Observable } from "rxjs";
+import { Observable } from "rxjs";
 import { Injectable } from "@angular/core";
-import { baseURL } from "../constants/constants";
+import { FormMode, baseURL } from "../constants/constants";
 
 @Injectable({ providedIn: 'root' })
 export class InvItemCategoryService {
@@ -10,12 +10,11 @@ export class InvItemCategoryService {
   findAll(): Observable<any> {
     return this.http.get(baseURL + '/inv_itemcard_categories');
   }
-  public save(requestbody: any): Observable<any> {
-    return this.http.post<any>(baseURL + '/inv_itemcard_categories/save', requestbody);
+  public save(requestbody: any, formMode: FormMode): Observable<any> {
+    if(formMode === FormMode.CREATE){
+      return this.http.post<any>(baseURL + '/inv_itemcard_categories/save', requestbody);
+    }else{
+      return this.http.put<any>(baseURL + '/inv_itemcard_categories/update', requestbody);
+    }
   }
-
-  public update(requestbody: any): Observable<any> {
-    return this.http.put<any>(baseURL + '/inv_itemcard_categories/update', requestbody);
-  }
-
 }

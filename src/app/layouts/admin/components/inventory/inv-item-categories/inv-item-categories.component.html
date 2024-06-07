@@ -14,21 +14,21 @@
 
                 <ng-container matColumnDef="id">
                     <th mat-header-cell *matHeaderCellDef> تسلسل </th>
-                    <td mat-cell *matCellDef="let invUom"> {{invUom.id}} </td>
+                    <td mat-cell *matCellDef="let invItemCategory"> {{invItemCategory.id}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef> الوحدة</th>
-                    <td mat-cell *matCellDef="let invUom"> {{invUom.name}} </td>
+                    <td mat-cell *matCellDef="let invItemCategory"> {{invItemCategory.name}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="active">
                     <th mat-header-cell *matHeaderCellDef> حالة التفعيل</th>
-                    <td mat-cell *matCellDef="let invUom">
-                        <mat-chip-row *ngIf="invUom.active" color="success">
+                    <td mat-cell *matCellDef="let invItemCategory">
+                        <mat-chip-row *ngIf="invItemCategory.active" color="success">
                             مفعلة
                         </mat-chip-row>
-                        <mat-chip-row *ngIf="!invUom.active" color="danger">
+                        <mat-chip-row *ngIf="!invItemCategory.active" color="danger">
                             غير مفعلة
                         </mat-chip-row>
                     </td>
@@ -36,10 +36,10 @@
 
                 <ng-container matColumnDef="actions">
                     <th mat-header-cell *matHeaderCellDef></th>
-                    <td mat-cell *matCellDef="let invUom">
+                    <td mat-cell *matCellDef="let invItemCategory">
 
 
-                        <button mat-icon-button (click)="openEditInvItemCategoryDialog(invUom)">
+                        <button mat-icon-button (click)="openEditInvItemCategoryDialog(invItemCategory)">
                             <mat-icon color="primary">mode_edit</mat-icon>
                         </button>
                        

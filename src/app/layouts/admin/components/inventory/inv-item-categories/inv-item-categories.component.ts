@@ -4,23 +4,23 @@ import { MatTableDataSource } from '@angular/material/table';
 import { take } from 'rxjs';
 import { FormMode } from 'src/app/constants/constants';
 import Swal from 'sweetalert2'; 
-import { AppResponse } from 'src/app/model/app_response.model';
+import { AppResponse } from 'src/app/model/app_response.model'; 
+import { InvItemCategoryFormDialogComponent } from '../inv-item-category-form-dialog/inv-item-category-form-dialog.component';
 import { InvItemCategory } from 'src/app/model/invItemCategory';
 import { InvItemCategoryService } from 'src/app/service/invItemCategory.service';
-import { InvItemCategoryFormDialogComponent } from '../inv-item-category-form-dialog/inv-item-category-form-dialog.component';
 
 @Component({
   selector: 'app-inv-item-categories',
   templateUrl: './inv-item-categories.component.html',
   styleUrls: ['./inv-item-categories.component.scss']
 })
-export class InvItemCategoriesComponent {
+export class InvItemCategoriesComponent implements OnInit {
   constructor(public dialog: MatDialog, private invItemCategoryService: InvItemCategoryService){}
 
-  invItemCategory:InvItemCategory[]=[];
+  invItemCategories:InvItemCategory[]=[];
 
   displayedColumns: string[] = ['id', 'name', 'active','actions'];
-  dataSource = new MatTableDataSource<InvItemCategory>(this.invItemCategory);
+  dataSource = new MatTableDataSource<InvItemCategory>(this.invItemCategories);
 
   ngOnInit(): void {
     this.findAll();
@@ -31,8 +31,8 @@ export class InvItemCategoriesComponent {
     this.invItemCategoryService.findAll().subscribe({
       next:(response: AppResponse)=>{  
         if(response.ok){
-           this.invItemCategory= response.data;
-           this.dataSource = new MatTableDataSource<any>(this.invItemCategory);
+           this.invItemCategories= response.data;
+           this.dataSource = new MatTableDataSource<any>(this.invItemCategories);
         }
       },
       error:(error: Error)=>{
@@ -62,8 +62,8 @@ export class InvItemCategoriesComponent {
 
     dialogRef.afterClosed().pipe(take(1)).subscribe(result => {      
       if(result){ 
-        this.invItemCategory.push(result);
-        this.dataSource = new MatTableDataSource<any>(this.invItemCategory);
+        this.invItemCategories.push(result);
+        this.dataSource = new MatTableDataSource<any>(this.invItemCategories);
       }
     });
   }
@@ -83,9 +83,15 @@ export class InvItemCategoriesComponent {
 
     dialogRef.afterClosed().pipe(take(1)).subscribe(result => {      
       if(result){ 
-        this.invItemCategory.push(result);
-        this.dataSource = new MatTableDataSource<any>(this.invItemCategory);
+        this.invItemCategories.push(result);
+        this.dataSource = new MatTableDataSource<any>(this.invItemCategories);
       }
     });
-  } 
+  }
+
+  showUpdatedItem(newItem){
+    let indexToUpdate = this.invItemCategories.findIndex(item => item.id === newItem.id);
+    this.invItemCategories[indexToUpdate] = newItem; 
+   this.invItemCategories = Object.assign([], this.invItemCategories);
+  }
 }

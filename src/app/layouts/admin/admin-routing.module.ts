@@ -15,6 +15,7 @@ import { SupplierOrderDetailsComponent } from './components/suppliersOrders/supp
 import { CustomersComponent } from './components/customers/customers/customers.component';
 import { SupplierCategoriesComponent } from './components/suppliers/supplier-categories/supplier-categories.component';
 import { SuppliersComponent } from './components/suppliers/suppliers/suppliers.component';
+import { SettingsComponent } from './components/settings/settings.component';
 
 const routes: Routes = [
   {
@@ -48,6 +49,12 @@ const routes: Routes = [
       /* customers */
 
       {path:'customers', component: CustomersComponent},
+
+
+
+      {path:'adminSettings', component: SettingsComponent},
+
+      
       
 
 

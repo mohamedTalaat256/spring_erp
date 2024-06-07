@@ -1,7 +1,6 @@
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component } from '@angular/core';
-import { MatIcon } from '@angular/material/icon';
-import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+ import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 
 
 interface FoodNode {
@@ -154,6 +153,19 @@ const TREE_DATA: FoodNode[] = [
 
       }
     ],
+  },{
+    name: 'الضبط العام',
+    icon: 'settings',
+    iconColor: 'primary',
+    url: '/admin/adminSettings',
+    children:[
+      {
+        name: 'الضبط العام',
+        icon: 'settings',
+        iconColor: 'primary',
+        url: '/admin/adminSettings',
+      }
+    ]
   }
 ];
 

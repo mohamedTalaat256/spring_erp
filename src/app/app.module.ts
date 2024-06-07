@@ -56,6 +56,7 @@ import { SuppliersComponent } from './layouts/admin/components/suppliers/supplie
 import { SupplierFormDialogComponent } from './layouts/admin/components/suppliers/supplier-form-dialog/supplier-form-dialog.component';
 import { SupplierCategoriesComponent } from './layouts/admin/components/suppliers/supplier-categories/supplier-categories.component';
 import { SupplierCategoryFormDialogComponent } from './layouts/admin/components/suppliers/supplier-category-form-dialog/supplier-category-form-dialog.component';
+import { SettingsComponent } from './layouts/admin/components/settings/settings.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -103,7 +104,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     SuppliersComponent,
     SupplierFormDialogComponent,
     SupplierCategoriesComponent,
-    SupplierCategoryFormDialogComponent
+    SupplierCategoryFormDialogComponent,
+    SettingsComponent
     
 
   ],

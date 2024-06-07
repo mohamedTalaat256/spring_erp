@@ -7,11 +7,10 @@ export interface Account{
     accountType: AccountType,
     isParent: boolean,
     parentAccount_number: number,
-    accountNumber: number,
+    accountNumber?: number,
     startBalanceStatus: number,
     startBalance: number,
     currentBalance: number,
-    otherTableFk: number,
     notes: string,
     active: boolean
 
