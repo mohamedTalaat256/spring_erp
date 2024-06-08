@@ -9,6 +9,7 @@ import { MatSelectChange } from '@angular/material/select';
 import { AccountService } from 'src/app/service/account.service';
 import { SupplierCategory } from 'src/app/model/supplierCategory';
 import { SupplierFormControl } from '../../../form-controls/supplier-form';
+import { SupplierService } from 'src/app/service/supplier.service';
 
 @Component({
   selector: 'app-supplier-form-dialog',
@@ -28,14 +29,14 @@ export class SupplierFormDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<SupplierFormDialogComponent>,
     private supplierFormControl: SupplierFormControl,
-    private accountService: AccountService
+    private supplierService: SupplierService
   ){
 
 
     if(this.data.formMode === FormMode.CREATE){
       this.supplierForm =  this.supplierFormControl.createForm();
     }else{
-      this.supplierForm =  this.supplierFormControl.setForm(this.data.customer);
+      this.supplierForm =  this.supplierFormControl.setForm(this.data.supplier);
     } 
     this.title = this.data.title;
     this.supplierCategories = this.data.supplierCategories;
@@ -50,10 +51,9 @@ export class SupplierFormDialogComponent {
   } 
  
 
-  onSubmit(){
-    console.log(this.supplierForm.value);
+  onSubmit(){ 
 
-    this.accountService.save(this.supplierForm.value).subscribe({
+    this.supplierService.save(this.supplierForm.value, this.data.formMode).subscribe({
       next:(response: AppResponse)=>{  
         if(response.ok){
           Swal.fire({

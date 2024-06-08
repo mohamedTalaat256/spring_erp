@@ -10,6 +10,7 @@ import { AppResponse } from 'src/app/model/app_response.model';
 import { SupplierFormDialogComponent } from '../supplier-form-dialog/supplier-form-dialog.component';
 import { Supplier } from 'src/app/model/supplier';
 import { SupplierCategory } from 'src/app/model/supplierCategory';
+import { SupplierService } from 'src/app/service/supplier.service';
  
 
 @Component({
@@ -20,13 +21,7 @@ import { SupplierCategory } from 'src/app/model/supplierCategory';
 export class SuppliersComponent implements OnInit {
 
   suppliers: Supplier[] = [];
-  supplierCategories: SupplierCategory[] = [
-    {
-      id: 1,
-      name: "asdasd",
-      active: 1
-    }
-  ];
+  supplierCategories: SupplierCategory[] = [];
   createData: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -43,16 +38,16 @@ export class SuppliersComponent implements OnInit {
     'actions'];
   dataSource = new MatTableDataSource<Supplier>(this.suppliers);
 
-  constructor(public dialog: MatDialog, private accountService: AccountService) { }
+  constructor(public dialog: MatDialog, private supplierService: SupplierService) { }
 
 
 
   ngOnInit(): void {
-    //this.findAll();
+    this.findAll();
   }
 
   findAll() {
-    this.accountService.findAll().subscribe({
+    this.supplierService.findAll().subscribe({
       next: (response: AppResponse) => {
         if (response.ok) {
           this.suppliers = response.data.suppliers;
@@ -113,9 +108,16 @@ export class SuppliersComponent implements OnInit {
 
     dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
       if (result) {
-        this.suppliers.push(result);
+
+        this.showUpdatedItem(result);
         this.dataSource = new MatTableDataSource<Supplier>(this.suppliers);
       }
     });
+  }
+
+  showUpdatedItem(newItem){
+    let indexToUpdate = this.suppliers.findIndex(item => item.id === newItem.id);
+    this.suppliers[indexToUpdate] = newItem; 
+   this.suppliers = Object.assign([], this.suppliers);
   }
 }

@@ -8,9 +8,6 @@ export class SupplierOrderService {
 
   constructor(private http: HttpClient) { }
   
-  findAccountTypes(): Observable<any> {
-    return this.http.get(baseURL + '/accountTypes');
-  }
 
 
   findAll(): Observable<any> {
