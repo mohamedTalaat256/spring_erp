@@ -57,6 +57,8 @@ import { SupplierFormDialogComponent } from './layouts/admin/components/supplier
 import { SupplierCategoriesComponent } from './layouts/admin/components/suppliers/supplier-categories/supplier-categories.component';
 import { SupplierCategoryFormDialogComponent } from './layouts/admin/components/suppliers/supplier-category-form-dialog/supplier-category-form-dialog.component';
 import { SettingsComponent } from './layouts/admin/components/settings/settings.component';
+import { TransactionCollectComponent } from './layouts/admin/components/transactions/transaction-collecr/transaction-collect.component';
+import { TransactionExchangeComponent } from './layouts/admin/components/transactions/transaction-exchange/transaction-exchange.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -105,7 +107,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     SupplierFormDialogComponent,
     SupplierCategoriesComponent,
     SupplierCategoryFormDialogComponent,
-    SettingsComponent
+    SettingsComponent,
+    TransactionCollectComponent,
+    TransactionExchangeComponent
     
 
   ],

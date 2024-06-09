@@ -87,20 +87,27 @@ const TREE_DATA: FoodNode[] = [
         icon: 'dashboard',
         url: '/admin/suppliers'
 
-      },
+      }
+    ],
+  },
+  {
+    name: 'الخزنة',
+    icon: 'lock',
+    iconColor: 'danger',
+    children:[
       { 
         name: 'شاشة تحيل النقدية',
         icon: 'dashboard',
-        url: '/admin/invItems'
+        url: '/admin/transactionCollect'
 
       },
       { 
         name: 'شاشة صرف النقدية',
         icon: 'dashboard',
-        url: '/admin/invItems'
+        url: '/admin/transactionexchange'
 
       },
-    ],
+    ]
   },
   {
     name: 'المشتريات و المخازن',

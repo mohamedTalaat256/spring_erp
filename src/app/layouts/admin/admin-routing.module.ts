@@ -16,6 +16,8 @@ import { CustomersComponent } from './components/customers/customers/customers.c
 import { SupplierCategoriesComponent } from './components/suppliers/supplier-categories/supplier-categories.component';
 import { SuppliersComponent } from './components/suppliers/suppliers/suppliers.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { TransactionCollectComponent } from './components/transactions/transaction-collecr/transaction-collect.component';
+import { TransactionExchangeComponent } from './components/transactions/transaction-exchange/transaction-exchange.component';
 
 const routes: Routes = [
   {
@@ -50,6 +52,9 @@ const routes: Routes = [
 
       {path:'customers', component: CustomersComponent},
 
+
+      {path:'transactionCollect', component: TransactionCollectComponent},
+      {path:'transactionexchange', component: TransactionExchangeComponent},
 
 
       {path:'adminSettings', component: SettingsComponent},

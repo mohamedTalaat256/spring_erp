@@ -83,9 +83,15 @@ export class SupplierCategoriesComponent implements OnInit {
 
     dialogRef.afterClosed().pipe(take(1)).subscribe(result => {      
       if(result){ 
-        this.supplierCategories.push(result);
+        
+        this.showUpdatedItem(result);
         this.dataSource = new MatTableDataSource<any>(this.supplierCategories);
       }
     });
-  } 
+  }
+  showUpdatedItem(newItem){
+    let indexToUpdate = this.supplierCategories.findIndex(item => item.id === newItem.id);
+    this.supplierCategories[indexToUpdate] = newItem; 
+   this.supplierCategories = Object.assign([], this.supplierCategories);
+  }
 }

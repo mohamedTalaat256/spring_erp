@@ -11,13 +11,19 @@ export class SupplierService {
   
 
   getSupplierCategories(): Observable<any> {
-    return this.http.get(baseURL + '/supplierCategories');
+    return this.http.get(baseURL + '/supplierCategory');
   }
 
   
 
-  public saveSupplierCategory(data: any): Observable<any> {
-    return this.http.post<any>(baseURL + '/supplierCategories/save',  data);
+  public saveSupplierCategory(data: any, formMode: FormMode): Observable<any> {
+
+    if(formMode === FormMode.CREATE){
+      return this.http.post<any>(baseURL + '/supplierCategory',  data);
+
+    }else{
+      return this.http.put<any>(baseURL + '/supplierCategory',  data);
+    }
   }
 
  

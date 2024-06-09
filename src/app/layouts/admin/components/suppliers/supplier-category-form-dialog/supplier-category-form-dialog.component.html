@@ -14,8 +14,8 @@
     <mat-form-field>
         <mat-label>حالة التفعيل</mat-label>
         <mat-select formControlName="active">
-          <mat-option [value]="1">نعم</mat-option>
-          <mat-option [value]="0">لا</mat-option>
+          <mat-option [value]="true">نعم</mat-option>
+          <mat-option [value]="false">لا</mat-option>
         </mat-select>
         <mat-error>
           <app-validation-msg [control]="supplierCategoryForm.get('active')" fieldName="حالة التفعيل"></app-validation-msg>

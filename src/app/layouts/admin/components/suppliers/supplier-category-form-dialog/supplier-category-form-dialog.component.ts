@@ -5,8 +5,8 @@ import { FormMode } from 'src/app/constants/constants';
 import { AppResponse } from 'src/app/model/app_response.model';
 import Swal from 'sweetalert2';
  import { SupplierService } from 'src/app/service/supplier.service';
-import { SupplierCategoryForm } from '../../../form-controls/supplier-category-form';
 import { SupplierFormControl } from '../../../form-controls/supplier-form';
+import { SupplierCategoryForm } from '../../../form-controls/supplier-category-form';
 
 
 @Component({
@@ -20,7 +20,7 @@ export class SupplierCategoryFormDialogComponent {
   title:string;
  
   constructor(
-    private supplierCategoryFormContrl : SupplierFormControl,
+    private supplierCategoryFormContrl : SupplierCategoryForm,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<SupplierCategoryFormDialogComponent>,
     private supplierService: SupplierService
@@ -38,7 +38,7 @@ export class SupplierCategoryFormDialogComponent {
 
   onSubmit(){
 
-    this.supplierService.saveSupplierCategory(this.supplierCategoryForm.value).subscribe({
+    this.supplierService.saveSupplierCategory(this.supplierCategoryForm.value, this.data.formMode).subscribe({
       next:(response: AppResponse)=>{  
         if(response.ok){
           Swal.fire({
