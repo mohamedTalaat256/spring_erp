@@ -18,7 +18,10 @@
                 </ng-container>
             </mat-autocomplete>
 
-            <app-validation-msg [control]="invItemFormControl" fieldName="الصنف"></app-validation-msg>
+            <mat-error>
+                <app-validation-msg [control]="invItemFormControl" fieldName="الصنف"></app-validation-msg>
+            </mat-error>
+
 
         </mat-form-field>
 

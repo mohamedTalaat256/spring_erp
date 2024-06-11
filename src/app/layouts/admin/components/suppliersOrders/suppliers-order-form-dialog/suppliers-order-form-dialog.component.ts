@@ -64,7 +64,8 @@ export class SuppliersOrderFormDialogComponent {
 
   onSubmit() { 
 
-    this.router.navigate(['/admin/supplierOrderDetails']);
+    console.log(this.supplierOrderForm.value);
+   // this.router.navigate(['/admin/supplierOrderDetails']);
     
   this.dialogRef.close( );
 /*     this.supplierOrderService

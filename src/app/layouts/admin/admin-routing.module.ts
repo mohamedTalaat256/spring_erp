@@ -38,8 +38,8 @@ const routes: Routes = [
 
       /* suppliers orders */
 
-      {path:'suppliersOrders', component: SuppliersOrdersComponent},
-      {path:'supplierOrderDetails', component: SupplierOrderDetailsComponent},
+      {path:'suppliersOrders', component: SuppliersOrdersComponent}, 
+      {path:'supplierOrderDetails/:id', component: SupplierOrderDetailsComponent},
 
 
       {path:'suppliers', component: SuppliersComponent},

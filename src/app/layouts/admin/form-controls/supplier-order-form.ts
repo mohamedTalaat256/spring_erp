@@ -12,13 +12,13 @@ export class supplierOrderFormControl {
   createForm() {
     return this.fb.group(
       {
-        id:            [null],
-        orderDate:     [null, [Validators.required]],
-        docNo:         [null, [Validators.required, Validators.maxLength(255)]],
-        supplierCode:  [null, [Validators.required]],
-        pillType:      [null, [Validators.required]],
-        storeId:       [null, [Validators.required]],
-        notes:         [null, [Validators.maxLength(1000)]],
+        id:        [null],
+        orderDate: [null, [Validators.required]],
+        docNo:     [null, [Validators.required, Validators.maxLength(255)]],
+        supplier:  [null, [Validators.required]],
+        pillType:  [null, [Validators.required]],
+        store:     [null, [Validators.required]],
+        notes:     [null, [Validators.maxLength(1000)]],
       }
     );
   }
@@ -26,13 +26,13 @@ export class supplierOrderFormControl {
   setForm(data: SupplierOrder) {
     return this.fb.group(
       {
-        id:           [data.id],
-        orderDate:    [data.order_date, [Validators.required]],
-        docNo:        [data.DOC_NO, [Validators.required, Validators.maxLength(255)]],
-        supplierCode: [data.suuplier_code, [Validators.required]],
-        pillType:     [data.pill_type, [Validators.required]],
-        storeId:      [data.store_id, [Validators.required]],
-        notes:        [data.notes, [Validators.maxLength(1000)]],
+        id:        [data.id],
+        orderDate: [data.orderDate, [Validators.required]],
+        docNo:     [data.DOC_NO, [Validators.required, Validators.maxLength(255)]],
+        supplier:  [data.suuplier, [Validators.required]],
+        pillType:  [data.pillType, [Validators.required]],
+        store:     [data.store, [Validators.required]],
+        notes:     [data.notes, [Validators.maxLength(1000)]],
       }
     );
   } 

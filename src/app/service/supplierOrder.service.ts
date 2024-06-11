@@ -11,7 +11,11 @@ export class SupplierOrderService {
 
 
   findAll(): Observable<any> {
-    return this.http.get(baseURL + '/suppliers_orders');
+    return this.http.get(baseURL + '/supplierOrder');
+  }
+
+  findById(id : number):Observable<any> {
+    return this.http.get(baseURL + '/supplierOrder/'+id);
   }
 
 

@@ -49,27 +49,27 @@
             <table mat-table [dataSource]="dataSource" style="direction: rtl;">
                 <ng-container matColumnDef="autoSerial">
                     <th mat-header-cell *matHeaderCellDef>كود</th>
-                    <td mat-cell *matCellDef="let supplierOrder"> {{supplierOrder.auto_serial}} </td>
+                    <td mat-cell *matCellDef="let supplierOrder"> {{supplierOrder.autoSerial}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="supplierName">
                     <th mat-header-cell *matHeaderCellDef>المورد</th>
-                    <td mat-cell *matCellDef="let supplierOrder"> {{supplierOrder.supplier_name}} </td>
+                    <td mat-cell *matCellDef="let supplierOrder"> {{supplierOrder.supplier.name}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="orderDate">
                     <th mat-header-cell *matHeaderCellDef> تاريخ الفاتورة</th>
-                    <td mat-cell *matCellDef="let supplierOrder"> {{supplierOrder.order_date}} </td>
+                    <td mat-cell *matCellDef="let supplierOrder"> {{supplierOrder.orderDate}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="pillType">
                     <th mat-header-cell *matHeaderCellDef> نوع الفاتورة</th>
                     <td mat-cell *matCellDef="let supplierOrder">
-                        <mat-chip-row *ngIf="supplierOrder.pill_type===1" color="success">
+                        <mat-chip-row *ngIf="supplierOrder.pillType===1" color="success">
                             <mat-icon class="icons-sm">monetization_on</mat-icon>
                             كاش
                         </mat-chip-row>
-                        <mat-chip-row *ngIf="supplierOrder.pill_type===2" color="danger">
+                        <mat-chip-row *ngIf="supplierOrder.pillType===2" color="danger">
                             اّجل
                         </mat-chip-row>
 
@@ -78,23 +78,23 @@
 
                 <ng-container matColumnDef="storeName">
                     <th mat-header-cell *matHeaderCellDef>المخزن المستلم</th>
-                    <td mat-cell *matCellDef="let supplierOrder"> {{supplierOrder.store_name}} </td>
+                    <td mat-cell *matCellDef="let supplierOrder"> {{supplierOrder.store.name}} </td>
                 </ng-container>
 
 
                 <ng-container matColumnDef="totalCost">
                     <th mat-header-cell *matHeaderCellDef> اجمالي الفاتورة</th>
-                    <td mat-cell *matCellDef="let supplierOrder"> {{supplierOrder.total_cost * 1}} </td>
+                    <td mat-cell *matCellDef="let supplierOrder"> {{supplierOrder.totalCost * 1}} </td>
                 </ng-container>
 
 
                 <ng-container matColumnDef="approveStatus">
                     <th mat-header-cell *matHeaderCellDef>حالة الفاتورة</th>
                     <td mat-cell *matCellDef="let supplierOrder">
-                        <mat-chip-row *ngIf="supplierOrder.is_approved===1" color="success">
+                        <mat-chip-row *ngIf="supplierOrder.isApproved" color="danger">
                             معتمدة
                         </mat-chip-row>
-                        <mat-chip-row *ngIf="supplierOrder.is_approved ===2" color="danger">
+                        <mat-chip-row *ngIf="!supplierOrder.isApproved" color="light-success">
                             مفتوحة
                         </mat-chip-row>
                     </td>
@@ -103,7 +103,7 @@
                 <ng-container matColumnDef="actions">
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let supplierOrder">
-                        <button mat-icon-button>
+                        <button mat-icon-button [routerLink]="['/admin/supplierOrderDetails', supplierOrder.id]">
                             <mat-icon color="danger">remove_red_eye</mat-icon>
                         </button>
 

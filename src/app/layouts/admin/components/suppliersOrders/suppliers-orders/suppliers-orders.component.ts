@@ -65,7 +65,7 @@ export class SuppliersOrdersComponent {
       next: (response: AppResponse) => {
         if (response.ok) {
           this.suppliers = response.data.suppliers;
-          this.supplierOrders = response.data.suppliersOrders;
+          this.supplierOrders = response.data.suppliersWithOrders;
           this.stores = response.data.stores;
          
           this.dataSource = new MatTableDataSource<SupplierOrder>(this.supplierOrders);

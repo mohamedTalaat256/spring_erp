@@ -11,6 +11,8 @@ import { SuppliersOrderItemDetailsFormDialogComponent } from '../suppliers-order
 import { InvItemService } from 'src/app/service/invItem.service';
 import { AppResponse } from 'src/app/model/app_response.model';
 import { InvItem } from 'src/app/model/invItem';
+import { SupplierOrderService } from 'src/app/service/supplierOrder.service';
+import { InvUom } from 'src/app/model/invUom';
 
 
 
@@ -33,13 +35,17 @@ export class SupplierOrderDetailsComponent implements OnInit {
   invoiceForm: FormGroup;
 
   invoceTotal:number =0;
-  invItems: InvItem[] =[];
-  displayedColumns: string[] = ['id', 'unit', 'inItem', 'price', 'amount', 'total', 'actions'];
-  dataSource = new MatTableDataSource<any>(this.invItems);
+  displayedColumns: string[] = ['id', 'unit', 'orderItem', 'price', 'amount', 'total', 'actions'];
+
+
+  supplierOrderDetailsItems: any []=[];
+  dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
+
 
 
   constructor(private fb: FormBuilder,
     public dialog: MatDialog,
+    private supplierOrderService: SupplierOrderService,
    
   ){
     this.invoiceForm = this.fb.group({
@@ -60,13 +66,37 @@ export class SupplierOrderDetailsComponent implements OnInit {
   filteredClients: Observable<any[]>;
 
  
-  ngOnInit(): void { 
+  ngOnInit(): void {
+    this.getSupplierOrderDetails();
   }
 
  
  
   onSubmit(){
 
+
+
+  }
+
+  getSupplierOrderDetails(){
+    this.supplierOrderService.findById(1).subscribe({
+      next: (response: AppResponse) => {
+        if (response.ok) {
+          this.supplierOrderDetailsItems = response.data.supplierOrderDetails.supplierOrderDetailsItems; 
+          this.dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
+ 
+        
+        }
+      },
+      error: (error: Error) => {
+        Swal.fire({
+          icon: "error",
+          title: error.message,
+          showConfirmButton: true
+        });
+      }
+
+    });
   }
 
   openAddInvItemDialog() { 
@@ -83,7 +113,7 @@ export class SupplierOrderDetailsComponent implements OnInit {
     dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
  
       if(result){
-        let index = this.invItems.find(i=> i.id=== result.invItemId);
+        let index = this.supplierOrderDetailsItems.find(i=> i.invItemCard.id=== result.invItemId);
         if(index){
           Swal.fire({ 
             icon: "error",
@@ -96,8 +126,8 @@ export class SupplierOrderDetailsComponent implements OnInit {
         console.log(result);
 
        
-        this.invItems.push(result);
-        this.dataSource = new MatTableDataSource<any>(this.invItems);
+        this.supplierOrderDetailsItems.push(result);
+        this.dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
 
         this.calculateInvoiceItemTotal();
 
@@ -123,8 +153,8 @@ export class SupplierOrderDetailsComponent implements OnInit {
       
       if(result){
  
-        this.invItems.push(result);
-        this.dataSource = new MatTableDataSource<any>(this.invItems);
+        this.supplierOrderDetailsItems.push(result);
+        this.dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
 
       }
     });
@@ -132,7 +162,7 @@ export class SupplierOrderDetailsComponent implements OnInit {
 
 
   deleteInvItem(invItem){
-    this.invItems = this.invItems.filter(i=> i.id !== invItem.invItem);
+    this.supplierOrderDetailsItems = this.supplierOrderDetailsItems.filter(i=> i.id !== invItem.invItem);
   }
 
   calculateInvoiceItemTotal(){
