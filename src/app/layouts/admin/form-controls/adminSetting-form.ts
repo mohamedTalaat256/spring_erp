@@ -13,15 +13,15 @@ export class AdminSettingForm {
     return this.fb.group(
       {
         id:                           [data.id], 
-        systemName:                   [data.systemName,                [Validators.required, Validators.maxLength(255)]],
-        address:                      [data.address,      [Validators.required]],
-        phone:                        [data.phone,            [Validators.required]],
-        photo:                        [data.photo, [Validators.required]], 
-        notes:                        [data.notes,               [Validators.maxLength(1000)]],
+        systemName:                   [data.systemName,                   [Validators.required, Validators.maxLength(255)]],
+        address:                      [data.address,                      [Validators.required]],
+        phone:                        [data.phone,                        [Validators.required]],
+        photo:                        [data.photo,                        [Validators.required]], 
+        notes:                        [data.notes,                        [Validators.maxLength(1000)]],
       
-        customerParentAccountNumber:  [data.customerParentAccountNumber.id,  [Validators.required]],
-        employeesParentAccountNumber: [data.employeesParentAccountNumber.id, [Validators.required]],
-        suppliersParentAccountNumber: [data.suppliersParentAccountNumber.id, [Validators.required]],
+        customerParentAccountNumber:  [data.customerParentAccountNumber,  [Validators.required]],
+        employeesParentAccountNumber: [data.employeesParentAccountNumber, [Validators.required]],
+        suppliersParentAccountNumber: [data.suppliersParentAccountNumber, [Validators.required]],
       }
     );
   } 

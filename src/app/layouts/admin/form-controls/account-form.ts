@@ -33,7 +33,7 @@ export class AccountForm {
         name:                [data.name,                [Validators.required, Validators.maxLength(255)]],
         accountType:         [data.accountType.id,      [Validators.required]],
         isParent:            [data.isParent,            [Validators.required]],
-        parentAccountNumber: [data.parentAccount_number, [Validators.required]],
+        parentAccountNumber: [data.parentAccount_number, ],
         startBalanceStatus:  [data.startBalanceStatus,  [Validators.required]],
         startBalance:        [data.startBalance,        [Validators.required]],
         currentBalance:      [data.currentBalance,      [Validators.required]],

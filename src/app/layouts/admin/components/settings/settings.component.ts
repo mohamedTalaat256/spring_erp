@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AdminSettingForm } from '../../form-controls/adminSetting-form';
 import { FormGroup } from '@angular/forms';
 import { Account } from 'src/app/model/accounty';
+import { AdminSettingService } from 'src/app/service/adminSetting.service';
+import { take } from 'rxjs';
+import { AppResponse } from 'src/app/model/app_response.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-settings',
@@ -13,66 +17,20 @@ export class SettingsComponent implements OnInit {
   adminSettingForm: FormGroup;
 
   parentAccounts: Account[] = [];
-  constructor(private adminSettingFormControl: AdminSettingForm) {
+  constructor(private adminSettingFormControl: AdminSettingForm,
+    private adminSettingService: AdminSettingService
+  ) {
 
     this.adminSettingForm = this.adminSettingFormControl.setForm({
-      id: 1,
-      systemName: 'string',
-      address: 'string',
-      phone: 'string',
-      photo: 'string',
-      customerParentAccountNumber: {
-        id: 1,
-        name: 'string',
-        accountType: {
-          id: 1,
-          name: '',
-          active: true,
-          relatediternalaccounts: false
-        },
-        isParent: false,
-        parentAccount_number: 0,
-        startBalanceStatus: 0,
-        startBalance: 0,
-        currentBalance: 0,
-        notes: 'string',
-        active: true
-      },
-      employeesParentAccountNumber: {
-        id: 1,
-        name: 'string',
-        accountType: {
-          id: 1,
-          name: '',
-          active: true,
-          relatediternalaccounts: false
-        },
-        isParent: false,
-        parentAccount_number: 0,
-        startBalanceStatus: 0,
-        startBalance: 0,
-        currentBalance: 0,
-        notes: 'string',
-        active: true
-      },
-      suppliersParentAccountNumber: {
-        id: 1,
-        name: 'string',
-        accountType: {
-          id: 1,
-          name: '',
-          active: true,
-          relatediternalaccounts: false
-        },
-        isParent: false,
-        parentAccount_number: 0,
-        startBalanceStatus: 0,
-        startBalance: 0,
-        currentBalance: 0,
-        notes: 'string',
-        active: true
-      },
-      notes: 'string'
+      id: null,
+      systemName: null,
+      address: null,
+      phone: null,
+      photo: null,
+      customerParentAccountNumber:1,
+      employeesParentAccountNumber:1,
+      suppliersParentAccountNumber:1,
+      notes: null
     });
 
   }
@@ -82,11 +40,44 @@ export class SettingsComponent implements OnInit {
   }
 
   getAdminSettingData() {
-
+    this.adminSettingService.getData().subscribe({
+      next: (response: AppResponse) => {
+        if (response.ok) {
+          this.adminSettingForm = this.adminSettingFormControl.setForm(response.data.adminSettings);
+          this.parentAccounts = response.data.parentAccounts;
+        }
+      },
+      error: (error: Error) => {
+        Swal.fire({
+          icon: "error",
+          title: error.message,
+          showConfirmButton: true
+        });
+      }
+    });
   }
 
 
   onSubmit() {
+    this.adminSettingService.save(this.adminSettingForm.value).subscribe({
+      next: (response: AppResponse) => {
+        if (response.ok) {
+          Swal.fire({
+            icon: "success",
+            title: response.message,
+            showConfirmButton: true
+          });
 
+          this.adminSettingForm = this.adminSettingFormControl.setForm(response.data);
+        }
+      },
+      error: (error: Error) => {
+        Swal.fire({
+          icon: "error",
+          title: error.message,
+          showConfirmButton: true
+        });
+      }
+    });
   }
 }

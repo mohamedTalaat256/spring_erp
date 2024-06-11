@@ -7,9 +7,9 @@ export interface AdminSetting{
     address: string,
     phone: string,
     photo: string,
-    customerParentAccountNumber: Account, 
-    employeesParentAccountNumber: Account, 
-    suppliersParentAccountNumber: Account,
+    customerParentAccountNumber: number, 
+    employeesParentAccountNumber: number, 
+    suppliersParentAccountNumber: number,
     notes: string
 
 }

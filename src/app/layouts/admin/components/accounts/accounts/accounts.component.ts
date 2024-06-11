@@ -108,9 +108,15 @@ export class AccountsComponent implements OnInit {
 
     dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
       if (result) {
-        this.accounts.push(result);
+        this.showUpdatedItem(result);
         this.dataSource = new MatTableDataSource<Account>(this.accounts);
       }
     });
+  }
+
+  showUpdatedItem(newItem){
+    let indexToUpdate = this.accounts.findIndex(item => item.id === newItem.id);
+    this.accounts[indexToUpdate] = newItem; 
+   this.accounts = Object.assign([], this.accounts);
   }
 }

@@ -58,7 +58,7 @@ export class AccountFormDialogComponent {
   onSubmit(){
     console.log(this.accountForm.value);
 
-    this.accountService.save(this.accountForm.value).subscribe({
+    this.accountService.save(this.accountForm.value, this.data.formMode).subscribe({
       next:(response: AppResponse)=>{  
         if(response.ok){
           Swal.fire({
