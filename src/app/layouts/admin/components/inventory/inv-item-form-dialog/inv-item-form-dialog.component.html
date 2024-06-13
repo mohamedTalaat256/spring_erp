@@ -68,18 +68,18 @@
  
         <mat-form-field fxFlex="48">
             <mat-label>هل للصنف وحدة تجزئة ابن</mat-label>
-            <mat-select formControlName="doesHasRetailunit" (selectionChange)="doesHasRetailunitChange($event)"> 
+            <mat-select formControlName="doesHasRetailUnit" (selectionChange)="doesHasRetailUnitChange($event)"> 
                 <mat-option [value]="true">نعم</mat-option>
                 <mat-option [value]="false">لا</mat-option>
             </mat-select>
             <mat-error>
-                <app-validation-msg [control]="invItemForm.get('doesHasRetailunit')"
+                <app-validation-msg [control]="invItemForm.get('doesHasRetailUnit')"
                     fieldName="الحقل"></app-validation-msg>
             </mat-error>
         </mat-form-field>
 
 
-        <mat-form-field fxFlex="48" *ngIf="doesHasRetailunit">
+        <mat-form-field fxFlex="48" *ngIf="doesHasRetailUnit">
             <mat-label> وحدة القياس التجزئة الابن بالنسبة للأب({{parentUomName}})</mat-label>
             <mat-select formControlName="retailUom" (selectionChange)="retialUomChange($event)"> 
                 <mat-option *ngFor="let i of invUomsChild" [value]="i.id">{{i.name}} </mat-option>
@@ -91,7 +91,7 @@
         </mat-form-field>
 
 
-        <mat-form-field fxFlex="48"  *ngIf="doesHasRetailunit">
+        <mat-form-field fxFlex="48"  *ngIf="doesHasRetailUnit">
 
              <mat-label>عدد وحدات التجزئة ({{childUomName}}) بالنسبة للأب ({{parentUomName}}) </mat-label>
 
@@ -136,7 +136,7 @@
 
         <!-- retail -->
 
-        <mat-form-field fxFlex="48" *ngIf="doesHasRetailunit">
+        <mat-form-field fxFlex="48" *ngIf="doesHasRetailUnit">
             <mat-label>سعر القطاعي بوحدة ({{childUomName}}) </mat-label>
             <input matInput formControlName="priceRetail" placeholder="السعر" type="number">
             <mat-error>
@@ -144,7 +144,7 @@
             </mat-error>
         </mat-form-field>
 
-        <mat-form-field fxFlex="48" *ngIf="doesHasRetailunit">
+        <mat-form-field fxFlex="48" *ngIf="doesHasRetailUnit">
             <mat-label>سعر النص جملة بوحدة({{childUomName}})</mat-label>
             <input matInput formControlName="nosGomlaPriceRetail" placeholder="السعر" type="number">
             <mat-error>
@@ -152,7 +152,7 @@
             </mat-error>
         </mat-form-field>
 
-        <mat-form-field fxFlex="48" *ngIf="doesHasRetailunit">
+        <mat-form-field fxFlex="48" *ngIf="doesHasRetailUnit">
             <mat-label>سعر جملة بوحدة({{childUomName}})</mat-label>
             <input matInput formControlName="gomlaPriceRetail" placeholder="السعر" type="number">
             <mat-error>
@@ -160,7 +160,7 @@
             </mat-error>
         </mat-form-field>
 
-        <mat-form-field fxFlex="48" *ngIf="doesHasRetailunit">
+        <mat-form-field fxFlex="48" *ngIf="doesHasRetailUnit">
             <mat-label>سعر تكلفة الشراء لوحدة({{childUomName}})</mat-label>
             <input matInput formControlName="costPriceRetail" placeholder="السعر" type="number">
             <mat-error>

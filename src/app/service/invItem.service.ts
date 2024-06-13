@@ -33,7 +33,7 @@ export class InvItemService {
         uom:{
           id: form.value.uom
         },
-        doesHasRetailunit:     form.value.doesHasRetailunit,
+        doesHasRetailUnit:     form.value.doesHasRetailUnit,
         retailUom:{
           id: form.value.retailUom
         },

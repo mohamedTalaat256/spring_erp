@@ -81,11 +81,9 @@ export class SupplierOrderDetailsComponent implements OnInit {
   getSupplierOrderDetails(){
     this.supplierOrderService.findById(1).subscribe({
       next: (response: AppResponse) => {
-        if (response.ok) {
-          this.supplierOrderDetailsItems = response.data.supplierOrderDetails.supplierOrderDetailsItems; 
+        if (response.ok) { 
+          this.supplierOrderDetailsItems = response.data.supplierOrderDetailsItems; 
           this.dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
- 
-        
         }
       },
       error: (error: Error) => {
@@ -135,12 +133,12 @@ export class SupplierOrderDetailsComponent implements OnInit {
     });
   }
 
-  openEditInvItemDialog(invItem) { 
+  openEditInvItemDialog(orderItem) { 
 
     const data = {
       title: 'تعديل صنف في الفاتورة',
       formMode: FormMode.EDIT,
-      invItem:invItem
+      orderItem:orderItem
     };
     const dialogRef = this.dialog.open(SuppliersOrderItemDetailsFormDialogComponent, {
       width: '400px',

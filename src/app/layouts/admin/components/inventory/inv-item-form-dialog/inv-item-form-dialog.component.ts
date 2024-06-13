@@ -37,7 +37,7 @@ export class InvItemFormDialogComponent {
   invItemsCategories:any[]=[];
 
 
-  doesHasRetailunit: boolean =false;
+  doesHasRetailUnit: boolean =false;
   showPricesFeilds: boolean =false;
 
   constructor(private fb: FormBuilder,
@@ -130,8 +130,8 @@ export class InvItemFormDialogComponent {
     //this.dialogRef.close(this.invItemForm.value);
   }
  
-  doesHasRetailunitChange(event:MatSelectChange){
-    this.doesHasRetailunit = event.value;
+  doesHasRetailUnitChange(event:MatSelectChange){
+    this.doesHasRetailUnit = event.value;
 
   }
 

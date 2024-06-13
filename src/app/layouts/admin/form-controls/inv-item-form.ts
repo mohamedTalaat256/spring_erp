@@ -53,7 +53,7 @@ export class InvItemForm {
         invItemCategory:         [null, [Validators.required ]],
         parentInvItemCard:       [null, [Validators.required ]],
         uom:                     [null, [Validators.required ]],
-        doesHasRetailunit:       [null, [Validators.required ]],
+        doesHasRetailUnit:       [null, [Validators.required ]],
         retailUom:               [null, [Validators.required ]],
         retailUomQuntToParent:   [null, [Validators.required ]],
 
@@ -86,7 +86,7 @@ export class InvItemForm {
         invItemCategory:         [data.invItemCategory?  data.invItemCategory.id: null, [Validators.required ]],
         parentInvItemCard:       [data.parentInvItemCard? data.parentInvItemCard.id : null, [Validators.required ]],
         uom:                     [data.uom ? data.uom.id: null, [Validators.required ]],
-        doesHasRetailunit:       [data.doesHasRetailunit, [Validators.required ]],
+        doesHasRetailUnit:       [data.doesHasRetailUnit, [Validators.required ]],
         retailUom:               [data.retailUom ? data.retailUom.id: null, [Validators.required ]],
         retailUomQuntToParent:   [data.retailUomQuntToParent, [Validators.required ]],
         price:                   [data.price, [Validators.required ]],

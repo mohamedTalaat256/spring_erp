@@ -1,6 +1,5 @@
 import { FormBuilder, Validators} from '@angular/forms';
 import { Injectable } from '@angular/core'; 
-import { InvItem } from 'src/app/model/invItem';
 
 @Injectable({
   providedIn: 'root'
@@ -12,23 +11,23 @@ export class SupplierOrderDetailsItemForm {
   createForm() {
     return this.fb.group(
       {
-        id:       [null],
-        item_code_add:     [null, [Validators.maxLength(255)]],
-        uom_id_Add:     [null, [Validators.required, Validators.maxLength(255)]],
-        quantity_add:     [null, [Validators.required, Validators.maxLength(255)]],
-        price_add:     [null, [Validators.required, Validators.maxLength(255)]],
+        id:                [null],
+        invItemCard:       [null, [Validators.required] ],
+        uom:               [null, [Validators.required]],
+        deliveredQuantity: [null, [Validators.required, Validators.max(100000)]],
+        unitPrice:         [null, [Validators.required, Validators.max(100000)]],
       }
     );
   }
   
-  setForm(data: InvItem) {
+  setForm(data: any) {
     return this.fb.group(
       {
-        id:                      [data.id],
-        item_code_add:     [null, [Validators.maxLength(255)]],
-        uom_id_Add:     [null, [Validators.required, Validators.maxLength(255)]],
-        quantity_add:     [null, [Validators.required, Validators.maxLength(255)]],
-        price_add:     [null, [Validators.required, Validators.maxLength(255)]],
+        id:                [data.is],
+        invItemCard:       [data.invItemCard,       [Validators.required]],
+        uom:               [data.uom.id,            [Validators.required]],
+        deliveredQuantity: [data.deliveredQuantity, [Validators.required, Validators.max(100000)]],
+        unitPrice:         [data.unitPrice,         [Validators.required, Validators.max(100000)]],
       }
     );
   } 

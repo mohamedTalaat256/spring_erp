@@ -10,10 +10,11 @@ import { supplierOrderFormControl } from '../../../form-controls/supplier-order-
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { SupplierOrderService } from 'src/app/service/supplierOrder.service';
 import { Router } from '@angular/router';
-import { InvItem } from 'src/app/model/invItem';
+import { InvItem, emptyItem } from 'src/app/model/invItem';
 import { SupplierOrderDetailsItemForm } from '../../../form-controls/supplierOrderDetailsItem-form';
 import { InvItemService } from 'src/app/service/invItem.service';
 import { InvUomService } from 'src/app/service/invUom.service';
+import { InvUom } from 'src/app/model/invUom';
 
 @Component({
   selector: 'app-suppliers-order-item-details-form-dialog',
@@ -25,16 +26,8 @@ export class SuppliersOrderItemDetailsFormDialogComponent implements OnInit {
   invItemFormControl = new FormControl<string | any>('', [Validators.required]);
 
   invItems: InvItem[] = [];
-/*   itemUoms: any= {
-    does_has_retailunit: 0,
-    parent_uom_name: "وحده",
-    retail_uom_id : null,
-    uom_id : 10
-  };
- */
-  itemUoms: any= {
-   
-  };
+  selectedItem: InvItem=emptyItem;
+  uom: InvUom;
   filteredInvItems: Observable<any[]>;
 
 
@@ -54,8 +47,16 @@ export class SuppliersOrderItemDetailsFormDialogComponent implements OnInit {
 
     if (this.data.formMode === FormMode.CREATE) {
       this.newInvItemForm = this.supplierOrderDetailsItemForm.createForm();
+      
     } else {
-      this.newInvItemForm = this.supplierOrderDetailsItemForm.setForm(this.data.invItem);
+      this.newInvItemForm = this.supplierOrderDetailsItemForm.setForm(this.data.orderItem);
+      this.invItemFormControl.setValue( {
+        id: this.data.orderItem.invItemCard.id,
+        name: this.data.orderItem.invItemCard.name
+      });
+
+      this.selectedItem = this.data.orderItem;
+      
     }
     this.title = this.data.title;
 
@@ -64,6 +65,8 @@ export class SuppliersOrderItemDetailsFormDialogComponent implements OnInit {
   ngOnInit(): void {
     this.getAllInvItems();
     this.setFilters();
+   
+
   }
 
   getAllInvItems() {
@@ -113,30 +116,22 @@ export class SuppliersOrderItemDetailsFormDialogComponent implements OnInit {
   selectedInvItem(event: MatAutocompleteSelectedEvent) {
  
     this.newInvItemForm.patchValue({
-      item_code_add: event.option.value.item_code
+      invItemCard: event.option.value.id
     }, { onlySelf: true, emitEvent: true });
 
 
-    this.getItemUoms(event.option.value.item_code);
+    this.setSelectedItem(event.option.value.id);
 
   }
 
-  getItemUoms(itemCode) {
-    this.uomService.getItemUoms(itemCode).subscribe({
-      next: (response: AppResponse) => {
-        if (response.ok) {
-          console.log(response.data);
-          this.itemUoms = response.data;
-        }
-      },
-      error: (error: Error) => {
-        Swal.fire({
-          icon: "error",
-          title: error.message,
-          showConfirmButton: true
-        });
-      }
 
+  setSelectedItem(id:number) {
+   
+    this.selectedItem = this.invItems.filter( i=> i.id === id)[0];
+    this.newInvItemForm.patchValue({
+      unitPrice: this.selectedItem.price
     });
+    console.log(this.selectedItem);
+   
   }
 }

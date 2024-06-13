@@ -11,11 +11,11 @@
     <span *ngIf="control?.hasError('minlength')&& (control.dirty || control.touched)"> {{'min_length_is'|translate}} :
         {{control?.errors?.['minlength']?.requiredLength}}</span>
 
-    <span *ngIf="control?.hasError('max')&& (control.dirty || control.touched)"> {{'max_value_is'|translate}} :
+    <span *ngIf="control?.hasError('max')&& (control.dirty || control.touched)"> أكبر قيمة مسموح بها :
         {{control?.errors?.['max']?.max}} </span>
 
 
      
-        <span *ngIf="control?.hasError('min')&& (control.dirty || control.touched)"> {{'min_value_is'|translate}} : {{control?.errors?.['min']?.max}} </span>
+        <span *ngIf="control?.hasError('min')&& (control.dirty || control.touched)"> أقل قيمة مسموح بها : {{control?.errors?.['min']?.max}} </span>
  
 </ng-container>
