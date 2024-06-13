@@ -105,7 +105,7 @@ export class InvItemFormDialogComponent {
 
     console.log(this.invItemForm.value);
 
-    this.invItemService.save(this.invItemForm).subscribe({
+/*     this.invItemService.save(this.invItemForm).subscribe({
       next:(response: AppResponse)=>{  
         if(response.ok){
           Swal.fire({
@@ -125,14 +125,35 @@ export class InvItemFormDialogComponent {
         });
       }
 
-    }); 
-    
-    //this.dialogRef.close(this.invItemForm.value);
+    });  */
+     
   }
  
   doesHasRetailUnitChange(event:MatSelectChange){
     this.doesHasRetailUnit = event.value;
 
+    if(this.doesHasRetailUnit){
+
+      this.invItemForm.controls['retailUom'].setValidators([Validators.required]);
+      this.invItemForm.controls['retailUomQuntToParent'].setValidators([Validators.required]);
+      this.invItemForm.controls['priceRetail'].setValidators([Validators.required]);
+      this.invItemForm.controls['nosGomlaPriceRetail'].setValidators([Validators.required]);
+      this.invItemForm.controls['gomlaPriceRetail'].setValidators([Validators.required]);
+      this.invItemForm.controls['costPriceRetail'].setValidators([Validators.required]);
+      this.invItemForm.updateValueAndValidity();
+      this.invItemForm.markAllAsTouched();
+
+    }else{
+      this.invItemForm.controls['retailUom'].clearValidators();
+      this.invItemForm.controls['retailUomQuntToParent'].clearValidators();
+      this.invItemForm.controls['priceRetail'].clearValidators();
+      this.invItemForm.controls['nosGomlaPriceRetail'].clearValidators();
+      this.invItemForm.controls['gomlaPriceRetail'].clearValidators();
+      this.invItemForm.controls['costPriceRetail'].clearValidators();
+      this.invItemForm.updateValueAndValidity();
+
+    }
+    
   }
 
   retailUomQuntToParentChange(event:MatSelectChange){

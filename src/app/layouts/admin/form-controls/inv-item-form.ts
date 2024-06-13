@@ -54,20 +54,20 @@ export class InvItemForm {
         parentInvItemCard:       [null, [Validators.required ]],
         uom:                     [null, [Validators.required ]],
         doesHasRetailUnit:       [null, [Validators.required ]],
-        retailUom:               [null, [Validators.required ]],
-        retailUomQuntToParent:   [null, [Validators.required ]],
+        retailUom:               [null,                       ],      // <=========
+        retailUomQuntToParent:   [null,                       ],      // <=========
 
         price:                   [null, [Validators.required ]],
         nosGomlaPrice:           [null, [Validators.required ]],
         gomlaPrice:              [null, [Validators.required ]],
         costPrice:               [null, [Validators.required ]],
 
-        priceRetail:             [null, [Validators.required ]],
-        nosGomlaPriceRetail:     [null, [Validators.required ]],
-        gomlaPriceRetail:        [null, [Validators.required ]],
-        costPriceRetail:         [null, [Validators.required ]],
+        priceRetail:             [null,                       ],      // <=========
+        nosGomlaPriceRetail:     [null,                       ],      // <=========
+        gomlaPriceRetail:        [null,                       ],      // <=========
+        costPriceRetail:         [null,                       ],      // <=========
        
-        hasFixcedPrice:          [null, [Validators.required, Validators.maxLength(255)]],
+        hasFixcedPrice:          [null, [Validators.required]],
         active:                  [null, [Validators.required]],
       }
     );
@@ -87,18 +87,18 @@ export class InvItemForm {
         parentInvItemCard:       [data.parentInvItemCard? data.parentInvItemCard.id : null, [Validators.required ]],
         uom:                     [data.uom ? data.uom.id: null, [Validators.required ]],
         doesHasRetailUnit:       [data.doesHasRetailUnit, [Validators.required ]],
-        retailUom:               [data.retailUom ? data.retailUom.id: null, [Validators.required ]],
-        retailUomQuntToParent:   [data.retailUomQuntToParent, [Validators.required ]],
-        price:                   [data.price, [Validators.required ]],
-        nosGomlaPrice:           [data.nosGomlaPrice, [Validators.required ]],
-        gomlaPrice:              [data.gomlaPrice, [Validators.required ]],
-        costPrice:               [data.costPrice, [Validators.required ]],
-        priceRetail:             [data.priceRetail, [Validators.required ]],
-        nosGomlaPriceRetail:     [data.nosGomlaPriceRetail, [Validators.required ]],
-        gomlaPriceRetail:        [data.gomlaPriceRetail, [Validators.required ]],
-        costPriceRetail:         [data.costPriceRetail, [Validators.required ]],
-        hasFixcedPrice:          [data.hasFixcedPrice, [Validators.required, Validators.maxLength(255)]],
-        active:                  [data.active, [Validators.required]],
+        retailUom:               [data.retailUom ? data.retailUom.id: null,           ],      // <=========
+        retailUomQuntToParent:   [data.retailUomQuntToParent,                         ],      // <=========
+        price:                   [data.price,                   [Validators.required ]],
+        nosGomlaPrice:           [data.nosGomlaPrice,           [Validators.required ]],
+        gomlaPrice:              [data.gomlaPrice,              [Validators.required ]],
+        costPrice:               [data.costPrice,               [Validators.required ]],
+        priceRetail:             [data.priceRetail,                                   ],      // <=========
+        nosGomlaPriceRetail:     [data.nosGomlaPriceRetail,                           ],      // <=========
+        gomlaPriceRetail:        [data.gomlaPriceRetail,                              ],      // <=========
+        costPriceRetail:         [data.costPriceRetail,                               ],      // <=========
+        hasFixcedPrice:          [data.hasFixcedPrice,          [Validators.required ]],
+        active:                  [data.active,                  [Validators.required ]],
       }
       
     );
