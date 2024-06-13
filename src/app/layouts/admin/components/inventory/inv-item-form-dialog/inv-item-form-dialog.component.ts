@@ -105,7 +105,7 @@ export class InvItemFormDialogComponent {
 
     console.log(this.invItemForm.value);
 
-/*     this.invItemService.save(this.invItemForm).subscribe({
+    this.invItemService.save(this.invItemForm).subscribe({
       next:(response: AppResponse)=>{  
         if(response.ok){
           Swal.fire({
@@ -125,7 +125,7 @@ export class InvItemFormDialogComponent {
         });
       }
 
-    });  */
+    }); 
      
   }
  
