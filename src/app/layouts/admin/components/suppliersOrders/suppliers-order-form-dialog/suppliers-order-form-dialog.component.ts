@@ -74,6 +74,7 @@ export class SuppliersOrderFormDialogComponent {
           if(response.ok){
 
             this.router.navigate(['/admin/supplierOrderDetails/'+response.data.id]);
+            this.dialogRef.close();
             Swal.fire({
               icon: 'success',
               title: response.message,

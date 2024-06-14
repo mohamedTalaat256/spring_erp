@@ -88,7 +88,7 @@ export class SupplierOrderDetailsComponent implements OnInit {
   }
 
   getSupplierOrderDetails(id: number){
-    this.supplierOrderService.findById(1).subscribe({
+    this.supplierOrderService.findById(id).subscribe({
       next: (response: AppResponse) => {
         if (response.ok) { 
           this.supplierOrderDetailsItems = response.data.supplierOrderDetailsItems; 

@@ -32,8 +32,8 @@
             <mat-select formControlName="uom">
 
                 <mat-option *ngIf="selectedItem.doesHasRetailUnit"  [value]="selectedItem.uom.id"> {{ selectedItem.uom.name  }} (وحده اب)</mat-option>
-                <mat-option *ngIf="selectedItem.doesHasRetailUnit"  [value]="selectedItem.retailUom">{{ selectedItem.retailUom.name  }} (وحدة تجزئة)</mat-option>
-                <mat-option *ngIf="!selectedItem.doesHasRetailUnit" [value]="selectedItem.uom.id">{{ selectedItem.uom.id }} (وحده اب)</mat-option>
+                <mat-option *ngIf="selectedItem.doesHasRetailUnit"  [value]="selectedItem.retailUom.id">{{ selectedItem.retailUom.name  }} (وحدة تجزئة)</mat-option>
+                <mat-option *ngIf="!selectedItem.doesHasRetailUnit" [value]="selectedItem.uom.id">{{ selectedItem.uom.name }} (وحده اب)</mat-option>
             </mat-select>
             <mat-error>
                 <app-validation-msg [control]="newInvItemForm.get('uom')"
