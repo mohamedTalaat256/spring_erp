@@ -11,7 +11,7 @@
 
     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
 
-        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding class="mat-bg-light">
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding class="mat-bg-light"   [@simpleFade]="node.level?1:0">
             <mat-list-item  [routerLink]="[node.url]" routerLinkActive="active">
                 <div matListItemTitle fxHide.sm fxHide.xs > {{node.name}} </div>
             </mat-list-item>

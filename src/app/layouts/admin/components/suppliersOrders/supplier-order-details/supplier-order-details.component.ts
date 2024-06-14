@@ -56,13 +56,14 @@ export class SupplierOrderDetailsComponent implements OnInit {
    
   ){
     this.invoiceForm = this.fb.group({
+      orderId:         [0,  ],
       discountType:    [0, [Validators.required]],
       discountPercent: [0, [Validators.required]],
       discountValue:   [0, [Validators.required]],
       pillType:        [null, [Validators.required]],
       whatPaid:        [null, [Validators.required]],
       whatRemain:      [null, [Validators.required]],
-      notes:            [null],
+      notes:           [null],
     });
   }
  
@@ -73,16 +74,29 @@ export class SupplierOrderDetailsComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.orderId = params['id'];
       this.getSupplierOrderDetails(params['id']);
+      
     }); 
   }
 
  
  
   onSubmit(){
+    console.log(this.invoiceForm.value);
 
 
+/* 
+{
+    "orderId": 3,
+    "discountType": 1,
+    "discountPercent": 0,
+    "discountValue": 0,
+    "pillType": 1,
+    "whatPaid": 12,
+    "whatRemain": 20,
+    "notes": "sdfsdf"
+}
 
-
+*/
 
 
   }
@@ -96,6 +110,7 @@ export class SupplierOrderDetailsComponent implements OnInit {
 
           this.supplierOrder = response.data;
           this.invoiceForm = this.fb.group({  
+            orderId:          [this.supplierOrder.id,  ],
             discountType:    [this.supplierOrder.discountType, [Validators.required]],
             discountPercent: [this.supplierOrder.discountPercent, [Validators.required]],
             discountValue:   [this.supplierOrder.discountValue, [Validators.required]],

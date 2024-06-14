@@ -1,6 +1,7 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component } from '@angular/core';
- import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 
 
 interface FoodNode {
@@ -13,35 +14,31 @@ interface FoodNode {
 }
 
 const TREE_DATA: FoodNode[] = [
- 
+
   {
     name: 'ضبط المخازن',
     icon: 'store',
     iconColor: 'warn',
     children: [
-      { 
-        name: 'بيانات فئات الفواتير',
-        icon: 'menu',
-        url: '/admin/invoices_types'
-      },
-      { 
+
+      {
         name: 'بيانات المخازن',
         icon: 'stores',
         url: '/admin/stores'
       },
-       { 
+      {
         name: 'بيانات الوحدات',
         icon: 'text_format',
         url: '/admin/inv-uoms'
 
       },
-      { 
+      {
         name: 'فئات الأصناف',
         icon: 'store',
         url: '/admin/invItemsCategories'
 
       },
-      { 
+      {
         name: 'الأصناف',
         icon: 'dashboard',
         url: '/admin/invItems'
@@ -54,35 +51,30 @@ const TREE_DATA: FoodNode[] = [
     icon: 'monetization_on',
     iconColor: 'success',
     children: [
-      { 
+      {
         name: 'أنواع الحسابات المالية',
         icon: 'menu',
         url: '/admin/accountTypes'
       },
-      { 
+      {
         name: 'الشجرة (الحسابات المالية)',
         icon: 'stores',
         url: '/admin/accounts'
       },
-       { 
+      {
         name: 'حسابات العملاء',
         icon: 'text_format',
         url: '/admin/customers'
 
       },
-      { 
-        name: 'حسابات المناديب',
-        icon: 'store',
-        url: '/admin/invItemsCategories'
 
-      },
-      { 
+      {
         name: 'فئات الموردين',
         icon: 'dashboard',
         url: '/admin/suppliersCategories'
 
       },
-      { 
+      {
         name: 'حسابات الموردين',
         icon: 'dashboard',
         url: '/admin/suppliers'
@@ -94,14 +86,14 @@ const TREE_DATA: FoodNode[] = [
     name: 'الخزنة',
     icon: 'lock',
     iconColor: 'danger',
-    children:[
-      { 
+    children: [
+      {
         name: 'شاشة تحيل النقدية',
         icon: 'dashboard',
         url: '/admin/transactionCollect'
 
       },
-      { 
+      {
         name: 'شاشة صرف النقدية',
         icon: 'dashboard',
         url: '/admin/transactionexchange'
@@ -114,23 +106,23 @@ const TREE_DATA: FoodNode[] = [
     icon: 'menu',
     iconColor: 'danger',
     children: [
-      { 
+      {
         name: 'فواتير المشتريات',
         icon: 'menu',
         url: '/admin/suppliersOrders'
       },
-      { 
+      {
         name: 'فواتير مرتجع المشتريات العام',
         icon: 'stores',
         url: '/admin/accounts'
       },
-       { 
+      {
         name: 'جرد المخازن',
         icon: 'text_format',
         url: '/admin/inv-uoms'
 
       },
-       { 
+      {
         name: 'ارصدة الأصناف',
         icon: 'text_format',
         url: '/admin/inv-uoms'
@@ -143,29 +135,29 @@ const TREE_DATA: FoodNode[] = [
     icon: 'shopping_cart',
     iconColor: 'success',
     children: [
-      { 
+      {
         name: 'أنواع الحسابات المالية',
         icon: 'menu',
         url: '/admin/accountTypes'
       },
-      { 
+      {
         name: 'الشجرة (الحسابات المالية)',
         icon: 'stores',
         url: '/admin/accounts'
       },
-       { 
+      {
         name: 'حسابات العملاء',
         icon: 'text_format',
         url: '/admin/inv-uoms'
 
       }
     ],
-  },{
+  }, {
     name: 'الضبط العام',
     icon: 'settings',
     iconColor: 'primary',
     url: '/admin/adminSettings',
-    children:[
+    children: [
       {
         name: 'الضبط العام',
         icon: 'settings',
@@ -193,7 +185,15 @@ interface ExampleFlatNode {
 @Component({
   selector: 'admin-side-nav-list',
   templateUrl: './admin-side-nav-list.component.html',
-  styleUrls: ['./admin-side-nav-list.component.scss']
+  styleUrls: ['./admin-side-nav-list.component.scss'],
+  animations: [
+    trigger('simpleFade', [
+    transition(':enter', [
+      style({ opacity: 0, transform: 'translateY(-100%)' }),
+      animate('200ms ease-in-out', style({ opacity: 1, transform: 'translateY(0)' }))
+    ])
+  ])
+  ]
 })
 export class AdminSideNavListComponent {
   private _transformer = (node: FoodNode, level: number) => {
