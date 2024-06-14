@@ -59,6 +59,7 @@ import { SupplierCategoryFormDialogComponent } from './layouts/admin/components/
 import { SettingsComponent } from './layouts/admin/components/settings/settings.component';
 import { TransactionCollectComponent } from './layouts/admin/components/transactions/transaction-collecr/transaction-collect.component';
 import { TransactionExchangeComponent } from './layouts/admin/components/transactions/transaction-exchange/transaction-exchange.component';
+import { DateConverter } from './pip/dateConverter';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -109,8 +110,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     SupplierCategoryFormDialogComponent,
     SettingsComponent,
     TransactionCollectComponent,
-    TransactionExchangeComponent
-    
+    TransactionExchangeComponent,
+    DateConverter
 
   ],
   imports: [

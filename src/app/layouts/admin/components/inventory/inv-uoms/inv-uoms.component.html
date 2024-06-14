@@ -37,10 +37,10 @@
                     <th mat-header-cell *matHeaderCellDef> نوع الوحدة </th>
                     <td mat-cell *matCellDef="let invUom"> 
                         
-                        <mat-chip-row *ngIf="invUom.isMaster" color="success">
+                        <mat-chip-row *ngIf="invUom.master" color="success">
                             وحدة أب
                         </mat-chip-row>
-                        <mat-chip-row *ngIf="!invUom.isMaster" color="warn">
+                        <mat-chip-row *ngIf="!invUom.master" color="warn">
                             وحدة تجرئة
                         </mat-chip-row></td>
                 </ng-container>

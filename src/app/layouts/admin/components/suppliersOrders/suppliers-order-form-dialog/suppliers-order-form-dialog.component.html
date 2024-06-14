@@ -20,7 +20,7 @@
 
     <mat-form-field fxFlex="48">
         <mat-label>رقم الفاتورة المسجل بأصل فاتورة المشتريات</mat-label>
-        <input matInput formControlName="docNo" placeholder="رقم الفاتورة المسجل بأصل فاتورة المشتريات">
+        <input matInput formControlName="docNo" placeholder="رقم الفاتورة المسجل بأصل فاتورة المشتريات" type="number">
         <mat-error>
             <app-validation-msg [control]="supplierOrderForm.get('docNo')"
                 fieldName="رقم الفاتورة"></app-validation-msg>

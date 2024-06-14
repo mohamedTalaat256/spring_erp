@@ -15,6 +15,7 @@ import { SupplierOrderDetailsItemForm } from '../../../form-controls/supplierOrd
 import { InvItemService } from 'src/app/service/invItem.service';
 import { InvUomService } from 'src/app/service/invUom.service';
 import { InvUom } from 'src/app/model/invUom';
+import { SupplierOrderDetailsService } from 'src/app/service/supplierOrderDetails.service';
 
 @Component({
   selector: 'app-suppliers-order-item-details-form-dialog',
@@ -29,11 +30,9 @@ export class SuppliersOrderItemDetailsFormDialogComponent implements OnInit {
   selectedItem: InvItem=emptyItem;
   uom: InvUom;
   filteredInvItems: Observable<any[]>;
-
-
   newInvItemForm: FormGroup;
-
   title: string;
+  orderId: number;
 
 
   constructor(
@@ -42,6 +41,7 @@ export class SuppliersOrderItemDetailsFormDialogComponent implements OnInit {
     private uomService: InvUomService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<SuppliersOrderItemDetailsFormDialogComponent>,
+    private supplierOrderDetails: SupplierOrderDetailsService
   ) {
 
 
@@ -59,7 +59,11 @@ export class SuppliersOrderItemDetailsFormDialogComponent implements OnInit {
       
     }
     this.title = this.data.title;
+    this.orderId = this.data.orderId;
 
+    this.newInvItemForm.patchValue({
+      orderId: Number(this.orderId)
+    });
   }
 
   ngOnInit(): void {
@@ -73,8 +77,7 @@ export class SuppliersOrderItemDetailsFormDialogComponent implements OnInit {
     this.invItemService.findAll().subscribe({
       next: (response: AppResponse) => {
         if (response.ok) {
-          this.invItems = response.data.invItems;
-          //this.dataSource = new MatTableDataSource<any>(this.invItems);
+          this.invItems = response.data.invItems; 
         }
       },
       error: (error: Error) => {
@@ -91,6 +94,31 @@ export class SuppliersOrderItemDetailsFormDialogComponent implements OnInit {
 
   onSubmit() {
     console.log(this.newInvItemForm.value);
+    
+    this.supplierOrderDetails
+      .save(this.newInvItemForm.value, this.data.formMode)
+      .pipe(take(1))
+      .subscribe({
+        next: (response: AppResponse) => {
+          if(response.ok){
+
+            Swal.fire({
+              icon: 'success',
+              title: response.message,
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+         
+        },
+        error: (error: AppResponse) => {
+          Swal.fire({
+            icon: 'error',
+            title: error.message,
+            showConfirmButton: false,
+          });
+        },
+      });
   }
 
 
@@ -134,4 +162,6 @@ export class SuppliersOrderItemDetailsFormDialogComponent implements OnInit {
     console.log(this.selectedItem);
    
   }
+
+
 }

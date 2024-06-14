@@ -24,6 +24,7 @@ export class SupplierFormDialogComponent {
 
  
   supplierCategories: SupplierCategory[] = [];
+  formMode: FormMode;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -40,6 +41,7 @@ export class SupplierFormDialogComponent {
     } 
     this.title = this.data.title;
     this.supplierCategories = this.data.supplierCategories;
+    this.formMode = this.data.formMode;
   }
 
 

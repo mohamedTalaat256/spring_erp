@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable } from "rxjs";
 import { Injectable } from "@angular/core";
-import { baseURL } from "../constants/constants";
+import { FormMode, baseURL } from "../constants/constants";
 import { FormGroup } from "@angular/forms";
 
 @Injectable({ providedIn: 'root' })
@@ -18,9 +18,10 @@ export class InvItemService {
   }
     
   
-  public save(form: FormGroup): Observable<any> {
+  public save(form: FormGroup, formMode:FormMode): Observable<any> {
 
-    const payLoad =  { 
+    const payLoad =  {
+      id: form.value.id,
         barcode:               form.value.barcode,
         name:                  form.value.name,
         itemType:              form.value.itemType,
@@ -49,13 +50,14 @@ export class InvItemService {
         hasFixcedPrice:        form.value.hasFixcedPrice,
         active:                form.value.active
     }
-    
-    return this.http.post<any>(baseURL + '/itemcards/save', payLoad);
-  }
 
-  public update(requestbody: any): Observable<any> {
-    return this.http.put<any>(baseURL + '/itemcards/update', requestbody);
-  }
+    if(formMode===FormMode.CREATE){
+      return this.http.post<any>(baseURL + '/itemcards/save', payLoad);
+    }else{
+    return this.http.put<any>(baseURL + '/itemcards/update', payLoad);
+    }
+    
+  } 
 
 
 }

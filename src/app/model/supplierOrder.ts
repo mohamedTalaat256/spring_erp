@@ -6,7 +6,7 @@ export interface SupplierOrder{
     orderDate: string,
     orderType: number, //	1-Burshase 2-return on same pill 3-return on general	
     autoSerial: number,
-    DOC_NO: string,
+    docNo: number,
     suuplier: Supplier,
     isApproved?: boolean,
     notes: string,

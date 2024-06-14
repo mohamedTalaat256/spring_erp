@@ -4,7 +4,7 @@ export interface Customer{
      
     id: number,
     name: string,
-    account: Account,
+    account?: Account,
     startBalanceStatus: number,
     startBalance: number,
     currentBalance: number,

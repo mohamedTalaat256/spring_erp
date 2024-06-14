@@ -1,5 +1,14 @@
 <div class=" m-2">
     <h1 class="inv-title  my-3">تفاصيل فاتورة المشتريات</h1>
+
+
+    <div class="my-3" fxLayout="row" fxLayoutAlign="space-between center">
+
+      <span>التاريخ : {{supplierOrder.orderDate  }}</span>
+      <span>المورد : {{supplierOrder.supplier.name}}</span>
+      <span>المخزن : {{supplierOrder.store.name}}</span>
+
+    </div>
     <button mat-raised-button type="button" color="warn" (click)="openAddInvItemDialog()"> اضافة اصناف الي
         الفاتورة</button>
 
@@ -72,14 +81,14 @@
               </thead>
               <tbody>
                 <tr>
-                  <th>{{invoceTotal}}</th>
+                  <th>{{supplierOrder.totalBeforeDiscount}}</th>
                   <th>{{discountValue}}</th>
-                  <th>{{invoceTotal - discountValue}}</th>
-                  <th>{{ pillType===1? 'كاش':  'اّجل'}}</th>
-                  <th>{{whatPaid}}</th>
-                  <th>{{whatRemain}}</th>
-                  <th>{{whatRemain}}</th>
-                  <th>{{whatRemain}}</th>
+                  <th>{{supplierOrder.totalCost}}</th>
+                  <th>{{ supplierOrder.pillType===1? 'كاش':  'اّجل'}}</th>
+                  <th>{{supplierOrder.whatPaid}}</th>
+                  <th>{{supplierOrder.whatRemain}}</th>
+                  <th>{{supplierOrder.supplierBalanceBefore}}</th>
+                  <th>{{supplierOrder.supplierBalanceAfter}}</th>
     
                 </tr>
               </tbody>
@@ -87,9 +96,6 @@
     
           </div>
     <form (ngSubmit)="onSubmit()" [formGroup]="invoiceForm" class="invoice-form" fxLayout="column">
-  
-       
-  
   
       <div fxLayout="row">
         <div class="w-100 mt-2 rounded-2">
@@ -101,9 +107,9 @@
             <mat-form-field>
               <mat-label>نوع الخصم</mat-label>
               <mat-select formControlName="discountType" (selectionChange)="onDiscountTypeChange($event)">
-                <mat-option value="0">لا يوجد خصم</mat-option>
-                <mat-option value="1">نسبة مئوية</mat-option>
-                <mat-option value="2">خصم يدوي</mat-option>
+                <mat-option [value]="0">لا يوجد خصم</mat-option>
+                <mat-option [value]="1">نسبة مئوية</mat-option>
+                <mat-option [value]="2">خصم يدوي</mat-option>
               </mat-select>
               <mat-error>
                 <app-validation-msg [control]="invoiceForm.get('discountType')" fieldName="نوع الخصم"></app-validation-msg>
@@ -131,8 +137,8 @@
               <mat-form-field>
                 <mat-label>نوع الدفع</mat-label>
                 <mat-select formControlName="pillType" (selectionChange)="onPillTypeChange($event)">
-                  <mat-option value="1">كاش</mat-option>
-                  <mat-option value="2">اّجل</mat-option>
+                  <mat-option [value]="1">كاش</mat-option>
+                  <mat-option [value]="2">اّجل</mat-option>
                 </mat-select>
                 <mat-error>
                   <app-validation-msg [control]="invoiceForm.get('pillType')" fieldName="نوع الدفع"></app-validation-msg>
@@ -160,9 +166,9 @@
           <div fxLayout="row-reverse" fxLayoutAlign="start center" >
             <mat-form-field fxFlex="100">
               <mat-label>ملاحظات</mat-label>
-              <textarea matInput formControlName="note" placeholder="ملاحظات"></textarea> 
+              <textarea matInput formControlName="notes" placeholder="ملاحظات"></textarea> 
               <mat-error>
-                <app-validation-msg [control]="invoiceForm.get('note')" fieldName="ملاحظات"></app-validation-msg>
+                <app-validation-msg [control]="invoiceForm.get('notes')" fieldName="ملاحظات"></app-validation-msg>
               </mat-error>
             </mat-form-field>
           

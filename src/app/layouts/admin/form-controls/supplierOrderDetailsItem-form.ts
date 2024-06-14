@@ -12,6 +12,7 @@ export class SupplierOrderDetailsItemForm {
     return this.fb.group(
       {
         id:                [null],
+        orderId:           [null],
         invItemCard:       [null, [Validators.required] ],
         uom:               [null, [Validators.required]],
         deliveredQuantity: [null, [Validators.required, Validators.max(100000)]],
@@ -23,8 +24,9 @@ export class SupplierOrderDetailsItemForm {
   setForm(data: any) {
     return this.fb.group(
       {
-        id:                [data.is],
-        invItemCard:       [data.invItemCard,       [Validators.required]],
+        id:                [data.id],
+        orderId:           [data.orderId],
+        invItemCard:       [data.invItemCard.id,       [Validators.required]],
         uom:               [data.uom.id,            [Validators.required]],
         deliveredQuantity: [data.deliveredQuantity, [Validators.required, Validators.max(100000)]],
         unitPrice:         [data.unitPrice,         [Validators.required, Validators.max(100000)]],

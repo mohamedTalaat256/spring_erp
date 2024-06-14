@@ -21,7 +21,7 @@ export class SupplierOrderService {
 
 
   public save(data: any): Observable<any> {
-    return this.http.post<any>(baseURL + '/suppliers_orders/save',  data);
+    return this.http.post<any>(baseURL + '/supplierOrder',  data);
   }
  
 

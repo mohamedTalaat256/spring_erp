@@ -13,6 +13,8 @@ import { AppResponse } from 'src/app/model/app_response.model';
 import { InvItem } from 'src/app/model/invItem';
 import { SupplierOrderService } from 'src/app/service/supplierOrder.service';
 import { InvUom } from 'src/app/model/invUom';
+import { ActivatedRoute } from '@angular/router';
+import { SupplierOrderDetailsService } from 'src/app/service/supplierOrderDetails.service';
 
 
 
@@ -34,32 +36,33 @@ export class SupplierOrderDetailsComponent implements OnInit {
   whatRemain: number=0;
   invoiceForm: FormGroup;
 
+
+  supplierOrder: any;
+
   invoceTotal:number =0;
   displayedColumns: string[] = ['id', 'unit', 'orderItem', 'price', 'amount', 'total', 'actions'];
 
 
   supplierOrderDetailsItems: any []=[];
   dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
-
+  orderId: number;
 
 
   constructor(private fb: FormBuilder,
     public dialog: MatDialog,
     private supplierOrderService: SupplierOrderService,
+    private supplierOrderDetailsService: SupplierOrderDetailsService,
+    private route: ActivatedRoute,
    
   ){
     this.invoiceForm = this.fb.group({
-      clientNumber:    [null, [Validators.required]],
-      date:            [null, [Validators.required]],
-      store:           [null, [Validators.required]],
-      salesItemType:   [null, [Validators.required]],
       discountType:    [0, [Validators.required]],
       discountPercent: [0, [Validators.required]],
       discountValue:   [0, [Validators.required]],
       pillType:        [null, [Validators.required]],
       whatPaid:        [null, [Validators.required]],
       whatRemain:      [null, [Validators.required]],
-      note:            [null],
+      notes:            [null],
     });
   }
  
@@ -67,7 +70,10 @@ export class SupplierOrderDetailsComponent implements OnInit {
 
  
   ngOnInit(): void {
-    this.getSupplierOrderDetails();
+    this.route.params.subscribe((params) => {
+      this.orderId = params['id'];
+      this.getSupplierOrderDetails(params['id']);
+    }); 
   }
 
  
@@ -76,14 +82,28 @@ export class SupplierOrderDetailsComponent implements OnInit {
 
 
 
+
+
+
   }
 
-  getSupplierOrderDetails(){
+  getSupplierOrderDetails(id: number){
     this.supplierOrderService.findById(1).subscribe({
       next: (response: AppResponse) => {
         if (response.ok) { 
           this.supplierOrderDetailsItems = response.data.supplierOrderDetailsItems; 
           this.dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
+
+          this.supplierOrder = response.data;
+          this.invoiceForm = this.fb.group({  
+            discountType:    [this.supplierOrder.discountType, [Validators.required]],
+            discountPercent: [this.supplierOrder.discountPercent, [Validators.required]],
+            discountValue:   [this.supplierOrder.discountValue, [Validators.required]],
+            pillType:        [this.supplierOrder.pillType, [Validators.required]],
+            whatPaid:        [this.supplierOrder.whatPaid, [Validators.required]],
+            whatRemain:      [this.supplierOrder.whatRemain, [Validators.required]],
+            notes:            [this.supplierOrder.notes],
+          });
         }
       },
       error: (error: Error) => {
@@ -100,7 +120,8 @@ export class SupplierOrderDetailsComponent implements OnInit {
   openAddInvItemDialog() { 
     const data = {
       title: 'اضافة صنف الي الفاتورة',
-      formMode: FormMode.CREATE
+      formMode: FormMode.CREATE,
+      orderId: this.orderId
     };
     const dialogRef = this.dialog.open(SuppliersOrderItemDetailsFormDialogComponent, {
       width: '400px',
@@ -138,7 +159,8 @@ export class SupplierOrderDetailsComponent implements OnInit {
     const data = {
       title: 'تعديل صنف في الفاتورة',
       formMode: FormMode.EDIT,
-      orderItem:orderItem
+      orderItem:orderItem,
+      orderId: this.orderId
     };
     const dialogRef = this.dialog.open(SuppliersOrderItemDetailsFormDialogComponent, {
       width: '400px',
@@ -160,6 +182,51 @@ export class SupplierOrderDetailsComponent implements OnInit {
 
 
   deleteInvItem(invItem){
+
+    Swal.fire({
+      icon: 'warning',
+      title: 'تأكيد',
+      showDenyButton: true,
+      confirmButtonText: 'نعم',
+      confirmButtonColor: '#ed1818',
+      denyButtonText: 'لا',
+      denyButtonColor: '#54e9ac',
+      customClass: {
+        actions: 'my-actions',
+        cancelButton: 'order-1 right-gap',
+        confirmButton: 'order-2'
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        
+        this.supplierOrderDetailsService.delete(invItem.id).subscribe(
+          {
+            next:(response: any)=>{ 
+    
+              if(response.ok){
+               // this.supplierOrderDetailsItems.removeAt(index);
+              }
+              
+              Swal.fire({ 
+                icon: "success",
+                title: response.message,
+                showConfirmButton: false,
+                timer: 1500
+              });
+            },
+            error:(error: AppResponse)=>{
+              Swal.fire({ 
+                icon: "error",
+                title: error.message,
+                showConfirmButton: false,
+                timer: 1500
+              });   
+            }
+          }
+        ); 
+        Swal.fire('تم الحذف', '', 'success')
+      }}
+      );
     this.supplierOrderDetailsItems = this.supplierOrderDetailsItems.filter(i=> i.id !== invItem.invItem);
   }
 
@@ -207,4 +274,6 @@ export class SupplierOrderDetailsComponent implements OnInit {
     }
   }
   
+
+ 
 }

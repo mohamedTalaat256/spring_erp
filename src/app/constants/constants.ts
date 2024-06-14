@@ -51,10 +51,10 @@ export const ITEM_TYPES = [
         id: 1,
         description: "مخزني"
     },
-    {
+  /*   {
         id: 2,
         description: "استهلاكي"
-    },
+    }, */
     {
         id: 3,
         description: "عهدة"

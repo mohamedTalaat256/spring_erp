@@ -45,7 +45,7 @@
         <mat-form-field fxFlex="48">
             <mat-label>الصنف له اب ؟</mat-label>
             <mat-select formControlName="parentInvItemCard">
-                <mat-option [value]="0">هو أب </mat-option>
+                <mat-option value="null">هو أب </mat-option>
                 <mat-option *ngFor="let i of invItems" [value]="i.id">{{i.name}} </mat-option>
             </mat-select>
             <mat-error>

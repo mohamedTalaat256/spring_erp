@@ -52,14 +52,14 @@ export const emptyItem: InvItem={
     uom: {
         id: 0,
         name: null,
-        isMaster: null,
+        master: null,
         active: null
     }, 
     doesHasRetailUnit: null,
     retailUom:  {
         id: 0,
         name: null,
-        isMaster: null,
+        master: null,
         active: null
     },
 

@@ -65,27 +65,15 @@ export class SuppliersOrderFormDialogComponent {
   onSubmit() { 
 
     console.log(this.supplierOrderForm.value);
-   // this.router.navigate(['/admin/supplierOrderDetails']);
-    
-  this.dialogRef.close( );
-/*     this.supplierOrderService
-      .save({ 
-        order_date:     this.supplierOrderForm.value.orderDate,
-        DOC_NO:         this.supplierOrderForm.value.docNo,
-        suuplier_code:  this.supplierOrderForm.value.supplierCode,
-        pill_type:      this.supplierOrderForm.value.pillType,
-        store_id:       this.supplierOrderForm.value.storeId,
-        notes:         this.supplierOrderForm.value.notes,
-      })
+
+    this.supplierOrderService
+      .save(this.supplierOrderForm.value)
       .pipe(take(1))
       .subscribe({
         next: (response: AppResponse) => {
-
-          this.router.navigate(['/user']);
-
           if(response.ok){
 
-            //this.dialogRef.close(response.data);
+            this.router.navigate(['/admin/supplierOrderDetails/'+response.data.id]);
             Swal.fire({
               icon: 'success',
               title: response.message,
@@ -102,7 +90,7 @@ export class SuppliersOrderFormDialogComponent {
             showConfirmButton: false,
           });
         },
-      }); */
+      });
   }
 
  
@@ -147,7 +135,7 @@ export class SuppliersOrderFormDialogComponent {
   selectedStore(event: MatAutocompleteSelectedEvent){
     
     this.supplierOrderForm.patchValue({
-      storeId: event.option.value.id
+      store: event.option.value.id
     },{onlySelf:true, emitEvent: true});
 
   }
@@ -155,7 +143,7 @@ export class SuppliersOrderFormDialogComponent {
   selectedSupllier(event: MatAutocompleteSelectedEvent){
     
     this.supplierOrderForm.patchValue({
-      supplierCode: event.option.value.suuplier_code
+      supplier: event.option.value.id
     },{onlySelf:true, emitEvent: true});
 
   }

@@ -26,6 +26,7 @@ export class AccountFormDialogComponent {
   title:string;
 
   showParentAccounts: boolean= false;
+  formMode:FormMode;
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<AccountFormDialogComponent>,
@@ -44,6 +45,8 @@ export class AccountFormDialogComponent {
     this.parentAccounts= this.data.parentAccounts;
 
     this.title = this.data.title;
+
+    this.formMode = this.data.formMode;
   }
 
 

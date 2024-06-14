@@ -13,12 +13,12 @@
 
     <mat-form-field>
         <mat-label>نوع الوحدة</mat-label>
-        <mat-select formControlName="isMaster">
+        <mat-select formControlName="master">
           <mat-option [value]="true">وحدة اب</mat-option>
           <mat-option [value]="false">وحدة تجزئة</mat-option>
         </mat-select>
         <mat-error>
-          <app-validation-msg [control]="invUomForm.get('isMaster')" fieldName="نوع الوحدة"></app-validation-msg>
+          <app-validation-msg [control]="invUomForm.get('master')" fieldName="نوع الوحدة"></app-validation-msg>
         </mat-error>
     </mat-form-field>
 

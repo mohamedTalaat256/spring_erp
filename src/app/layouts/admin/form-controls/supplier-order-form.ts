@@ -28,7 +28,7 @@ export class supplierOrderFormControl {
       {
         id:        [data.id],
         orderDate: [data.orderDate, [Validators.required]],
-        docNo:     [data.DOC_NO, [Validators.required, Validators.maxLength(255)]],
+        docNo:     [data.docNo, [Validators.required, Validators.maxLength(255)]],
         supplier:  [data.suuplier, [Validators.required]],
         pillType:  [data.pillType, [Validators.required]],
         store:     [data.store, [Validators.required]],
