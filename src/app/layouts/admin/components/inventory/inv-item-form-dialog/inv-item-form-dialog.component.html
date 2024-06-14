@@ -1,8 +1,8 @@
 <h2 mat-dialog-title class="text-capitalize">{{title}}</h2>
 
-<form (ngSubmit)="onSubmit()" [formGroup]="invItemForm" fxLayout="row wrap" fxLayoutGap="15" class="p-5">
+<form (ngSubmit)="onSubmit()" [formGroup]="invItemForm" fxLayout="row wrap" fxLayoutGap="15" class="p-5" style="overflow-y: auto;">
 
-        <mat-form-field fxFlex="48">
+        <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100" fxFlex.sm="100" fxFlex.xs="100">
             <mat-label>الباركود</mat-label>
             <input matInput formControlName="barcode" placeholder="الباركود" >
             <mat-error>
@@ -11,7 +11,7 @@
         </mat-form-field> 
 
 
-        <mat-form-field  fxFlex="48">
+        <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100">
             <mat-label>اسم الصنف</mat-label>
             <input matInput formControlName="name" placeholder="اسم الصنف" >
             <mat-error>
@@ -19,7 +19,7 @@
             </mat-error>
         </mat-form-field>
 
-        <mat-form-field fxFlex="48">
+        <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100">
             <mat-label>نوع الصنف</mat-label>
             <mat-select formControlName="itemType">
                 <mat-option *ngFor="let i of ITEM_TYPES" [value]="i.id">{{i.description}} </mat-option>
@@ -31,7 +31,7 @@
         </mat-form-field>
 
         
-        <mat-form-field fxFlex="48">
+        <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100">
             <mat-label>فئة الصنف</mat-label>
             <mat-select formControlName="invItemCategory">
                 <mat-option *ngFor="let c of invItemsCategories" [value]="c.id">{{c.name}} </mat-option>
@@ -42,7 +42,7 @@
             </mat-error>
         </mat-form-field>
 
-        <mat-form-field fxFlex="48">
+        <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100">
             <mat-label>الصنف له اب ؟</mat-label>
             <mat-select formControlName="parentInvItemCard">
                 <mat-option value="null">هو أب </mat-option>
@@ -54,7 +54,7 @@
             </mat-error>
         </mat-form-field>  
 
-        <mat-form-field fxFlex="48">
+        <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100">
             <mat-label>وحدة قياس الأب</mat-label>
             <mat-select formControlName="uom" (selectionChange)="uomChange($event)"> 
                 <mat-option *ngFor="let i of invUomsParent" [value]="i.id">{{i.name}} </mat-option>
@@ -66,7 +66,7 @@
         </mat-form-field>
 
  
-        <mat-form-field fxFlex="48">
+        <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100">
             <mat-label>هل للصنف وحدة تجزئة ابن</mat-label>
             <mat-select formControlName="doesHasRetailUnit" (selectionChange)="doesHasRetailUnitChange($event)"> 
                 <mat-option [value]="true">نعم</mat-option>
@@ -79,7 +79,7 @@
         </mat-form-field>
 
 
-        <mat-form-field fxFlex="48" *ngIf="doesHasRetailUnit">
+        <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100" *ngIf="doesHasRetailUnit">
             <mat-label> وحدة القياس التجزئة الابن بالنسبة للأب({{parentUomName}})</mat-label>
             <mat-select formControlName="retailUom" (selectionChange)="retialUomChange($event)"> 
                 <mat-option *ngFor="let i of invUomsChild" [value]="i.id">{{i.name}} </mat-option>
@@ -91,7 +91,7 @@
         </mat-form-field>
 
 
-        <mat-form-field fxFlex="48"  *ngIf="doesHasRetailUnit">
+        <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100"  *ngIf="doesHasRetailUnit">
 
              <mat-label>عدد وحدات التجزئة ({{childUomName}}) بالنسبة للأب ({{parentUomName}}) </mat-label>
 
@@ -102,7 +102,7 @@
         </mat-form-field>
 
         
-        <mat-form-field fxFlex="48" >
+        <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100" >
             <mat-label>  سعر القطاعي بوحدة ({{parentUomName}}) </mat-label>
             <input matInput formControlName="price" placeholder="سعر القطاعي بوحدة ({{parentUomName}})" type="number">
             <mat-error>
@@ -110,7 +110,7 @@
             </mat-error>
         </mat-form-field>
 
-        <mat-form-field fxFlex="48" >
+        <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100" >
             <mat-label>  سعر النص جملة بوحدة ({{parentUomName}}) </mat-label>
             <input matInput formControlName="nosGomlaPrice" placeholder="سعر النص جملة بوحدة ({{parentUomName}}) " type="number">
             <mat-error>
@@ -118,7 +118,7 @@
             </mat-error>
         </mat-form-field>
 
-        <mat-form-field fxFlex="48" >
+        <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100" >
             <mat-label>سعر جملة بوحدة ({{parentUomName}}) </mat-label>
             <input matInput formControlName="gomlaPrice" placeholder="السعر" type="number">
             <mat-error>
@@ -126,7 +126,7 @@
             </mat-error>
         </mat-form-field>
 
-        <mat-form-field fxFlex="48" >
+        <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100" >
             <mat-label>سعر تكلفة الشراء لوحدة ({{parentUomName}}) </mat-label>
             <input matInput formControlName="costPrice" placeholder="السعر" type="number">
             <mat-error>
@@ -136,7 +136,7 @@
 
         <!-- retail -->
 
-        <mat-form-field fxFlex="48" *ngIf="doesHasRetailUnit">
+        <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100" *ngIf="doesHasRetailUnit">
             <mat-label>سعر القطاعي بوحدة ({{childUomName}}) </mat-label>
             <input matInput formControlName="priceRetail" placeholder="السعر" type="number">
             <mat-error>
@@ -144,7 +144,7 @@
             </mat-error>
         </mat-form-field>
 
-        <mat-form-field fxFlex="48" *ngIf="doesHasRetailUnit">
+        <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100" *ngIf="doesHasRetailUnit">
             <mat-label>سعر النص جملة بوحدة({{childUomName}})</mat-label>
             <input matInput formControlName="nosGomlaPriceRetail" placeholder="السعر" type="number">
             <mat-error>
@@ -152,7 +152,7 @@
             </mat-error>
         </mat-form-field>
 
-        <mat-form-field fxFlex="48" *ngIf="doesHasRetailUnit">
+        <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100" *ngIf="doesHasRetailUnit">
             <mat-label>سعر جملة بوحدة({{childUomName}})</mat-label>
             <input matInput formControlName="gomlaPriceRetail" placeholder="السعر" type="number">
             <mat-error>
@@ -160,7 +160,7 @@
             </mat-error>
         </mat-form-field>
 
-        <mat-form-field fxFlex="48" *ngIf="doesHasRetailUnit">
+        <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100" *ngIf="doesHasRetailUnit">
             <mat-label>سعر تكلفة الشراء لوحدة({{childUomName}})</mat-label>
             <input matInput formControlName="costPriceRetail" placeholder="السعر" type="number">
             <mat-error>
@@ -168,7 +168,7 @@
             </mat-error>
         </mat-form-field> 
 
-        <mat-form-field fxFlex="48">
+        <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100">
             <mat-label>هل للصنف سعر ثابت</mat-label>
             <mat-select formControlName="hasFixcedPrice"> 
                 <mat-option [value]="true">نعم</mat-option>
@@ -181,7 +181,7 @@
         </mat-form-field>
  
        
-        <mat-form-field fxFlex="48">
+        <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100">
             <mat-label>حالة التفعيل</mat-label>
             <mat-select formControlName="active"> 
                 <mat-option [value]="true">نعم</mat-option>

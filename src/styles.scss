@@ -333,7 +333,9 @@ body {
 }
 
 
-
+.cdk-global-overlay-wrapper{
+  overflow-y: auto !important;
+}
   .container {
     padding-right: 15px;
     padding-left: 15px;
