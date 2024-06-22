@@ -1,0 +1,66 @@
+ <h2 mat-dialog-title class="text-capitalize">{{title}}</h2>
+
+<form (ngSubmit)="onSubmit()" [formGroup]="saleForm"  class="p-5">
+
+    <div fxLayout="row wrap" fxLayoutGap="10">
+
+    <mat-form-field fxFlex="48">
+        <mat-label>تاريخ الفاتورة</mat-label>
+        <input matInput [matDatepicker]="orderDatePicker" formControlName="date">
+        <mat-datepicker-toggle matIconSuffix [for]="orderDatePicker">
+            <mat-icon matDatepickerToggleIcon>date_range</mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #orderDatePicker></mat-datepicker>
+        <mat-error>
+            <app-validation-msg [control]="saleForm.get('date')"
+                fieldName="التاريخ"></app-validation-msg>
+        </mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field fxFlex="48">
+        <mat-label>العميل</mat-label>
+
+        <input type="text"   placeholder="العميل" matInput
+            [formControl]="customerFormControl" [matAutocomplete]="customerAutoComplete">
+
+        <mat-autocomplete #customerAutoComplete="matAutocomplete" [displayWith]="customerDisplayFn"  (optionSelected)="selectedSupllier($event)">
+            <ng-container *ngFor="let option of filteredSuppliers | async; trackBy: customerDisplayFn">
+                <mat-option [value]="option">{{ option.name }}</mat-option>
+            </ng-container>
+        </mat-autocomplete>
+
+        <app-validation-msg [control]="saleForm.get('customer')" fieldName="العميل"></app-validation-msg>
+
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48">
+        <mat-label>نوع الفاتورة</mat-label>
+        <mat-select formControlName="pillType">
+            <mat-option [value]="1">كاش</mat-option>
+            <mat-option [value]="2">اّجل</mat-option>
+        </mat-select>
+        <mat-error>
+            <app-validation-msg [control]="saleForm.get('pillType')"
+                fieldName="نوع الفاتورة"></app-validation-msg>
+        </mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field fxFlex="48">
+        <mat-label>ملاحظات</mat-label>
+        <textarea matInput formControlName="notes" placeholder="ملاحظات"></textarea>
+
+        <mat-error>
+            <app-validation-msg [control]="saleForm.get('notes')" fieldName="ملاحظات"></app-validation-msg>
+        </mat-error>
+    </mat-form-field>
+    </div>
+
+
+
+    <mat-dialog-actions fxLayoutAlign="center">
+        <button mat-button mat-dialog-close color="danger">الغاء</button>
+        <button mat-raised-button  [disabled]="!saleForm.valid"  color="primary" type="submit"> حفظ</button>
+    </mat-dialog-actions>
+</form>

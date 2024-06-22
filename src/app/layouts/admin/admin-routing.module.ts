@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router'; 
+import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { adminGuardService } from 'src/app/guards/admin-guard.guard';
 import { Page404Component } from 'src/app/global/page404/page404.component';
@@ -18,6 +18,8 @@ import { SuppliersComponent } from './components/suppliers/suppliers/suppliers.c
 import { SettingsComponent } from './components/settings/settings.component';
 import { TransactionCollectComponent } from './components/transactions/transaction-collecr/transaction-collect.component';
 import { TransactionExchangeComponent } from './components/transactions/transaction-exchange/transaction-exchange.component';
+import { SalesComponent } from './components/sales/sales/sales.component';
+import { SaleDetailsComponent } from './components/sales/sale-details/sale-details.component';
 
 const routes: Routes = [
   {
@@ -38,7 +40,7 @@ const routes: Routes = [
 
       /* suppliers orders */
 
-      {path:'suppliersOrders', component: SuppliersOrdersComponent}, 
+      {path:'suppliersOrders', component: SuppliersOrdersComponent},
       {path:'supplierOrderDetails/:id', component: SupplierOrderDetailsComponent},
 
 
@@ -46,7 +48,15 @@ const routes: Routes = [
       {path:'suppliersCategories', component: SupplierCategoriesComponent},
 
 
-      
+      /* sales */
+
+      {path:'sales', component: SalesComponent},
+      {path:'salseDetails/:id', component: SaleDetailsComponent},
+
+
+
+
+
 
       /* customers */
 
@@ -59,8 +69,8 @@ const routes: Routes = [
 
       {path:'adminSettings', component: SettingsComponent},
 
-      
-      
+
+
 
 
       { path: '**', pathMatch :'full' , component: Page404Component},

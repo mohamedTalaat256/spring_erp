@@ -136,9 +136,9 @@ const TREE_DATA: FoodNode[] = [
     iconColor: 'success',
     children: [
       {
-        name: 'أنواع الحسابات المالية',
+        name: 'فواتير المبيعات',
         icon: 'menu',
-        url: '/admin/accountTypes'
+        url: '/admin/sales'
       },
       {
         name: 'الشجرة (الحسابات المالية)',

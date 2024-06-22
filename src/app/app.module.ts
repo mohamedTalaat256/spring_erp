@@ -60,6 +60,10 @@ import { SettingsComponent } from './layouts/admin/components/settings/settings.
 import { TransactionCollectComponent } from './layouts/admin/components/transactions/transaction-collecr/transaction-collect.component';
 import { TransactionExchangeComponent } from './layouts/admin/components/transactions/transaction-exchange/transaction-exchange.component';
 import { DateConverter } from './pip/dateConverter';
+import { SalesComponent } from './layouts/admin/components/sales/sales/sales.component';
+import { SaleFormDialogComponent } from './layouts/admin/components/sales/sale-form-dialog/sale-form-dialog.component';
+import { SaleDetailsFormDialogComponent } from './layouts/admin/components/sales/sale-details-form-dialog/sale-details-form-dialog.component';
+import { SaleDetailsComponent } from './layouts/admin/components/sales/sale-details/sale-details.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -111,7 +115,11 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     SettingsComponent,
     TransactionCollectComponent,
     TransactionExchangeComponent,
-    DateConverter
+    DateConverter,
+    SalesComponent,
+    SaleFormDialogComponent,
+    SaleDetailsFormDialogComponent,
+    SaleDetailsComponent
 
   ],
   imports: [
