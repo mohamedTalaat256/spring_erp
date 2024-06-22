@@ -7,7 +7,7 @@ import { FormMode, baseURL } from "../constants/constants";
 export class SupplierOrderDetailsService {
 
   constructor(private http: HttpClient) { }
- 
+
 
   public save(data: any, formMode: FormMode): Observable<any> {
     if(formMode === FormMode.CREATE){
@@ -19,8 +19,8 @@ export class SupplierOrderDetailsService {
 
 
   public delete(id: number): Observable<any> {
-    return this.http.delete<any>(baseURL + '/supplierOrderDetails/saveItemInOrder/delete/'+id);
+    return this.http.delete<any>(baseURL + '/supplierOrderDetails/deleteItemInOrder/'+id);
   }
- 
+
 
 }

@@ -24,13 +24,13 @@ import { SupplierOrderDetailsService } from 'src/app/service/supplierOrderDetail
   styleUrls: ['./supplier-order-details.component.scss']
 })
 export class SupplierOrderDetailsComponent implements OnInit {
-  
-  
 
- 
+
+
+
   discountType:number=0;
   discountValue:number=0;
-  
+
   pillType:number=0;
   whatPaid: number=0;
   whatRemain: number=0;
@@ -53,7 +53,7 @@ export class SupplierOrderDetailsComponent implements OnInit {
     private supplierOrderService: SupplierOrderService,
     private supplierOrderDetailsService: SupplierOrderDetailsService,
     private route: ActivatedRoute,
-   
+
   ){
     this.invoiceForm = this.fb.group({
       orderId:         [0,  ],
@@ -66,27 +66,27 @@ export class SupplierOrderDetailsComponent implements OnInit {
       notes:           [null],
     });
   }
- 
+
   filteredClients: Observable<any[]>;
 
- 
+
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.orderId = params['id'];
       this.getSupplierOrderDetails(params['id']);
-      
-    }); 
+
+    });
   }
 
- 
- 
+
+
   onSubmit(){
     console.log(this.invoiceForm.value);
 
 
     this.supplierOrderService.upprove(this.invoiceForm.value).subscribe({
       next: (response: AppResponse) => {
-        if (response.ok) { 
+        if (response.ok) {
           Swal.fire({
             icon: "success",
             title: response.message,
@@ -113,12 +113,12 @@ export class SupplierOrderDetailsComponent implements OnInit {
   getSupplierOrderDetails(id: number){
     this.supplierOrderService.findById(id).subscribe({
       next: (response: AppResponse) => {
-        if (response.ok) { 
-          this.supplierOrderDetailsItems = response.data.supplierOrderDetailsItems; 
+        if (response.ok) {
+          this.supplierOrderDetailsItems = response.data.supplierOrderDetailsItems;
           this.dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
 
           this.supplierOrder = response.data;
-          this.invoiceForm = this.fb.group({  
+          this.invoiceForm = this.fb.group({
             orderId:          [this.supplierOrder.id,  ],
             discountType:    [this.supplierOrder.discountType, [Validators.required]],
             discountPercent: [this.supplierOrder.discountPercent, [Validators.required]],
@@ -141,7 +141,7 @@ export class SupplierOrderDetailsComponent implements OnInit {
     });
   }
 
-  openAddInvItemDialog() { 
+  openAddInvItemDialog() {
     const data = {
       title: 'اضافة صنف الي الفاتورة',
       formMode: FormMode.CREATE,
@@ -151,25 +151,22 @@ export class SupplierOrderDetailsComponent implements OnInit {
       width: '400px',
       height: 'auto',
       data: data
-    }); 
+    });
 
     dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
- 
+
       if(result){
         let index = this.supplierOrderDetailsItems.find(i=> i.invItemCard.id=== result.invItemId);
         if(index){
-          Swal.fire({ 
+          Swal.fire({
             icon: "error",
             title: "الصنف موجود بالفعل بالفاتورة, يمكنك التعديل عليه",
             showConfirmButton: true,
-          
+
           });
           return;
         }
-        console.log(result);
-
-       
-        this.supplierOrderDetailsItems.push(result);
+        this.supplierOrderDetailsItems= result;
         this.dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
 
         this.calculateInvoiceItemTotal();
@@ -178,7 +175,7 @@ export class SupplierOrderDetailsComponent implements OnInit {
     });
   }
 
-  openEditInvItemDialog(orderItem) { 
+  openEditInvItemDialog(orderItem) {
 
     const data = {
       title: 'تعديل صنف في الفاتورة',
@@ -190,14 +187,13 @@ export class SupplierOrderDetailsComponent implements OnInit {
       width: '400px',
       height: 'auto',
       data: data
-    }); 
+    });
 
     dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
- 
-      
+
+
       if(result){
- 
-        this.supplierOrderDetailsItems.push(result);
+        this.supplierOrderDetailsItems= result;
         this.dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
 
       }
@@ -222,32 +218,36 @@ export class SupplierOrderDetailsComponent implements OnInit {
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        
+
         this.supplierOrderDetailsService.delete(invItem.id).subscribe(
           {
-            next:(response: any)=>{ 
-    
+            next:(response: any)=>{
+
               if(response.ok){
                // this.supplierOrderDetailsItems.removeAt(index);
+
+                Swal.fire({
+                  icon: "success",
+                  title: response.message,
+                  showConfirmButton: false,
+                  timer: 1500
+                });
+                this.supplierOrderDetailsItems = response.data;
+
               }
-              
-              Swal.fire({ 
-                icon: "success",
-                title: response.message,
-                showConfirmButton: false,
-                timer: 1500
-              });
+
+
             },
             error:(error: AppResponse)=>{
-              Swal.fire({ 
+              Swal.fire({
                 icon: "error",
                 title: error.message,
                 showConfirmButton: false,
                 timer: 1500
-              });   
+              });
             }
           }
-        ); 
+        );
         Swal.fire('تم الحذف', '', 'success')
       }}
       );
@@ -268,10 +268,10 @@ export class SupplierOrderDetailsComponent implements OnInit {
     this.discountType = Number(event.value);
   }
 
-  ondiscountValueChange(){ 
+  ondiscountValueChange(){
     if(this.discountType ===1){
       this.discountValue =   this.invoceTotal * (this.invoiceForm.value.discountPercent / 100);
- 
+
     }else if(this.discountType ===2){
       this.discountValue =  this.invoiceForm.value.discountValue ;
     }else{
@@ -297,7 +297,7 @@ export class SupplierOrderDetailsComponent implements OnInit {
       );
     }
   }
-  
 
- 
+
+
 }

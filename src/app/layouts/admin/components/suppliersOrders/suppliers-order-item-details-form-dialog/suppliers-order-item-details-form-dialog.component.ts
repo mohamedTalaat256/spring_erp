@@ -47,7 +47,7 @@ export class SuppliersOrderItemDetailsFormDialogComponent implements OnInit {
 
     if (this.data.formMode === FormMode.CREATE) {
       this.newInvItemForm = this.supplierOrderDetailsItemForm.createForm();
-      
+
     } else {
       this.newInvItemForm = this.supplierOrderDetailsItemForm.setForm(this.data.orderItem);
       this.invItemFormControl.setValue( {
@@ -56,7 +56,7 @@ export class SuppliersOrderItemDetailsFormDialogComponent implements OnInit {
       });
 
       this.selectedItem = this.data.orderItem;
-      
+
     }
     this.title = this.data.title;
     this.orderId = this.data.orderId;
@@ -69,7 +69,7 @@ export class SuppliersOrderItemDetailsFormDialogComponent implements OnInit {
   ngOnInit(): void {
     this.getAllInvItems();
     this.setFilters();
-   
+
 
   }
 
@@ -77,7 +77,7 @@ export class SuppliersOrderItemDetailsFormDialogComponent implements OnInit {
     this.invItemService.findAll().subscribe({
       next: (response: AppResponse) => {
         if (response.ok) {
-          this.invItems = response.data.invItems; 
+          this.invItems = response.data.invItems;
         }
       },
       error: (error: Error) => {
@@ -93,8 +93,7 @@ export class SuppliersOrderItemDetailsFormDialogComponent implements OnInit {
 
 
   onSubmit() {
-    console.log(this.newInvItemForm.value);
-    
+
     this.supplierOrderDetails
       .save(this.newInvItemForm.value, this.data.formMode)
       .pipe(take(1))
@@ -108,8 +107,8 @@ export class SuppliersOrderItemDetailsFormDialogComponent implements OnInit {
               showConfirmButton: false,
               timer: 1500,
             });
+          this.dialogRef.close(response.data);
           }
-         
         },
         error: (error: AppResponse) => {
           Swal.fire({
@@ -142,7 +141,7 @@ export class SuppliersOrderItemDetailsFormDialogComponent implements OnInit {
   }
 
   selectedInvItem(event: MatAutocompleteSelectedEvent) {
- 
+
     this.newInvItemForm.patchValue({
       invItemCard: event.option.value.id
     }, { onlySelf: true, emitEvent: true });
@@ -154,13 +153,13 @@ export class SuppliersOrderItemDetailsFormDialogComponent implements OnInit {
 
 
   setSelectedItem(id:number) {
-   
+
     this.selectedItem = this.invItems.filter( i=> i.id === id)[0];
     this.newInvItemForm.patchValue({
       unitPrice: this.selectedItem.price
     });
     console.log(this.selectedItem);
-   
+
   }
 
 
