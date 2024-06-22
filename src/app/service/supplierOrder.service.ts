@@ -23,6 +23,11 @@ export class SupplierOrderService {
   public save(data: any): Observable<any> {
     return this.http.post<any>(baseURL + '/supplierOrder',  data);
   }
- 
+
+
+  public upprove(data: any): Observable<any> {
+    return this.http.post<any>(baseURL + '/supplierOrder/approve',  data);
+  }
+
 
 }

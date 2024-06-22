@@ -84,19 +84,28 @@ export class SupplierOrderDetailsComponent implements OnInit {
     console.log(this.invoiceForm.value);
 
 
-/* 
-{
-    "orderId": 3,
-    "discountType": 1,
-    "discountPercent": 0,
-    "discountValue": 0,
-    "pillType": 1,
-    "whatPaid": 12,
-    "whatRemain": 20,
-    "notes": "sdfsdf"
-}
+    this.supplierOrderService.upprove(this.invoiceForm.value).subscribe({
+      next: (response: AppResponse) => {
+        if (response.ok) { 
+          Swal.fire({
+            icon: "success",
+            title: response.message,
+            showConfirmButton: true
+          });
+        }
+      },
+      error: (error: Error) => {
+        Swal.fire({
+          icon: "error",
+          title: error.message,
+          showConfirmButton: true
+        });
+      }
 
-*/
+    });
+
+
+
 
 
   }
