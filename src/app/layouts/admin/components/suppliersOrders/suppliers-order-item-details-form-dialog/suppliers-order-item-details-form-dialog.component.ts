@@ -68,7 +68,7 @@ export class SuppliersOrderItemDetailsFormDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllInvItems();
-    this.setFilters();
+
 
 
   }
@@ -78,6 +78,7 @@ export class SuppliersOrderItemDetailsFormDialogComponent implements OnInit {
       next: (response: AppResponse) => {
         if (response.ok) {
           this.invItems = response.data.invItems;
+          this.setFilters();
         }
       },
       error: (error: Error) => {

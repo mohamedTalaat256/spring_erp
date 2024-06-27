@@ -13,7 +13,7 @@
         <mat-datepicker #orderDatePicker></mat-datepicker>
         <mat-error>
             <app-validation-msg [control]="supplierOrderForm.get('orderDate')"
-                [fieldName]="'date_of_birth'"></app-validation-msg>
+                fieldName="تاريخ الفاتورة"></app-validation-msg>
         </mat-error>
     </mat-form-field>
 
@@ -38,9 +38,9 @@
                 <mat-option [value]="option">{{ option.name }}</mat-option>
             </ng-container>
         </mat-autocomplete>
-
-        <app-validation-msg [control]="supplierOrderForm.get('supplierCode')" fieldName="المورد"></app-validation-msg>
-
+        <mat-error>
+        <app-validation-msg [control]="supplierFormControl" fieldName="المورد"></app-validation-msg>
+          </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48">
@@ -75,7 +75,7 @@
     <mat-form-field fxFlex="100">
         <mat-label>ملاحظات</mat-label>
         <textarea matInput formControlName="notes" placeholder="ملاحظات"></textarea>
-         
+
         <mat-error>
             <app-validation-msg [control]="supplierOrderForm.get('notes')" fieldName="ملاحظات"></app-validation-msg>
         </mat-error>

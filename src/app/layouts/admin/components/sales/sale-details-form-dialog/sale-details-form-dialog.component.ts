@@ -5,13 +5,14 @@ import { FormMode } from 'src/app/constants/constants';
 import { Observable, map, startWith, take } from 'rxjs';
 import { AppResponse } from 'src/app/model/app_response.model';
 import Swal from 'sweetalert2';
-  import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-  import { InvItem, emptyItem } from 'src/app/model/invItem';
-import { SupplierOrderDetailsItemForm } from '../../../form-controls/supplierOrderDetailsItem-form';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { InvItem, emptyItem, emptyUom } from 'src/app/model/invItem';
 import { InvItemService } from 'src/app/service/invItem.service';
- import { InvUom } from 'src/app/model/invUom';
-import { SupplierOrderDetailsService } from 'src/app/service/supplierOrderDetails.service';
+import { InvUom } from 'src/app/model/invUom';
 import { Store } from 'src/app/model/store';
+import { SalesService } from 'src/app/service/sale.service';
+import { SalesOrderDetailsItemForm } from '../../../form-controls/salesOrderDetailsItem-form';
+import { SalesOrderDetailsService } from 'src/app/service/salesOrderDetails.service';
 
 
 @Component({
@@ -31,22 +32,25 @@ export class SaleDetailsFormDialogComponent {
   newInvItemForm: FormGroup;
   title: string;
   orderId: number;
+  itemBatches: any[] = [];
+  selectedUom: InvUom = emptyUom;
 
 
   constructor(
-    private supplierOrderDetailsItemForm: SupplierOrderDetailsItemForm,
+    private salesOrderDetailsItemForm: SalesOrderDetailsItemForm,
     private invItemService: InvItemService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<SaleDetailsFormDialogComponent>,
-    private supplierOrderDetails: SupplierOrderDetailsService
+    private salesOrderDetailsService: SalesOrderDetailsService,
+    private salesService: SalesService
   ) {
 
 
     if (this.data.formMode === FormMode.CREATE) {
-      this.newInvItemForm = this.supplierOrderDetailsItemForm.createForm();
+      this.newInvItemForm = this.salesOrderDetailsItemForm.createForm();
 
     } else {
-      this.newInvItemForm = this.supplierOrderDetailsItemForm.setForm(this.data.orderItem);
+      this.newInvItemForm = this.salesOrderDetailsItemForm.setForm(this.data.orderItem);
       this.invItemFormControl.setValue( {
         id: this.data.orderItem.invItemCard.id,
         name: this.data.orderItem.invItemCard.name
@@ -65,16 +69,15 @@ export class SaleDetailsFormDialogComponent {
 
   ngOnInit(): void {
     this.getAllData();
-    this.setFilters();
-
-
   }
 
   getAllData() {
-    this.invItemService.findAll().subscribe({
+    this.salesService.getAllData().subscribe({
       next: (response: AppResponse) => {
         if (response.ok) {
           this.invItems = response.data.invItems;
+          this.stores = response.data.stores;
+          this.setFilters();
         }
       },
       error: (error: Error) => {
@@ -91,7 +94,7 @@ export class SaleDetailsFormDialogComponent {
 
   onSubmit() {
 
-    this.supplierOrderDetails
+    this.salesOrderDetailsService
       .save(this.newInvItemForm.value, this.data.formMode)
       .pipe(take(1))
       .subscribe({
@@ -155,13 +158,48 @@ export class SaleDetailsFormDialogComponent {
     this.newInvItemForm.patchValue({
       unitPrice: this.selectedItem.price
     });
-    console.log(this.selectedItem);
+
+    const formData = {
+      invItemId: this.selectedItem.id ,
+      storeId: this.newInvItemForm.value.store,
+      uomId: this.newInvItemForm.value.uom
+    }
+
+    if( this.newInvItemForm.value.uom !== null && this.newInvItemForm.value.store !== null){
+
+
+      this.salesOrderDetailsService.getItemBatches(formData).subscribe(
+        {
+          next: (response: AppResponse) => {
+            if(response.ok){
+              this.itemBatches = response.data.invItemCardBatch;
+              this.selectedUom = response.data.uom;
+
+              console.log(response.data);
+
+            }
+          },
+          error: (error: AppResponse) => {
+            Swal.fire({
+              icon: 'error',
+              title: error.message,
+              showConfirmButton: false,
+            });
+          },
+        }
+      );
+    }
+
+
+
 
   }
 
 
-  onStoreChange(event){
+  onUomChange(event){
 
+    this.selectedUom = this.newInvItemForm.value.uom;
   }
+
 
 }

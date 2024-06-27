@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { FormMode } from 'src/app/constants/constants';
+import { FormMode, emptySalesOrder } from 'src/app/constants/constants';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, map, startWith, take } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import Swal from 'sweetalert2';
 import { MatSelectChange } from '@angular/material/select';
 import { AppResponse } from 'src/app/model/app_response.model';
- import { SupplierOrderService } from 'src/app/service/supplierOrder.service';
  import { ActivatedRoute } from '@angular/router';
-import { SupplierOrderDetailsService } from 'src/app/service/supplierOrderDetails.service';
 import { SaleDetailsFormDialogComponent } from '../sale-details-form-dialog/sale-details-form-dialog.component';
 import { SalesService } from 'src/app/service/sale.service';
+import { SalesOrderDetailsService } from 'src/app/service/salesOrderDetails.service';
 @Component({
   selector: 'app-sale-details',
   templateUrl: './sale-details.component.html',
@@ -30,21 +29,21 @@ export class SaleDetailsComponent {
   invoiceForm: FormGroup;
 
 
-  supplierOrder: any;
+  salesOrder: any = emptySalesOrder;
 
   invoceTotal:number =0;
-  displayedColumns: string[] = ['id', 'store', 'unit', 'orderItem', 'price', 'amount', 'total', 'actions'];
+  displayedColumns: string[] = ['id', 'store', 'orderItem', 'unit',  'price', 'amount', 'total', 'actions'];
 
 
-  supplierOrderDetailsItems: any []=[];
-  dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
+  salesInvoiceDetails: any []=[];
+  dataSource = new MatTableDataSource<any>(this.salesInvoiceDetails);
   orderId: number;
 
 
   constructor(private fb: FormBuilder,
     public dialog: MatDialog,
     private salesService: SalesService,
-    private supplierOrderDetailsService: SupplierOrderDetailsService,
+    private salesOrderDetailsService: SalesOrderDetailsService,
     private route: ActivatedRoute,
 
   ){
@@ -107,19 +106,19 @@ export class SaleDetailsComponent {
     this.salesService.findById(id).subscribe({
       next: (response: AppResponse) => {
         if (response.ok) {
-          this.supplierOrderDetailsItems = response.data.supplierOrderDetailsItems;
-          this.dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
+          this.salesInvoiceDetails = response.data.salesInvoiceDetails;
+          this.dataSource = new MatTableDataSource<any>(this.salesInvoiceDetails);
 
-          this.supplierOrder = response.data;
+          this.salesOrder = response.data;
           this.invoiceForm = this.fb.group({
-            orderId:          [this.supplierOrder.id,  ],
-            discountType:    [this.supplierOrder.discountType, [Validators.required]],
-            discountPercent: [this.supplierOrder.discountPercent, [Validators.required]],
-            discountValue:   [this.supplierOrder.discountValue, [Validators.required]],
-            pillType:        [this.supplierOrder.pillType, [Validators.required]],
-            whatPaid:        [this.supplierOrder.whatPaid, [Validators.required]],
-            whatRemain:      [this.supplierOrder.whatRemain, [Validators.required]],
-            notes:            [this.supplierOrder.notes],
+            orderId:          [this.salesOrder.id,  ],
+            discountType:    [this.salesOrder.discountType, [Validators.required]],
+            discountPercent: [this.salesOrder.discountPercent, [Validators.required]],
+            discountValue:   [this.salesOrder.discountValue, [Validators.required]],
+            pillType:        [this.salesOrder.pillType, [Validators.required]],
+            whatPaid:        [this.salesOrder.whatPaid, [Validators.required]],
+            whatRemain:      [this.salesOrder.whatRemain, [Validators.required]],
+            notes:            [this.salesOrder.notes],
           });
         }
       },
@@ -149,7 +148,7 @@ export class SaleDetailsComponent {
     dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
 
       if(result){
-        let index = this.supplierOrderDetailsItems.find(i=> i.invItemCard.id=== result.invItemId);
+        let index = this.salesInvoiceDetails.find(i=> i.invItemCard.id=== result.invItemId);
         if(index){
           Swal.fire({
             icon: "error",
@@ -159,8 +158,8 @@ export class SaleDetailsComponent {
           });
           return;
         }
-        this.supplierOrderDetailsItems= result;
-        this.dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
+        this.salesInvoiceDetails= result;
+        this.dataSource = new MatTableDataSource<any>(this.salesInvoiceDetails);
 
         this.calculateInvoiceItemTotal();
 
@@ -186,8 +185,8 @@ export class SaleDetailsComponent {
 
 
       if(result){
-        this.supplierOrderDetailsItems= result;
-        this.dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
+        this.salesInvoiceDetails= result;
+        this.dataSource = new MatTableDataSource<any>(this.salesInvoiceDetails);
 
       }
     });
@@ -212,12 +211,12 @@ export class SaleDetailsComponent {
     }).then((result) => {
       if (result.isConfirmed) {
 
-        this.supplierOrderDetailsService.delete(invItem.id).subscribe(
+        this.salesOrderDetailsService.delete(invItem.id).subscribe(
           {
             next:(response: any)=>{
 
               if(response.ok){
-               // this.supplierOrderDetailsItems.removeAt(index);
+               // this.salesInvoiceDetails.removeAt(index);
 
                 Swal.fire({
                   icon: "success",
@@ -225,7 +224,7 @@ export class SaleDetailsComponent {
                   showConfirmButton: false,
                   timer: 1500
                 });
-                this.supplierOrderDetailsItems = response.data;
+                this.salesInvoiceDetails = response.data;
 
               }
 
@@ -244,7 +243,7 @@ export class SaleDetailsComponent {
         Swal.fire('تم الحذف', '', 'success')
       }}
       );
-    this.supplierOrderDetailsItems = this.supplierOrderDetailsItems.filter(i=> i.id !== invItem.invItem);
+    this.salesInvoiceDetails = this.salesInvoiceDetails.filter(i=> i.id !== invItem.invItem);
   }
 
   calculateInvoiceItemTotal(){

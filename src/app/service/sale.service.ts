@@ -29,5 +29,10 @@ export class SalesService {
     return this.http.post<any>(baseURL + '/salesInvoice/approve',  data);
   }
 
+  getAllData(): Observable<any> {
+    return this.http.get(baseURL + '/salesInvoice/getAllData');
+  }
+
+
 
 }

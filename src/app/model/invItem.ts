@@ -8,33 +8,40 @@ export interface InvItem{
     itemType: number;
 
     invItemCategory: InvItemCategory;
-    parentInvItemCard: InvItem; 
-    uom: InvUom; 
+    parentInvItemCard: InvItem;
+    uom: InvUom;
     doesHasRetailUnit: boolean;
     retailUom: InvUom;
 
     retailUomQuntToParent: number;
-  
-    price: number; 
+
+    price: number;
     nosGomlaPrice: number;
     gomlaPrice: number;
-    costPrice: number; 
+    costPrice: number;
 
 
-    priceRetail: number; 
+    priceRetail: number;
     nosGomlaPriceRetail: number;
     gomlaPriceRetail: number;
     costPriceRetail: number;
 
-    hasFixcedPrice: boolean; 
+    hasFixcedPrice: boolean;
 
-    QUENTITY: number; 
+    QUENTITY: number;
     QUENTITY_Retail: number;
-    QUENTITY_all_Retails: number; 
-    allQUENTITY: number; 
+    QUENTITY_all_Retails: number;
+    allQUENTITY: number;
 
-    photo: string; 
+    photo: string;
     active: boolean;
+}
+
+export const emptyUom: InvUom ={
+  id: 0,
+  name: null,
+  master: null,
+  active: null
 }
 
 export const emptyItem: InvItem={
@@ -48,13 +55,13 @@ export const emptyItem: InvItem={
         name: null,
         active: null
     },
-    parentInvItemCard: null, 
+    parentInvItemCard: null,
     uom: {
         id: 0,
         name: null,
         master: null,
         active: null
-    }, 
+    },
     doesHasRetailUnit: null,
     retailUom:  {
         id: 0,
@@ -64,25 +71,25 @@ export const emptyItem: InvItem={
     },
 
     retailUomQuntToParent: null,
-  
-    price: null, 
+
+    price: null,
     nosGomlaPrice: null,
     gomlaPrice: null,
-    costPrice: null, 
+    costPrice: null,
 
 
-    priceRetail: null, 
+    priceRetail: null,
     nosGomlaPriceRetail: null,
     gomlaPriceRetail: null,
     costPriceRetail: null,
 
-    hasFixcedPrice: null, 
+    hasFixcedPrice: null,
 
-    QUENTITY: null, 
+    QUENTITY: null,
     QUENTITY_Retail: null,
-    QUENTITY_all_Retails: null, 
-    allQUENTITY: null, 
+    QUENTITY_all_Retails: null,
+    allQUENTITY: null,
 
-    photo: null, 
+    photo: null,
     active: null,
 }
