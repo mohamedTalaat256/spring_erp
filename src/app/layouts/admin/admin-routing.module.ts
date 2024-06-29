@@ -21,6 +21,8 @@ import { TransactionExchangeComponent } from './components/transactions/transact
 import { SalesComponent } from './components/sales/sales/sales.component';
 import { SaleDetailsComponent } from './components/sales/sale-details/sale-details.component';
 import { ItemsBalanceComponent } from './components/items-balance/items-balance.component';
+import { SupplierOrdersReturnComponent } from './components/supplierOrderReturn/supplier-orders-return/supplier-orders-return.component';
+import { SupplierOrdersReturnDetailsComponent } from './components/supplierOrderReturn/supplier-orders-return-details/supplier-orders-return-details.component';
 
 const routes: Routes = [
   {
@@ -45,6 +47,13 @@ const routes: Routes = [
 
       {path:'suppliersOrders', component: SuppliersOrdersComponent},
       {path:'supplierOrderDetails/:id', component: SupplierOrderDetailsComponent},
+
+
+      /* supplierOrdersReturn */
+
+      {path:'supplierOrdersReturn', component: SupplierOrdersReturnComponent},
+      {path:'supplierOrderReturnDetails/:id', component: SupplierOrdersReturnDetailsComponent},
+
 
 
       {path:'suppliers', component: SuppliersComponent},

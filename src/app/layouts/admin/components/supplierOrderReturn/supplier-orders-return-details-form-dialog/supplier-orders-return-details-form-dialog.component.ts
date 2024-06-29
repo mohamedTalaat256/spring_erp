@@ -1,27 +1,33 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormMode } from 'src/app/constants/constants';
+import { FormMode, ITEM_TYPES } from 'src/app/constants/constants';
 import { Observable, map, startWith, take } from 'rxjs';
 import { AppResponse } from 'src/app/model/app_response.model';
 import Swal from 'sweetalert2';
+import { MatSelectChange } from '@angular/material/select';
+import { supplierOrderFormControl } from '../../../form-controls/supplier-order-form';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { SupplierOrderService } from 'src/app/service/supplierOrder.service';
+import { Router } from '@angular/router';
 import { InvItem, emptyItem, emptyUom } from 'src/app/model/invItem';
+import { SupplierOrderDetailsItemForm } from '../../../form-controls/supplierOrderDetailsItem-form';
 import { InvItemService } from 'src/app/service/invItem.service';
+import { InvUomService } from 'src/app/service/invUom.service';
 import { InvUom } from 'src/app/model/invUom';
+import { SupplierOrderReturnDetailsFormControl } from '../../../form-controls/supplierOrderReturnDetails-form';
 import { Store } from 'src/app/model/store';
 import { SalesService } from 'src/app/service/sale.service';
- import { SalesOrderDetailsService } from 'src/app/service/salesOrderDetails.service';
+import { SupplierOrderReturnDetailsService } from 'src/app/service/supplierOrderReturnDetails.service';
 import { ItemsBalanceService } from 'src/app/service/itemsBalance.service';
-import { SupplierOrderReturnDetailsFormControl } from '../../../form-controls/supplierOrderReturnDetails-form';
-
 
 @Component({
-  selector: 'app-sale-details-form-dialog',
-  templateUrl: './sale-details-form-dialog.component.html',
-  styleUrls: ['./sale-details-form-dialog.component.scss']
+  selector: 'app-supplier-orders-return-details-form-dialog',
+  templateUrl: './supplier-orders-return-details-form-dialog.component.html',
+  styleUrls: ['./supplier-orders-return-details-form-dialog.component.scss']
 })
-export class SaleDetailsFormDialogComponent implements OnInit {
+export class SupplierOrdersReturnDetailsFormDialogComponent {
+
 
   invItemFormControl = new FormControl<string | any>('', [Validators.required]);
 
@@ -33,17 +39,17 @@ export class SaleDetailsFormDialogComponent implements OnInit {
   newInvItemForm: FormGroup;
   title: string;
   orderId: number;
+  storeId: number;
   itemBatches: any[] = [];
   selectedUom: InvUom = emptyUom;
 
 
   constructor(
-    private supplierOrderReturnDetailsFormControl: SupplierOrderReturnDetailsFormControl,
     private invItemService: InvItemService,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<SaleDetailsFormDialogComponent>,
-    private salesOrderDetailsService: SalesOrderDetailsService,
-    private salesService: SalesService,
+    private dialogRef: MatDialogRef<SupplierOrdersReturnDetailsFormDialogComponent>,
+    private supplierOrderReturnDetailsFormControl: SupplierOrderReturnDetailsFormControl,
+    private supplierOrderReturnDetailsService: SupplierOrderReturnDetailsService,
     private itemsBalanceService: ItemsBalanceService
   ) {
 
@@ -63,6 +69,7 @@ export class SaleDetailsFormDialogComponent implements OnInit {
     }
     this.title = this.data.title;
     this.orderId = this.data.orderId;
+    this.storeId = this.data.storeId;
 
     this.newInvItemForm.patchValue({
       orderId: Number(this.orderId)
@@ -74,7 +81,7 @@ export class SaleDetailsFormDialogComponent implements OnInit {
   }
 
   getAllData() {
-    this.salesService.getAllData().subscribe({
+    this.supplierOrderReturnDetailsService.getAllData().subscribe({
       next: (response: AppResponse) => {
         if (response.ok) {
           this.invItems = response.data.invItems;
@@ -96,7 +103,7 @@ export class SaleDetailsFormDialogComponent implements OnInit {
 
   onSubmit() {
 
-    this.salesOrderDetailsService
+    this.supplierOrderReturnDetailsService
       .save(this.newInvItemForm.value, this.data.formMode)
       .pipe(take(1))
       .subscribe({
@@ -163,7 +170,7 @@ export class SaleDetailsFormDialogComponent implements OnInit {
 
     const formData = {
       invItemId: this.selectedItem.id ,
-      storeId: this.newInvItemForm.value.store,
+      storeId: this.storeId,
       uomId: this.newInvItemForm.value.uom
     }
 
@@ -202,6 +209,7 @@ export class SaleDetailsFormDialogComponent implements OnInit {
 
     this.selectedUom = this.newInvItemForm.value.uom;
   }
+
 
 
 }

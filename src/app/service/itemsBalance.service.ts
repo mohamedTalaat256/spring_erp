@@ -14,4 +14,9 @@ export class ItemsBalanceService {
     return this.http.get(baseURL + '/batches');
   }
 
+
+
+  getItemBatches(formData): Observable<any>{
+    return this.http.post(baseURL + '/batches/getItemBatches', formData);
+  }
 }

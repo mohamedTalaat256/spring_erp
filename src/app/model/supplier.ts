@@ -1,7 +1,7 @@
 import { SupplierCategory } from "./supplierCategory";
 
 export interface Supplier{
-     
+
     id: number,
     name: string,
     accountNumber: number,
@@ -13,5 +13,26 @@ export interface Supplier{
     phones: string,
     notes: string,
     active: boolean
+
+}
+
+
+export const emptySupplier ={
+
+  id: 0,
+  name: '',
+  accountNumber: 0,
+  supplierCategory: {
+    id: 0,
+    name: '',
+    active: false
+  },
+  startBalanceStatus: 0,
+  startBalance: 0,
+  currentBalance: 0,
+  address: '',
+  phones: '',
+  notes: '',
+  active: false
 
 }

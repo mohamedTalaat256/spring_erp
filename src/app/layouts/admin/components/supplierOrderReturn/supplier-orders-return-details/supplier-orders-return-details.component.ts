@@ -1,23 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormMode } from 'src/app/constants/constants';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, map, startWith, take } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import Swal from 'sweetalert2';
 import { MatSelectChange } from '@angular/material/select';
 import { AppResponse } from 'src/app/model/app_response.model';
- import { ActivatedRoute } from '@angular/router';
-import { SaleDetailsFormDialogComponent } from '../sale-details-form-dialog/sale-details-form-dialog.component';
-import { SalesService } from 'src/app/service/sale.service';
-import { SalesOrderDetailsService } from 'src/app/service/salesOrderDetails.service';
-import { emptySalesOrder } from 'src/app/model/sales-order.model';
+import { ActivatedRoute } from '@angular/router';
+ import { SupplierOrdersReturnDetailsFormDialogComponent } from '../supplier-orders-return-details-form-dialog/supplier-orders-return-details-form-dialog.component';
+import { SupplierOrderReturnService } from 'src/app/service/supplierOrderReturn.service';
+import { SupplierOrderReturnDetailsService } from 'src/app/service/supplierOrderReturnDetails.service';
+import { SupplierOrderReturn, emptySupplierOrderReturn } from 'src/app/model/supplierOrderReturn';
+
 @Component({
-  selector: 'app-sale-details',
-  templateUrl: './sale-details.component.html',
-  styleUrls: ['./sale-details.component.scss']
+  selector: 'app-supplier-orders-return-details',
+  templateUrl: './supplier-orders-return-details.component.html',
+  styleUrls: ['./supplier-orders-return-details.component.scss']
 })
-export class SaleDetailsComponent {
+export class SupplierOrdersReturnDetailsComponent implements OnInit {
 
 
 
@@ -29,35 +30,33 @@ export class SaleDetailsComponent {
   whatRemain: number=0;
   invoiceForm: FormGroup;
 
-  avialableBalance: number =0;
 
-  salesOrder: any = emptySalesOrder;
+  supplierOrderReturn: SupplierOrderReturn = emptySupplierOrderReturn;
 
   invoceTotal:number =0;
-  displayedColumns: string[] = ['id', 'store', 'orderItem', 'unit',  'price', 'amount', 'total', 'actions'];
+  displayedColumns: string[] = ['id', 'unit', 'orderItem', 'price', 'amount', 'total', 'actions'];
 
 
-  salesInvoiceDetails: any []=[];
-  dataSource = new MatTableDataSource<any>(this.salesInvoiceDetails);
-  id: number;
+  supplierOrderReturnDetailsItems: any []=[];
+  dataSource = new MatTableDataSource<any>(this.supplierOrderReturnDetailsItems);
+  orderId: number;
 
 
   constructor(private fb: FormBuilder,
     public dialog: MatDialog,
-    private salesService: SalesService,
-    private salesOrderDetailsService: SalesOrderDetailsService,
+    private supplierOrderReturnService: SupplierOrderReturnService,
+    private supplierOrderReturnDetailsService: SupplierOrderReturnDetailsService,
     private route: ActivatedRoute,
 
   ){
     this.invoiceForm = this.fb.group({
-      id:         [0,  ],
+      orderId:         [0,  ],
       discountType:    [0, [Validators.required]],
       discountPercent: [0, [Validators.required]],
       discountValue:   [0, [Validators.required]],
       pillType:        [null, [Validators.required]],
       whatPaid:        [null, [Validators.required]],
       whatRemain:      [null, [Validators.required]],
-      taxPercent:      [null, [Validators.required]],
       notes:           [null],
     });
   }
@@ -67,8 +66,8 @@ export class SaleDetailsComponent {
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      this.id = params['id'];
-      this.getSalesOrderDetails(params['id']);
+      this.orderId = params['id'];
+      this.getSupplierOrderDetails(params['id']);
 
     });
   }
@@ -79,7 +78,7 @@ export class SaleDetailsComponent {
     console.log(this.invoiceForm.value);
 
 
-    this.salesService.approve(this.invoiceForm.value).subscribe({
+    this.supplierOrderReturnService.upprove(this.invoiceForm.value).subscribe({
       next: (response: AppResponse) => {
         if (response.ok) {
           Swal.fire({
@@ -105,24 +104,23 @@ export class SaleDetailsComponent {
 
   }
 
-  getSalesOrderDetails(id: number){
-    this.salesService.findById(id).subscribe({
+  getSupplierOrderDetails(id: number){
+    this.supplierOrderReturnService.findById(id).subscribe({
       next: (response: AppResponse) => {
         if (response.ok) {
-          this.salesInvoiceDetails = response.data.salesInvoiceDetails;
-          this.dataSource = new MatTableDataSource<any>(this.salesInvoiceDetails);
+          this.supplierOrderReturnDetailsItems = response.data.supplierOrderReturnDetailsItems;
+          this.dataSource = new MatTableDataSource<any>(this.supplierOrderReturnDetailsItems);
 
-          this.salesOrder = response.data;
+          this.supplierOrderReturn = response.data;
           this.invoiceForm = this.fb.group({
-            id:          [this.salesOrder.id,  ],
-            discountType:    [this.salesOrder.discountType, [Validators.required]],
-            discountPercent: [this.salesOrder.discountPercent, [Validators.required]],
-            discountValue:   [this.salesOrder.discountValue, [Validators.required]],
-            pillType:        [this.salesOrder.pillType, [Validators.required]],
-            whatPaid:        [this.salesOrder.whatPaid, [Validators.required]],
-            whatRemain:      [this.salesOrder.whatRemain, [Validators.required]],
-            taxPercent:  [this.salesOrder.taxPercent, [Validators.required]],
-            notes:            [this.salesOrder.notes],
+            orderId:          [this.supplierOrderReturn.id,  ],
+            discountType:    [this.supplierOrderReturn.discountType, [Validators.required]],
+            discountPercent: [this.supplierOrderReturn.discountPercent, [Validators.required]],
+            discountValue:   [this.supplierOrderReturn.discountValue, [Validators.required]],
+            pillType:        [this.supplierOrderReturn.pillType, [Validators.required]],
+            whatPaid:        [this.supplierOrderReturn.whatPaid, [Validators.required]],
+            whatRemain:      [this.supplierOrderReturn.whatRemain, [Validators.required]],
+            notes:            [this.supplierOrderReturn.notes],
           });
         }
       },
@@ -141,9 +139,10 @@ export class SaleDetailsComponent {
     const data = {
       title: 'اضافة صنف الي الفاتورة',
       formMode: FormMode.CREATE,
-      orderId: this.id
+      orderId: this.orderId,
+      storeId: this.supplierOrderReturn.store.id
     };
-    const dialogRef = this.dialog.open(SaleDetailsFormDialogComponent, {
+    const dialogRef = this.dialog.open(SupplierOrdersReturnDetailsFormDialogComponent, {
       width: '400px',
       height: 'auto',
       data: data
@@ -152,7 +151,7 @@ export class SaleDetailsComponent {
     dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
 
       if(result){
-        let index = this.salesInvoiceDetails.find(i=> i.invItemCard.id=== result.invItemId);
+        let index = this.supplierOrderReturnDetailsItems.find(i=> i.invItemCard.id=== result.invItemId);
         if(index){
           Swal.fire({
             icon: "error",
@@ -162,8 +161,8 @@ export class SaleDetailsComponent {
           });
           return;
         }
-        this.salesInvoiceDetails= result;
-        this.dataSource = new MatTableDataSource<any>(this.salesInvoiceDetails);
+        this.supplierOrderReturnDetailsItems= result;
+        this.dataSource = new MatTableDataSource<any>(this.supplierOrderReturnDetailsItems);
 
         this.calculateInvoiceItemTotal();
 
@@ -177,9 +176,10 @@ export class SaleDetailsComponent {
       title: 'تعديل صنف في الفاتورة',
       formMode: FormMode.EDIT,
       orderItem:orderItem,
-      orderId: this.id
+      orderId: this.orderId,
+      storeId: this.supplierOrderReturn.store.id
     };
-    const dialogRef = this.dialog.open(SaleDetailsFormDialogComponent, {
+    const dialogRef = this.dialog.open(SupplierOrdersReturnDetailsFormDialogComponent, {
       width: '400px',
       height: 'auto',
       data: data
@@ -189,8 +189,8 @@ export class SaleDetailsComponent {
 
 
       if(result){
-        this.salesInvoiceDetails= result;
-        this.dataSource = new MatTableDataSource<any>(this.salesInvoiceDetails);
+        this.supplierOrderReturnDetailsItems= result;
+        this.dataSource = new MatTableDataSource<any>(this.supplierOrderReturnDetailsItems);
 
       }
     });
@@ -215,17 +215,12 @@ export class SaleDetailsComponent {
     }).then((result) => {
       if (result.isConfirmed) {
 
-        this.salesOrderDetailsService.delete(invItem.id).subscribe(
+        this.supplierOrderReturnDetailsService.delete(invItem.id).subscribe(
           {
             next:(response: any)=>{
 
               if(response.ok){
-               // this.salesInvoiceDetails.removeAt(index);
-
-               this.salesOrder = response.data;
-
-               this.salesInvoiceDetails = response.data.salesInvoiceDetails;
-               this.dataSource = new MatTableDataSource<any>(this.salesInvoiceDetails);
+               // this.supplierOrderReturnDetailsItems.removeAt(index);
 
                 Swal.fire({
                   icon: "success",
@@ -233,7 +228,7 @@ export class SaleDetailsComponent {
                   showConfirmButton: false,
                   timer: 1500
                 });
-                this.salesInvoiceDetails = response.data;
+                this.supplierOrderReturnDetailsItems = response.data;
 
               }
 
@@ -252,7 +247,7 @@ export class SaleDetailsComponent {
         Swal.fire('تم الحذف', '', 'success')
       }}
       );
-    this.salesInvoiceDetails = this.salesInvoiceDetails.filter(i=> i.id !== invItem.invItem);
+    this.supplierOrderReturnDetailsItems = this.supplierOrderReturnDetailsItems.filter(i=> i.id !== invItem.invItem);
   }
 
   calculateInvoiceItemTotal(){

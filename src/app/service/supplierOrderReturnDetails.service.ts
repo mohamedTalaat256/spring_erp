@@ -4,24 +4,27 @@ import { Injectable } from "@angular/core";
 import { FormMode, baseURL } from "../constants/constants";
 
 @Injectable({ providedIn: 'root' })
-export class SalesOrderDetailsService {
+export class SupplierOrderReturnDetailsService {
 
   constructor(private http: HttpClient) { }
 
 
-
   public save(data: any, formMode: FormMode): Observable<any> {
     if(formMode === FormMode.CREATE){
-      return this.http.post<any>(baseURL + '/salesInvoiceDetails/saveItemInSalesInvoice',  data);
+      return this.http.post<any>(baseURL + '/supplierOrderReturnDetails/saveItemInOrderReturn',  data);
     }else{
-      return this.http.put<any>(baseURL + '/salesInvoiceDetails/updateItemInSalesInvoice',  data);
+      return this.http.put<any>(baseURL + '/supplierOrderReturnDetails/updateItemInOrderReturn',  data);
     }
   }
 
 
-
   public delete(id: number): Observable<any> {
-    return this.http.delete<any>(baseURL + '/salesInvoiceDetails/deleteItemInOrder/'+id);
+    return this.http.delete<any>(baseURL + '/supplierOrderReturnDetails/deleteItemInOrderReturn/'+id);
+  }
+
+
+  getAllData(): Observable<any> {
+    return this.http.get(baseURL + '/salesInvoice/getAllData');
   }
 
 

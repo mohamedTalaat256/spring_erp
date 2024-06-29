@@ -1,0 +1,131 @@
+<div fxLayout="row">
+
+  <div class="w-100 mt-2 rounded-2">
+      <div fxLayout="row" class="my-3 p-1" fxLayoutAlign="space-between center">
+          <button mat-raised-button color="primary" (click)="openAddInvItemDialog()">اضافة جديد</button>
+          <h1>فواتير مرتجع المشتريات العام
+          </h1>
+      </div>
+
+      <div fxLayout="row-reverse wrap" fxLayoutGap="15">
+             <mat-form-field fxFlex="19" fxFlex.sm="100" fxFlex.xs="100">
+              <mat-label>الكود</mat-label>
+              <input matInput formControlName="barCode" placeholder="الكود">
+          </mat-form-field>
+          <mat-form-field fxFlex="19" fxFlex.sm="100" fxFlex.xs="100">
+              <mat-label>بحث بالموردين</mat-label>
+
+              <input type="text" placeholder="المورد" matInput [formControl]="supplierFormControl" [matAutocomplete]="supplierAutoComplete">
+
+              <mat-autocomplete #supplierAutoComplete="matAutocomplete" [displayWith]="supplierDisplayFn">
+                  <ng-container *ngFor="let option of filteredSuppliers | async; trackBy: supplierDisplayFn">
+                      <mat-option [value]="option">{{ option.name }}</mat-option>
+                  </ng-container>
+              </mat-autocomplete>
+
+
+          </mat-form-field>
+
+          <mat-form-field fxFlex="19" fxFlex.sm="100" fxFlex.xs="100">
+              <mat-label>بيانات المخازن</mat-label>
+              <input type="text" placeholder="المخزن" matInput [formControl]="storeFormControl" [matAutocomplete]="storeAutoComplete">
+
+              <mat-autocomplete #storeAutoComplete="matAutocomplete" [displayWith]="storeDisplayFn">
+                  <ng-container *ngFor="let option of filteredStores | async; trackBy: storeDisplayFn">
+                      <mat-option [value]="option">{{ option.name }}</mat-option>
+                  </ng-container>
+              </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field fxFlex="19" fxFlex.sm="100" fxFlex.xs="100">
+              <mat-label>بحث من تاريخ</mat-label>
+              <input matInput formControlName="barCode" placeholder="بحث من تاريخ">
+          </mat-form-field>
+          <mat-form-field fxFlex="19" fxFlex.sm="100" fxFlex.xs="100">
+              <mat-label>بحث الي تاريخ</mat-label>
+              <input matInput formControlName="barCode" placeholder="بحث الي تاريخ">
+          </mat-form-field>
+      </div>
+
+      <div class="w-100 mt-2 rounded-2 shadow-sm overflow-x-scroll">
+          <table mat-table [dataSource]="dataSource" style="direction: rtl;">
+              <ng-container matColumnDef="autoSerial">
+                  <th mat-header-cell *matHeaderCellDef>كود</th>
+                  <td mat-cell *matCellDef="let supplierOrderReturn"> {{supplierOrderReturn.id}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="supplierName">
+                  <th mat-header-cell *matHeaderCellDef>المورد</th>
+                  <td mat-cell *matCellDef="let supplierOrderReturn"> {{supplierOrderReturn.supplier.name}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="orderDate">
+                  <th mat-header-cell *matHeaderCellDef> تاريخ الفاتورة</th>
+                  <td mat-cell *matCellDef="let supplierOrderReturn"> {{supplierOrderReturn.orderDate}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="pillType">
+                  <th mat-header-cell *matHeaderCellDef> نوع الفاتورة</th>
+                  <td mat-cell *matCellDef="let supplierOrderReturn">
+                      <mat-chip-row *ngIf="supplierOrderReturn.pillType===1" color="success">
+                          <mat-icon class="icons-sm">monetization_on</mat-icon>
+                          كاش
+                      </mat-chip-row>
+                      <mat-chip-row *ngIf="supplierOrderReturn.pillType===2" color="danger">
+                          اّجل
+                      </mat-chip-row>
+
+                  </td>
+              </ng-container>
+
+              <ng-container matColumnDef="storeName">
+                  <th mat-header-cell *matHeaderCellDef>مخزن الصرف</th>
+                  <td mat-cell *matCellDef="let supplierOrderReturn"> {{supplierOrderReturn.store.name}} </td>
+              </ng-container>
+
+
+              <ng-container matColumnDef="totalCost">
+                  <th mat-header-cell *matHeaderCellDef> اجمالي الفاتورة</th>
+                  <td mat-cell *matCellDef="let supplierOrderReturn"> {{supplierOrderReturn.totalCost * 1}} </td>
+              </ng-container>
+
+
+              <ng-container matColumnDef="approveStatus">
+                  <th mat-header-cell *matHeaderCellDef>حالة الفاتورة</th>
+                  <td mat-cell *matCellDef="let supplierOrderReturn">
+                      <mat-chip-row *ngIf="supplierOrderReturn.isApproved" color="danger">
+                          معتمدة
+                      </mat-chip-row>
+                      <mat-chip-row *ngIf="!supplierOrderReturn.isApproved" color="light-success">
+                          مفتوحة
+                      </mat-chip-row>
+                  </td>
+              </ng-container>
+
+              <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td mat-cell *matCellDef="let supplierOrderReturn">
+                      <button mat-icon-button [routerLink]="['/admin/supplierOrderReturnDetails', supplierOrderReturn.id]">
+                          <mat-icon color="danger">remove_red_eye</mat-icon>
+                      </button>
+
+                      <button mat-icon-button>
+                          <mat-icon color="primary">local_print_shop</mat-icon>
+                      </button>
+                      <button mat-icon-button>
+                          <mat-icon color="warn">local_print_shop</mat-icon>
+                      </button>
+
+
+                  </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+
+          <mat-paginator [pageSizeOptions]="[10, 30, 100]" showFirstLastButtons
+              aria-label="Select page of periodic elements">
+          </mat-paginator>
+      </div>
+  </div>
+</div>

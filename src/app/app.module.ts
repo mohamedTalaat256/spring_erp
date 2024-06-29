@@ -14,7 +14,7 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldDefaultOptions } from '@ang
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import { AuthComponent } from './layouts/auth/auth.component'; 
+import { AuthComponent } from './layouts/auth/auth.component';
 import { AuthRoutingModule } from './layouts/auth/auth-routing.module';
 import { NgApexchartsModule } from "ng-apexcharts";
 import { RatingStarComponent } from './global/rating-star/rating-star.component';
@@ -65,6 +65,10 @@ import { SaleFormDialogComponent } from './layouts/admin/components/sales/sale-f
 import { SaleDetailsFormDialogComponent } from './layouts/admin/components/sales/sale-details-form-dialog/sale-details-form-dialog.component';
 import { SaleDetailsComponent } from './layouts/admin/components/sales/sale-details/sale-details.component';
 import { ItemsBalanceComponent } from './layouts/admin/components/items-balance/items-balance.component';
+import { SupplierOrdersReturnComponent } from './layouts/admin/components/supplierOrderReturn/supplier-orders-return/supplier-orders-return.component';
+import { SupplierOrdersReturnFormDialogComponent } from './layouts/admin/components/supplierOrderReturn/supplier-orders-return-form-dialog/supplier-orders-return-form-dialog.component';
+import { SupplierOrdersReturnDetailsFormDialogComponent } from './layouts/admin/components/supplierOrderReturn/supplier-orders-return-details-form-dialog/supplier-orders-return-details-form-dialog.component';
+import { SupplierOrdersReturnDetailsComponent } from './layouts/admin/components/supplierOrderReturn/supplier-orders-return-details/supplier-orders-return-details.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -79,7 +83,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     AppComponent,
     AppSideNavbarComponent,
     AppToolbarListComponent,
-    AuthComponent, 
+    AuthComponent,
     RatingStarComponent,
     secondsToLength,
     toShortText,
@@ -121,7 +125,11 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     SaleFormDialogComponent,
     SaleDetailsFormDialogComponent,
     SaleDetailsComponent,
-    ItemsBalanceComponent
+    ItemsBalanceComponent,
+    SupplierOrdersReturnComponent,
+    SupplierOrdersReturnFormDialogComponent,
+    SupplierOrdersReturnDetailsFormDialogComponent,
+    SupplierOrdersReturnDetailsComponent,
 
   ],
   imports: [

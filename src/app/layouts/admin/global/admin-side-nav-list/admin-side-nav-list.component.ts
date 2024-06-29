@@ -114,7 +114,7 @@ const TREE_DATA: FoodNode[] = [
       {
         name: 'فواتير مرتجع المشتريات العام',
         icon: 'stores',
-        url: '/admin/accounts'
+        url: '/admin/supplierOrdersReturn'
       },
       {
         name: 'جرد المخازن',
