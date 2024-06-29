@@ -165,6 +165,15 @@
               </mat-error>
             </mat-form-field>
 
+
+            <mat-form-field>
+              <mat-label>قيمة الضربية</mat-label>
+             <input matInput formControlName="taxPercent" placeholder="قيمة الضريبة" type="number" >
+              <mat-error>
+                <app-validation-msg [control]="invoiceForm.get('taxPercent')" fieldName="قيمة الضربية"></app-validation-msg>
+              </mat-error>
+            </mat-form-field>
+
         </div>
 
         <div fxLayout="row-reverse" fxLayoutAlign="start center" >

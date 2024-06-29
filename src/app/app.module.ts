@@ -64,6 +64,7 @@ import { SalesComponent } from './layouts/admin/components/sales/sales/sales.com
 import { SaleFormDialogComponent } from './layouts/admin/components/sales/sale-form-dialog/sale-form-dialog.component';
 import { SaleDetailsFormDialogComponent } from './layouts/admin/components/sales/sale-details-form-dialog/sale-details-form-dialog.component';
 import { SaleDetailsComponent } from './layouts/admin/components/sales/sale-details/sale-details.component';
+import { ItemsBalanceComponent } from './layouts/admin/components/items-balance/items-balance.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -119,7 +120,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     SalesComponent,
     SaleFormDialogComponent,
     SaleDetailsFormDialogComponent,
-    SaleDetailsComponent
+    SaleDetailsComponent,
+    ItemsBalanceComponent
 
   ],
   imports: [

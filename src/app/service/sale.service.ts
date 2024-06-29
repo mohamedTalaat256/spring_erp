@@ -25,8 +25,8 @@ export class SalesService {
   }
 
 
-  public upprove(data: any): Observable<any> {
-    return this.http.post<any>(baseURL + '/salesInvoice/approve',  data);
+  public approve(data: any): Observable<any> {
+    return this.http.post<any>(baseURL + '/salesInvoice/approveSalesInvoice',  data);
   }
 
   getAllData(): Observable<any> {

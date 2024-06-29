@@ -20,6 +20,7 @@ import { TransactionCollectComponent } from './components/transactions/transacti
 import { TransactionExchangeComponent } from './components/transactions/transaction-exchange/transaction-exchange.component';
 import { SalesComponent } from './components/sales/sales/sales.component';
 import { SaleDetailsComponent } from './components/sales/sale-details/sale-details.component';
+import { ItemsBalanceComponent } from './components/items-balance/items-balance.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,8 @@ const routes: Routes = [
       {path:'invItemsCategories', component: InvItemCategoriesComponent},
       {path:'invItems', component: InvItemsComponent},
       {path:'stores', component: StoresComponent},
+      {path:'itemsBalance', component: ItemsBalanceComponent},
+
 
 
       /* account */

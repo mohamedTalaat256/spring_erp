@@ -28,6 +28,7 @@ export class SaleDetailsComponent {
   whatRemain: number=0;
   invoiceForm: FormGroup;
 
+  avialableBalance: number =0;
 
   salesOrder: any = emptySalesOrder;
 
@@ -37,7 +38,7 @@ export class SaleDetailsComponent {
 
   salesInvoiceDetails: any []=[];
   dataSource = new MatTableDataSource<any>(this.salesInvoiceDetails);
-  orderId: number;
+  id: number;
 
 
   constructor(private fb: FormBuilder,
@@ -48,13 +49,14 @@ export class SaleDetailsComponent {
 
   ){
     this.invoiceForm = this.fb.group({
-      orderId:         [0,  ],
+      id:         [0,  ],
       discountType:    [0, [Validators.required]],
       discountPercent: [0, [Validators.required]],
       discountValue:   [0, [Validators.required]],
       pillType:        [null, [Validators.required]],
       whatPaid:        [null, [Validators.required]],
       whatRemain:      [null, [Validators.required]],
+      taxPercent:      [null, [Validators.required]],
       notes:           [null],
     });
   }
@@ -64,7 +66,7 @@ export class SaleDetailsComponent {
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      this.orderId = params['id'];
+      this.id = params['id'];
       this.getSalesOrderDetails(params['id']);
 
     });
@@ -76,7 +78,7 @@ export class SaleDetailsComponent {
     console.log(this.invoiceForm.value);
 
 
-    this.salesService.upprove(this.invoiceForm.value).subscribe({
+    this.salesService.approve(this.invoiceForm.value).subscribe({
       next: (response: AppResponse) => {
         if (response.ok) {
           Swal.fire({
@@ -111,13 +113,14 @@ export class SaleDetailsComponent {
 
           this.salesOrder = response.data;
           this.invoiceForm = this.fb.group({
-            orderId:          [this.salesOrder.id,  ],
+            id:          [this.salesOrder.id,  ],
             discountType:    [this.salesOrder.discountType, [Validators.required]],
             discountPercent: [this.salesOrder.discountPercent, [Validators.required]],
             discountValue:   [this.salesOrder.discountValue, [Validators.required]],
             pillType:        [this.salesOrder.pillType, [Validators.required]],
             whatPaid:        [this.salesOrder.whatPaid, [Validators.required]],
             whatRemain:      [this.salesOrder.whatRemain, [Validators.required]],
+            taxPercent:  [this.salesOrder.taxPercent, [Validators.required]],
             notes:            [this.salesOrder.notes],
           });
         }
@@ -137,7 +140,7 @@ export class SaleDetailsComponent {
     const data = {
       title: 'اضافة صنف الي الفاتورة',
       formMode: FormMode.CREATE,
-      orderId: this.orderId
+      orderId: this.id
     };
     const dialogRef = this.dialog.open(SaleDetailsFormDialogComponent, {
       width: '400px',
@@ -173,7 +176,7 @@ export class SaleDetailsComponent {
       title: 'تعديل صنف في الفاتورة',
       formMode: FormMode.EDIT,
       orderItem:orderItem,
-      orderId: this.orderId
+      orderId: this.id
     };
     const dialogRef = this.dialog.open(SaleDetailsFormDialogComponent, {
       width: '400px',

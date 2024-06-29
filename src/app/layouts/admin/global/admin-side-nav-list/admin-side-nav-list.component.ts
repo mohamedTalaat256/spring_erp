@@ -125,7 +125,7 @@ const TREE_DATA: FoodNode[] = [
       {
         name: 'ارصدة الأصناف',
         icon: 'text_format',
-        url: '/admin/inv-uoms'
+        url: '/admin/itemsBalance'
 
       }
     ],
