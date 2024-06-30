@@ -1,13 +1,13 @@
 import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable } from "rxjs";
 import { Injectable } from "@angular/core";
-import { baseURL } from "../constants/constants";
+import { FormMode, baseURL } from "../constants/constants";
 
 @Injectable({ providedIn: 'root' })
 export class SupplierOrderService {
 
   constructor(private http: HttpClient) { }
-  
+
 
 
   findAll(): Observable<any> {
@@ -20,9 +20,18 @@ export class SupplierOrderService {
 
 
 
-  public save(data: any): Observable<any> {
-    return this.http.post<any>(baseURL + '/supplierOrder',  data);
+  public save(data: any, formMode: FormMode): Observable<any> {
+    if(formMode=== FormMode.CREATE){
+      return this.http.post<any>(baseURL + '/supplierOrder',  data);
+    }else{
+      return this.http.put<any>(baseURL + '/supplierOrder',  data);
+    }
   }
+
+  public delete(id: any): Observable<any> {
+    return this.http.delete<any>(baseURL + '/supplierOrder/'+id);
+  }
+
 
 
   public upprove(data: any): Observable<any> {

@@ -18,7 +18,6 @@ import { Router } from '@angular/router';
 export class SuppliersOrderFormDialogComponent {
 
   supplierFormControl = new FormControl<string | any>('',[Validators.required]);
-  storeFormControl = new FormControl<string | any>('',[Validators.required]);
 
 
   suppliers: any[] = [];
@@ -36,7 +35,7 @@ export class SuppliersOrderFormDialogComponent {
     private dialogRef: MatDialogRef<SuppliersOrderFormDialogComponent>,
     private supplierOrderFormControl: supplierOrderFormControl,
     private supplierOrderService: SupplierOrderService,private router: Router
-    
+
 
   ) {
 
@@ -45,12 +44,24 @@ export class SuppliersOrderFormDialogComponent {
       this.supplierOrderForm = this.supplierOrderFormControl.createForm();
     } else {
       this.supplierOrderForm = this.supplierOrderFormControl.setForm(this.data.supplierOrder);
+
+      this.supplierFormControl.setValue( {
+        id: this.data.supplierOrder.supplier.id,
+        name: this.data.supplierOrder.supplier.name
+      });
+      this.supplierOrderForm.patchValue({
+        supplier: this.data.supplierOrder.supplier.id
+      });
     }
 
     this.suppliers = this.data.suppliers;
     this.stores = this.data.stores;
 
     this.title = this.data.title;
+
+
+
+
   }
 
 
@@ -58,16 +69,14 @@ export class SuppliersOrderFormDialogComponent {
 
   ngOnInit() {
     this.setFilters();
-
   }
 
 
-  onSubmit() { 
+  onSubmit() {
 
-    console.log(this.supplierOrderForm.value);
 
     this.supplierOrderService
-      .save(this.supplierOrderForm.value)
+      .save(this.supplierOrderForm.value, this.data.formMode)
       .pipe(take(1))
       .subscribe({
         next: (response: AppResponse) => {
@@ -82,7 +91,7 @@ export class SuppliersOrderFormDialogComponent {
               timer: 1500,
             });
           }
-         
+
         },
         error: (error: AppResponse) => {
           Swal.fire({
@@ -94,7 +103,7 @@ export class SuppliersOrderFormDialogComponent {
       });
   }
 
- 
+
 
 
   setFilters() {
@@ -105,13 +114,7 @@ export class SuppliersOrderFormDialogComponent {
         return name ? this._supplierFilter(name as string) : this.suppliers.slice();
       }),
     );
-    this.filteredStores = this.storeFormControl.valueChanges.pipe(
-      startWith(''),
-      map(value => {
-        const name = typeof value === 'string' ? value : value?.name;
-        return name ? this._storeFilter(name as string) : this.stores.slice();
-      }),
-    );
+
 
   }
 
@@ -124,17 +127,9 @@ export class SuppliersOrderFormDialogComponent {
     return this.suppliers.filter(option => option.name.toLowerCase().includes(filterValue));
   }
 
-  storeDisplayFn(store: any): string {
-    return store && store.name ? store.name : '';
-  }
-
-  private _storeFilter(name: string): any[] {
-    const filterValue = name.toLowerCase();
-    return this.stores.filter(option => option.name.toLowerCase().includes(filterValue));
-  }
 
   selectedStore(event: MatAutocompleteSelectedEvent){
-    
+
     this.supplierOrderForm.patchValue({
       store: event.option.value.id
     },{onlySelf:true, emitEvent: true});
@@ -142,12 +137,12 @@ export class SuppliersOrderFormDialogComponent {
   }
 
   selectedSupllier(event: MatAutocompleteSelectedEvent){
-    
+
     this.supplierOrderForm.patchValue({
       supplier: event.option.value.id
     },{onlySelf:true, emitEvent: true});
 
   }
-  
+
 
 }

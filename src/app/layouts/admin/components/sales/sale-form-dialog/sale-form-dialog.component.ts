@@ -46,6 +46,15 @@ export class SaleFormDialogComponent {
       this.saleForm = this.saleFormControl.createForm();
     } else {
       this.saleForm = this.saleFormControl.setForm(this.data.salesOrder);
+
+
+      this.customerFormControl.setValue( {
+        id: this.data.salesOrder.customer.id,
+        name: this.data.salesOrder.customer.name
+      });
+      this.saleForm.patchValue({
+        customer: this.data.salesOrder.customer.id
+      });
     }
 
     this.customers = this.data.customers;
@@ -67,7 +76,7 @@ export class SaleFormDialogComponent {
     console.log(this.saleForm.value);
 
     this.salesService
-      .save(this.saleForm.value)
+      .save(this.saleForm.value, this.data.formMode)
       .pipe(take(1))
       .subscribe({
         next: (response: AppResponse) => {

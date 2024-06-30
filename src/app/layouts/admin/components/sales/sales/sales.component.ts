@@ -16,7 +16,7 @@ import { SalesService } from 'src/app/service/sale.service';
   templateUrl: './sales.component.html',
   styleUrls: ['./sales.component.scss']
 })
-export class SalesComponent {
+export class SalesComponent implements OnInit {
   customerFormControl = new FormControl<string | any>('');
   storeFormControl = new FormControl<string | any>('');
 
@@ -51,9 +51,6 @@ export class SalesComponent {
 
   ngOnInit(): void {
     this.findAll();
-    this.setFilters();
-
-
   }
 
   findAll() {
@@ -65,7 +62,7 @@ export class SalesComponent {
 
           this.dataSource = new MatTableDataSource<any>(this.sales);
           this.dataSource.paginator = this.paginator;
-
+          this.setFilters();
 
         }
       },
@@ -90,40 +87,29 @@ export class SalesComponent {
       formMode: FormMode.CREATE,
       customers: this.customers
     };
-    /* const dialogRef = */ this.dialog.open(SaleFormDialogComponent, {
+    this.dialog.open(SaleFormDialogComponent, {
+      width: '650px',
+      height: 'auto',
+      data: data
+    });
+  }
+
+
+  openEditDialog(order: any) {
+    const data = {
+      title: 'تعديل الحساب',
+      formMode: FormMode.EDIT,
+      salesOrder: order,
+      customers: this.customers
+
+    };
+    const dialogRef = this.dialog.open(SaleFormDialogComponent, {
       width: '650px',
       height: 'auto',
       data: data
     });
 
-   /*  dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
-      if (result) {
-        this.accounts.push(result);
-        this.dataSource = new MatTableDataSource<Account>(this.accounts);
-      }
-    }); */
-  }
 
-
-  openEditInvItemDialog(account: Account) {
-    const data = {
-      title: 'تعديل الحساب',
-      formMode: FormMode.EDIT,
-      account: account
-
-    };
-   /*  const dialogRef = this.dialog.open(SaleDetailsFormDialogComponent, {
-      width: '80%',
-      height: 'auto',
-      data: data
-    });
-
-    dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
-      if (result) {
-        this.accounts.push(result);
-        this.dataSource = new MatTableDataSource<Account>(this.accounts);
-      }
-    }); */
   }
 
 
@@ -149,6 +135,57 @@ export class SalesComponent {
     const filterValue = name.toLowerCase();
     return this.customers.filter(option => option.name.toLowerCase().includes(filterValue));
   }
+
+
+  deleteInvoice(invoiceId: number){
+
+    Swal.fire({
+      icon: 'warning',
+      title: 'تأكيد',
+      showDenyButton: true,
+      confirmButtonText: 'نعم',
+      confirmButtonColor: '#ed1818',
+      denyButtonText: 'لا',
+      denyButtonColor: '#54e9ac',
+      customClass: {
+        actions: 'my-actions',
+        cancelButton: 'order-1 right-gap',
+        confirmButton: 'order-2'
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this.salesService.delete(invoiceId).subscribe(
+          {
+            next:(response: AppResponse)=>{
+              if(response.ok){
+
+                Swal.fire({
+                  icon: "success",
+                  title: response.message,
+                  showConfirmButton: false,
+                  timer: 1500
+                });
+                this.sales = this.sales.filter(i=> i.id !== invoiceId);
+              }
+
+
+            },
+            error:(error: AppResponse)=>{
+              Swal.fire({
+                icon: "error",
+                title: error.message,
+                showConfirmButton: false,
+                timer: 1500
+              });
+            }
+          }
+        );
+       }}
+      );
+
+  }
+
 
 
 

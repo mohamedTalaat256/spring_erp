@@ -5,11 +5,11 @@ import { Observable, map, startWith, take } from 'rxjs';
 import { FormMode } from 'src/app/constants/constants';
 import Swal from 'sweetalert2';
 import { AppResponse } from 'src/app/model/app_response.model';
-import { Account } from 'src/app/model/accounty'; 
+import { Account } from 'src/app/model/accounty';
 import { MatPaginator } from '@angular/material/paginator';
 import { SupplierOrder } from 'src/app/model/supplierOrder';
 import { SupplierOrderService } from 'src/app/service/supplierOrder.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { SuppliersOrderFormDialogComponent } from '../suppliers-order-form-dialog/suppliers-order-form-dialog.component';
 
 @Component({
@@ -19,19 +19,21 @@ import { SuppliersOrderFormDialogComponent } from '../suppliers-order-form-dialo
 })
 export class SuppliersOrdersComponent {
 
-  supplierFormControl = new FormControl<string | any>(''); 
-  storeFormControl = new FormControl<string | any>('');
+  supplierFormControl = new FormControl<string | any>('');
 
-  
+
   suppliers: any[] = [];
   filteredSuppliers: Observable<any[]>;
-  filteredStores: Observable<any[]>;
 
-  stores: any[] = []; 
-  supplierOrders: SupplierOrder[] = []; 
+  stores: any[] = [];
+  supplierOrders: SupplierOrder[] = [];
 
   createData: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+
+
+  searchForm: FormGroup;
+
 
 
   displayedColumns: string[] = [
@@ -47,17 +49,22 @@ export class SuppliersOrdersComponent {
   dataSource = new MatTableDataSource<SupplierOrder>(this.supplierOrders);
 
   constructor(public dialog: MatDialog,
+    private fb: FormBuilder,
     private supplierOrderService: SupplierOrderService
-    
-    ) { }
+    ) {
 
+      this.searchForm = fb.group({
+        barCode: [null],
+        store: [null],
+        supplier: [null],
+        fromDate: [null],
+        toDate: [null]
+      });
 
+    }
 
   ngOnInit(): void {
     this.findAll();
-    this.setFilters();
-
-    
   }
 
   findAll() {
@@ -67,11 +74,11 @@ export class SuppliersOrdersComponent {
           this.suppliers = response.data.suppliers;
           this.supplierOrders = response.data.suppliersWithOrders;
           this.stores = response.data.stores;
-         
+
           this.dataSource = new MatTableDataSource<SupplierOrder>(this.supplierOrders);
           this.dataSource.paginator = this.paginator;
+          this.setFilters();
 
-        
         }
       },
       error: (error: Error) => {
@@ -85,45 +92,44 @@ export class SuppliersOrdersComponent {
     });
   }
 
-  onSubmit(){}
+  onSubmitSearch(){
+    console.log(this.searchForm.value);
+  }
 
 
-  openAddInvItemDialog() {
-
+  openAddDialog() {
     const data = {
       title: 'اضافة فاتورة مشتريات من مورد',
       formMode: FormMode.CREATE,
       suppliers: this.suppliers,
       stores: this.stores
     };
-    /* const dialogRef = */ this.dialog.open(SuppliersOrderFormDialogComponent, {
+     this.dialog.open(SuppliersOrderFormDialogComponent, {
+      width: '650px',
+      height: 'auto',
+      data: data
+    });
+  }
+
+
+  openEditDialog(order: SupplierOrder) {
+    const data = {
+      title: 'تعديل الحساب',
+      formMode: FormMode.EDIT,
+      supplierOrder: order,
+      suppliers: this.suppliers,
+      stores: this.stores
+
+    };
+
+    const dialogRef = this.dialog.open(SuppliersOrderFormDialogComponent, {
       width: '650px',
       height: 'auto',
       data: data
     });
 
-   /*  dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
-      if (result) {
-        this.accounts.push(result);
-        this.dataSource = new MatTableDataSource<Account>(this.accounts);
-      }
-    }); */
-  }
 
-
-  openEditInvItemDialog(account: Account) {
-    const data = {
-      title: 'تعديل الحساب',
-      formMode: FormMode.EDIT,
-      account: account
-
-    };
-   /*  const dialogRef = this.dialog.open(AccountFormDialogComponent, {
-      width: '80%',
-      height: 'auto',
-      data: data
-    });
-
+   /*
     dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
       if (result) {
         this.accounts.push(result);
@@ -143,16 +149,8 @@ export class SuppliersOrdersComponent {
         return name ? this._supplierFilter(name as string) : this.suppliers.slice();
       }),
     );
-    this.filteredStores = this.storeFormControl.valueChanges.pipe(
-      startWith(''),
-      map(value => {
-        const name = typeof value === 'string' ? value : value?.name;
-        return name ? this._storeFilter(name as string) : this.stores.slice();
-      }),
-    );
+  }
 
-  } 
-  
   supplierDisplayFn(supplier: any): string {
     return supplier && supplier.name ? supplier.name : '';
   }
@@ -162,15 +160,53 @@ export class SuppliersOrdersComponent {
     return this.suppliers.filter(option => option.name.toLowerCase().includes(filterValue));
   }
 
+  deleteInvoice(invoiceId: number){
 
-  storeDisplayFn(store: any): string {
-    return store && store.name ? store.name : '';
+    Swal.fire({
+      icon: 'warning',
+      title: 'تأكيد',
+      showDenyButton: true,
+      confirmButtonText: 'نعم',
+      confirmButtonColor: '#ed1818',
+      denyButtonText: 'لا',
+      denyButtonColor: '#54e9ac',
+      customClass: {
+        actions: 'my-actions',
+        cancelButton: 'order-1 right-gap',
+        confirmButton: 'order-2'
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this.supplierOrderService.delete(invoiceId).subscribe(
+          {
+            next:(response: AppResponse)=>{
+              if(response.ok){
+
+                Swal.fire({
+                  icon: "success",
+                  title: response.message,
+                  showConfirmButton: false,
+                  timer: 1500
+                });
+                this.supplierOrders = this.supplierOrders.filter(i=> i.id !== invoiceId);
+              }
+
+
+            },
+            error:(error: AppResponse)=>{
+              Swal.fire({
+                icon: "error",
+                title: error.message,
+                showConfirmButton: false,
+                timer: 1500
+              });
+            }
+          }
+        );
+       }}
+      );
+
   }
-
-  private _storeFilter(name: string): any[] {
-    const filterValue = name.toLowerCase();
-    return this.stores.filter(option => option.name.toLowerCase().includes(filterValue));
-  }
-
 
 }

@@ -1,130 +1,150 @@
 <div fxLayout="row">
 
-    <div class="w-100 mt-2 rounded-2">
-        <div fxLayout="row" class="my-3 p-1" fxLayoutAlign="space-between center">
-            <button mat-raised-button color="primary" (click)="openAddInvItemDialog()">اضافة جديد</button>
-            <h1>فواتير المشتريات</h1>
-        </div>
-
-        <div fxLayout="row-reverse wrap" fxLayoutGap="15">
-               <mat-form-field fxFlex="19" fxFlex.sm="100" fxFlex.xs="100">
-                <mat-label>الكود</mat-label>
-                <input matInput formControlName="barCode" placeholder="الكود">
-            </mat-form-field>
-            <mat-form-field fxFlex="19" fxFlex.sm="100" fxFlex.xs="100">
-                <mat-label>بحث بالموردين</mat-label>
-
-                <input type="text" placeholder="المورد" matInput [formControl]="supplierFormControl" [matAutocomplete]="supplierAutoComplete">
-
-                <mat-autocomplete #supplierAutoComplete="matAutocomplete" [displayWith]="supplierDisplayFn">
-                    <ng-container *ngFor="let option of filteredSuppliers | async; trackBy: supplierDisplayFn">
-                        <mat-option [value]="option">{{ option.name }}</mat-option>
-                    </ng-container>
-                </mat-autocomplete>
-
-
-            </mat-form-field>
-            
-            <mat-form-field fxFlex="19" fxFlex.sm="100" fxFlex.xs="100">
-                <mat-label>بيانات المخازن</mat-label>
-                <input type="text" placeholder="المخزن" matInput [formControl]="storeFormControl" [matAutocomplete]="storeAutoComplete">
-
-                <mat-autocomplete #storeAutoComplete="matAutocomplete" [displayWith]="storeDisplayFn">
-                    <ng-container *ngFor="let option of filteredStores | async; trackBy: storeDisplayFn">
-                        <mat-option [value]="option">{{ option.name }}</mat-option>
-                    </ng-container>
-                </mat-autocomplete>
-            </mat-form-field>
-            <mat-form-field fxFlex="19" fxFlex.sm="100" fxFlex.xs="100">
-                <mat-label>بحث من تاريخ</mat-label>
-                <input matInput formControlName="barCode" placeholder="بحث من تاريخ">
-            </mat-form-field>
-            <mat-form-field fxFlex="19" fxFlex.sm="100" fxFlex.xs="100">
-                <mat-label>بحث الي تاريخ</mat-label>
-                <input matInput formControlName="barCode" placeholder="بحث الي تاريخ">
-            </mat-form-field>
-        </div>
-
-        <div class="w-100 mt-2 rounded-2 shadow-sm overflow-x-scroll">
-            <table mat-table [dataSource]="dataSource" style="direction: rtl;">
-                <ng-container matColumnDef="autoSerial">
-                    <th mat-header-cell *matHeaderCellDef>كود</th>
-                    <td mat-cell *matCellDef="let supplierOrder"> {{supplierOrder.id}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="supplierName">
-                    <th mat-header-cell *matHeaderCellDef>المورد</th>
-                    <td mat-cell *matCellDef="let supplierOrder"> {{supplierOrder.supplier.name}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="orderDate">
-                    <th mat-header-cell *matHeaderCellDef> تاريخ الفاتورة</th>
-                    <td mat-cell *matCellDef="let supplierOrder"> {{supplierOrder.orderDate}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="pillType">
-                    <th mat-header-cell *matHeaderCellDef> نوع الفاتورة</th>
-                    <td mat-cell *matCellDef="let supplierOrder">
-                        <mat-chip-row *ngIf="supplierOrder.pillType===1" color="success">
-                            <mat-icon class="icons-sm">monetization_on</mat-icon>
-                            كاش
-                        </mat-chip-row>
-                        <mat-chip-row *ngIf="supplierOrder.pillType===2" color="danger">
-                            اّجل
-                        </mat-chip-row>
-
-                    </td>
-                </ng-container>
-
-                <ng-container matColumnDef="storeName">
-                    <th mat-header-cell *matHeaderCellDef>المخزن المستلم</th>
-                    <td mat-cell *matCellDef="let supplierOrder"> {{supplierOrder.store.name}} </td>
-                </ng-container>
-
-
-                <ng-container matColumnDef="totalCost">
-                    <th mat-header-cell *matHeaderCellDef> اجمالي الفاتورة</th>
-                    <td mat-cell *matCellDef="let supplierOrder"> {{supplierOrder.totalCost * 1}} </td>
-                </ng-container>
-
-
-                <ng-container matColumnDef="approveStatus">
-                    <th mat-header-cell *matHeaderCellDef>حالة الفاتورة</th>
-                    <td mat-cell *matCellDef="let supplierOrder">
-                        <mat-chip-row *ngIf="supplierOrder.isApproved" color="danger">
-                            معتمدة
-                        </mat-chip-row>
-                        <mat-chip-row *ngIf="!supplierOrder.isApproved" color="light-success">
-                            مفتوحة
-                        </mat-chip-row>
-                    </td>
-                </ng-container>
-
-                <ng-container matColumnDef="actions">
-                    <th mat-header-cell *matHeaderCellDef></th>
-                    <td mat-cell *matCellDef="let supplierOrder">
-                        <button mat-icon-button [routerLink]="['/admin/supplierOrderDetails', supplierOrder.id]">
-                            <mat-icon color="danger">remove_red_eye</mat-icon>
-                        </button>
-
-                        <button mat-icon-button>
-                            <mat-icon color="primary">local_print_shop</mat-icon>
-                        </button>
-                        <button mat-icon-button>
-                            <mat-icon color="warn">local_print_shop</mat-icon>
-                        </button>
-
-
-                    </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-
-            <mat-paginator [pageSizeOptions]="[10, 30, 100]" showFirstLastButtons
-                aria-label="Select page of periodic elements">
-            </mat-paginator>
-        </div>
+  <div class="w-100 mt-2 rounded-2">
+    <div fxLayout="row" class="my-3 p-1" fxLayoutAlign="space-between center">
+      <button mat-raised-button color="primary" (click)="openAddDialog()">اضافة جديد</button>
+      <h1>فواتير المشتريات</h1>
     </div>
+
+    <form  (ngSubmit)="onSubmitSearch()" [formGroup]="searchForm" fxLayout="row-reverse wrap" fxLayoutGap="15">
+      <mat-form-field fxFlex="16" fxFlex.sm="100" fxFlex.xs="100">
+        <mat-label>الكود</mat-label>
+        <input matInput formControlName="barCode" placeholder="الكود">
+      </mat-form-field>
+      <mat-form-field fxFlex="16" fxFlex.sm="100" fxFlex.xs="100">
+        <mat-label>بحث بالموردين</mat-label>
+
+        <input type="text" placeholder="المورد" matInput [formControl]="supplierFormControl"
+          [matAutocomplete]="supplierAutoComplete">
+
+        <mat-autocomplete #supplierAutoComplete="matAutocomplete" [displayWith]="supplierDisplayFn">
+          <ng-container *ngFor="let option of filteredSuppliers | async; trackBy: supplierDisplayFn">
+            <mat-option [value]="option">{{ option.name }}</mat-option>
+          </ng-container>
+        </mat-autocomplete>
+
+
+      </mat-form-field>
+
+      <mat-form-field fxFlex="16">
+        <mat-label>بيانات المخازن</mat-label>
+        <mat-select formControlName="store">
+          <mat-option *ngFor="let store of stores" [value]="store.id">{{store.name}}</mat-option>
+        </mat-select>
+        <mat-error>
+          <app-validation-msg [control]="searchForm.get('store')" fieldName="المخزن"></app-validation-msg>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="16" fxFlex.sm="100" fxFlex.xs="100">
+        <mat-label>بحث من تاريخ</mat-label>
+        <input matInput [matDatepicker]="fromDatePicker" formControlName="fromDate" placeholder="بحث من تاريخ">
+        <mat-datepicker-toggle matIconSuffix [for]="fromDatePicker">
+          <mat-icon matDatepickerToggleIcon>date_range</mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #fromDatePicker></mat-datepicker>
+      </mat-form-field>
+
+
+      <mat-form-field fxFlex="16" fxFlex.sm="100" fxFlex.xs="100">
+        <mat-label>بحث الي تاريخ</mat-label>
+        <input matInput [matDatepicker]="toDatePicker" formControlName="toDate" placeholder="بحث الي تاريخ">
+        <mat-datepicker-toggle matIconSuffix [for]="toDatePicker">
+          <mat-icon matDatepickerToggleIcon>date_range</mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #toDatePicker></mat-datepicker>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit">
+        بحث
+        <mat-icon>search</mat-icon>
+      </button>
+    </form>
+
+    <div class="w-100 mt-2 rounded-2 shadow-sm overflow-x-scroll">
+      <table mat-table [dataSource]="dataSource" style="direction: rtl;">
+        <ng-container matColumnDef="autoSerial">
+          <th mat-header-cell *matHeaderCellDef>كود</th>
+          <td mat-cell *matCellDef="let supplierOrder"> {{supplierOrder.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="supplierName">
+          <th mat-header-cell *matHeaderCellDef>المورد</th>
+          <td mat-cell *matCellDef="let supplierOrder"> {{supplierOrder.supplier.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="orderDate">
+          <th mat-header-cell *matHeaderCellDef> تاريخ الفاتورة</th>
+          <td mat-cell *matCellDef="let supplierOrder"> {{supplierOrder.orderDate}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="pillType">
+          <th mat-header-cell *matHeaderCellDef> نوع الفاتورة</th>
+          <td mat-cell *matCellDef="let supplierOrder">
+            <mat-chip-row *ngIf="supplierOrder.pillType===1" color="success">
+              <mat-icon class="icons-sm">monetization_on</mat-icon>
+              كاش
+            </mat-chip-row>
+            <mat-chip-row *ngIf="supplierOrder.pillType===2" color="danger">
+              اّجل
+            </mat-chip-row>
+
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="storeName">
+          <th mat-header-cell *matHeaderCellDef>المخزن المستلم</th>
+          <td mat-cell *matCellDef="let supplierOrder"> {{supplierOrder.store.name}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="totalCost">
+          <th mat-header-cell *matHeaderCellDef> اجمالي الفاتورة</th>
+          <td mat-cell *matCellDef="let supplierOrder"> {{supplierOrder.totalCost * 1}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="approveStatus">
+          <th mat-header-cell *matHeaderCellDef>حالة الفاتورة</th>
+          <td mat-cell *matCellDef="let supplierOrder">
+            <mat-chip-row *ngIf="supplierOrder.isApproved" color="danger">
+              معتمدة
+            </mat-chip-row>
+            <mat-chip-row *ngIf="!supplierOrder.isApproved" color="light-success">
+              مفتوحة
+            </mat-chip-row>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let supplierOrder">
+            <button mat-icon-button [routerLink]="['/admin/supplierOrderDetails', supplierOrder.id]">
+              <mat-icon color="warn">remove_red_eye</mat-icon>
+            </button>
+
+            <button *ngIf="!supplierOrder.isApproved" mat-icon-button (click)="openEditDialog(supplierOrder)">
+              <mat-icon color="primary">edit</mat-icon>
+            </button>
+
+            <button *ngIf="!supplierOrder.isApproved" mat-icon-button (click)="deleteInvoice( supplierOrder.id)">
+              <mat-icon color="danger">delete</mat-icon>
+            </button>
+
+            <button mat-icon-button>
+              <mat-icon color="primary">local_print_shop</mat-icon>
+            </button>
+
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[10, 30, 100]" showFirstLastButtons
+        aria-label="Select page of periodic elements">
+      </mat-paginator>
+    </div>
+  </div>
 </div>

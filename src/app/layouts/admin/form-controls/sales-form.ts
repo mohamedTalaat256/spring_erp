@@ -25,7 +25,7 @@ export class salesFormControl {
     return this.fb.group(
       {
         id:        [data.id],
-        date:      [data.date, [Validators.required]],
+        date:      [data.invoiceDate, [Validators.required]],
         customer:  [data.customer, [Validators.required]],
         pillType:  [data.pillType, [Validators.required]],
         notes:     [data.notes, [Validators.maxLength(1000)]],

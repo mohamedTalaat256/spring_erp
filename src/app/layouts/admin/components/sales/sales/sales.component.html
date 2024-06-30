@@ -95,6 +95,15 @@
                           <mat-icon color="danger">remove_red_eye</mat-icon>
                       </button>
 
+
+                      <button *ngIf="!salesOrder.isApproved" mat-icon-button (click)="openEditDialog(salesOrder)">
+                        <mat-icon color="primary">edit</mat-icon>
+                      </button>
+
+                      <button *ngIf="!salesOrder.isApproved" mat-icon-button (click)="deleteInvoice( salesOrder.id)">
+                        <mat-icon color="danger">delete</mat-icon>
+                      </button>
+
                       <button mat-icon-button>
                           <mat-icon color="primary">local_print_shop</mat-icon>
                       </button>

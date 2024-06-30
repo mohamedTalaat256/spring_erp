@@ -80,6 +80,10 @@
     </mat-error>
   </mat-form-field>
 
+  <mat-dialog-actions fxLayoutAlign="center">
+    <button mat-button mat-dialog-close color="danger">الغاء</button>
+    <button [disabled]="!collectTransactionForm.valid" mat-raised-button color="primary" type="submit"> حفظ</button>
+  </mat-dialog-actions>
 
   <div class="w-100 mt-2 rounded-2 shadow-sm overflow-x-scroll">
 
@@ -134,7 +138,7 @@
 
       <ng-container matColumnDef="money">
         <th mat-header-cell *matHeaderCellDef>المبلغ</th>
-        <td mat-cell *matCellDef="let transaction"> {{transaction.money}} </td>
+        <td mat-cell *matCellDef="let transaction"> {{transaction.moneyForAccount}} </td>
       </ng-container>
 
       <ng-container matColumnDef="moveType">
@@ -177,12 +181,4 @@
     <mat-paginator [pageSizeOptions]="[10, 30, 100]" showFirstLastButtons aria-label="Select page of periodic elements">
     </mat-paginator>
   </div>
-
-
-
-
-  <mat-dialog-actions fxLayoutAlign="center">
-    <button mat-button mat-dialog-close color="danger">الغاء</button>
-    <button [disabled]="!collectTransactionForm.valid" mat-raised-button color="primary" type="submit"> حفظ</button>
-  </mat-dialog-actions>
 </form>

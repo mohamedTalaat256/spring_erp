@@ -7,7 +7,7 @@ import { SupplierOrder } from 'src/app/model/supplierOrder';
 })
 export class supplierOrderFormControl {
   constructor(public fb: FormBuilder ) {
-  } 
+  }
 
   createForm() {
     return this.fb.group(
@@ -22,8 +22,8 @@ export class supplierOrderFormControl {
       }
     );
   }
-  
-  setForm(data: SupplierOrder) {
+
+  setForm(data: any) {
     return this.fb.group(
       {
         id:        [data.id],
@@ -31,9 +31,9 @@ export class supplierOrderFormControl {
         docNo:     [data.docNo, [Validators.required, Validators.maxLength(255)]],
         supplier:  [data.suuplier, [Validators.required]],
         pillType:  [data.pillType, [Validators.required]],
-        store:     [data.store, [Validators.required]],
+        store:     [data.store.id, [Validators.required]],
         notes:     [data.notes, [Validators.maxLength(1000)]],
       }
     );
-  } 
+  }
 }

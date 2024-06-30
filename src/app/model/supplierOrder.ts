@@ -1,10 +1,10 @@
 import { Supplier } from "./supplier";
 
 export interface SupplierOrder{
-     
+
     id: number,
     orderDate: string,
-    orderType: number, //	1-Burshase 2-return on same pill 3-return on general	
+    orderType: number, //	1-Burshase 2-return on same pill 3-return on general
     autoSerial: number,
     docNo: number,
     suuplier: Supplier,
@@ -16,19 +16,19 @@ export interface SupplierOrder{
     totalCostItems: number,
     taxValue: string,
 
-    totalBeforDiscount: number, 
-    totalCost: number, 
-    accountNumber: number, 
-    moneyForAccount: number, 
+    totalBeforDiscount: number,
+    totalCost: number,
+    accountNumber: number,
+    moneyForAccount: number,
     pillType: number,  //نوع الفاتورة - كاش او اجل - واحد واثنين
-    whatPaid: number, 
-    whatRemain: number, 
-    treasuries_transactions_id: number, 
+    whatPaid: number,
+    whatRemain: number,
+    treasuries_transactions_id: number,
     SupplierBalanceBefor: number, //حالة رصيد المورد قبل الفاتروة
     SupplierBalanceAfter: number, //حالة رصيد المورد بعد الفاتروة
-    store: number, 
+    store: number,
     approvedBy: number,
-    
+
     active: boolean
 
 }
