@@ -5,13 +5,13 @@
 
   <mat-form-field fxFlex="32" fxFlex.sm="100" fxFlex.xs="100">
     <mat-label>تاريخ الحركة</mat-label>
-    <input matInput [matDatepicker]="datePicker" formControlName="date">
+    <input matInput [matDatepicker]="datePicker" formControlName="moveDate">
     <mat-datepicker-toggle matIconSuffix [for]="datePicker">
       <mat-icon matDatepickerToggleIcon>date_range</mat-icon>
     </mat-datepicker-toggle>
     <mat-datepicker #datePicker></mat-datepicker>
     <mat-error>
-      <app-validation-msg [control]="collectTransactionForm.get('date')" fieldName="تاريخ الحركة"></app-validation-msg>
+      <app-validation-msg [control]="collectTransactionForm.get('moveDate')" fieldName="تاريخ الحركة"></app-validation-msg>
     </mat-error>
   </mat-form-field>
 
@@ -43,7 +43,7 @@
 
   <mat-form-field fxFlex="32" fxFlex.sm="100" fxFlex.xs="100">
     <mat-label> نوع الحركة</mat-label>
-    <mat-select fsscssormControlName="movType">
+    <mat-select formControlName="movType">
 
       <mat-option *ngFor="let movType of movTypes" [value]="movType.id"> {{movType.name}}</mat-option>
     </mat-select>
@@ -53,14 +53,11 @@
   </mat-form-field>
 
 
-
-
-
   <mat-form-field fxFlex="32" fxFlex.sm="100" fxFlex.xs="100">
     <mat-label>قيمة المبلغ المحصل </mat-label>
     <input matInput formControlName="money" placeholder="قيمة المبلغ المحصل " type="number">
     <mat-error>
-      <app-validation-msg [control]="collectTransactionForm.get('docNo')"
+      <app-validation-msg [control]="collectTransactionForm.get('money')"
         fieldName="قيمة المبلغ المحصل "></app-validation-msg>
     </mat-error>
   </mat-form-field>
@@ -138,7 +135,7 @@
 
       <ng-container matColumnDef="money">
         <th mat-header-cell *matHeaderCellDef>المبلغ</th>
-        <td mat-cell *matCellDef="let transaction"> {{transaction.moneyForAccount}} </td>
+        <td mat-cell *matCellDef="let transaction"> {{transaction.money}} </td>
       </ng-container>
 
       <ng-container matColumnDef="moveType">
@@ -155,7 +152,7 @@
           <span *ngIf="transaction.isAccount">
             {{transaction.account.name}} ({{transaction.account.accountType.name}})
           </span>
-          </td>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="bayan">
@@ -166,10 +163,10 @@
       <ng-container matColumnDef="by">
         <th mat-header-cell *matHeaderCellDef> المستخدم</th>
         <td mat-cell *matCellDef="let transaction"> {{transaction.addedBy.name}}
-        <br>
-        <span>
-          {{transaction.createdAt }}
-        </span>
+          <br>
+          <span>
+            {{transaction.createdAt }}
+          </span>
 
         </td>
       </ng-container>

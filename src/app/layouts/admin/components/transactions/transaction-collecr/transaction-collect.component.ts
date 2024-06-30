@@ -37,11 +37,11 @@ export class TransactionCollectComponent implements OnInit {
   ){
 
     this.collectTransactionForm = this.fb.group({
-      date: [null, [Validators.required]],
+      moveDate:    [null, [Validators.required]],
       account: [null, [Validators.required]],
       movType: [null, [Validators.required]],
-      money: [null, [Validators.required]],
-      bayan: [null, [Validators.required]],
+      money:   [null, [Validators.required]],
+      bayan:   [null, [Validators.required]],
     });
 
   }
@@ -57,6 +57,7 @@ export class TransactionCollectComponent implements OnInit {
         if (response.ok) {
           this.accounts = response.data.accounts;
           this.transactions = response.data.treasuresTransactions;
+          this.availableBalance = response.data.availableBalance;
           this.dataSource = new MatTableDataSource<any>(this.transactions);
         }
       },
@@ -78,6 +79,24 @@ export class TransactionCollectComponent implements OnInit {
   }
 
   onSubmit(){
+
+    this.transactionService.collect(this.collectTransactionForm.value).subscribe({
+      next: (response: AppResponse) => {
+        if (response.ok) {
+          this.accounts = response.data.accounts;
+          this.transactions = response.data.treasuresTransactions;
+          this.availableBalance = response.data.availableBalance;
+          this.dataSource = new MatTableDataSource<any>(this.transactions);
+        }
+      },
+      error: (error: Error) => {
+        Swal.fire({
+          icon: "error",
+          title: error.message,
+          showConfirmButton: true
+        });
+      }
+    });
 
   }
 

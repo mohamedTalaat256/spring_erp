@@ -6,35 +6,51 @@
           <h1>فواتير المبيعات</h1>
       </div>
 
-      <div fxLayout="row-reverse wrap" fxLayoutGap="15">
-             <mat-form-field fxFlex="19" fxFlex.sm="100" fxFlex.xs="100">
-              <mat-label>الكود</mat-label>
-              <input matInput formControlName="barCode" placeholder="الكود">
-          </mat-form-field>
-          <mat-form-field fxFlex="19" fxFlex.sm="100" fxFlex.xs="100">
-              <mat-label>بحث بالعملاء</mat-label>
+      <form  (ngSubmit)="onSubmitSearch()" [formGroup]="searchForm" fxLayout="row-reverse wrap" fxLayoutGap="15">
+        <mat-form-field fxFlex="16" fxFlex.sm="100" fxFlex.xs="100">
+          <mat-label>الكود</mat-label>
+          <input matInput formControlName="barCode" placeholder="الكود">
+        </mat-form-field>
+        <mat-form-field fxFlex="16" fxFlex.sm="100" fxFlex.xs="100">
+          <mat-label>بحث بالعملاء</mat-label>
 
-              <input type="text" placeholder="المورد" matInput [formControl]="customerFormControl" [matAutocomplete]="customerAutoComplete">
+          <input type="text" placeholder="العميل" matInput [formControl]="customerFormControl"
+            [matAutocomplete]="supplierAutoComplete">
 
-              <mat-autocomplete #customerAutoComplete="matAutocomplete" [displayWith]="customerDisplayFn">
-                  <ng-container *ngFor="let option of filteredcustomer | async; trackBy: customerDisplayFn">
-                      <mat-option [value]="option">{{ option.name }}</mat-option>
-                  </ng-container>
-              </mat-autocomplete>
-
-
-          </mat-form-field>
+          <mat-autocomplete #supplierAutoComplete="matAutocomplete" [displayWith]="customerDisplayFn">
+            <ng-container *ngFor="let option of filteredcustomer | async; trackBy: customerDisplayFn">
+              <mat-option [value]="option">{{ option.name }}</mat-option>
+            </ng-container>
+          </mat-autocomplete>
 
 
-          <mat-form-field fxFlex="19" fxFlex.sm="100" fxFlex.xs="100">
-              <mat-label>بحث من تاريخ</mat-label>
-              <input matInput formControlName="barCode" placeholder="بحث من تاريخ">
-          </mat-form-field>
-          <mat-form-field fxFlex="19" fxFlex.sm="100" fxFlex.xs="100">
-              <mat-label>بحث الي تاريخ</mat-label>
-              <input matInput formControlName="barCode" placeholder="بحث الي تاريخ">
-          </mat-form-field>
-      </div>
+        </mat-form-field>
+
+
+        <mat-form-field fxFlex="16" fxFlex.sm="100" fxFlex.xs="100">
+          <mat-label>بحث من تاريخ</mat-label>
+          <input matInput [matDatepicker]="fromDatePicker" formControlName="fromDate" placeholder="بحث من تاريخ">
+          <mat-datepicker-toggle matIconSuffix [for]="fromDatePicker">
+            <mat-icon matDatepickerToggleIcon>date_range</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #fromDatePicker></mat-datepicker>
+        </mat-form-field>
+
+
+        <mat-form-field fxFlex="16" fxFlex.sm="100" fxFlex.xs="100">
+          <mat-label>بحث الي تاريخ</mat-label>
+          <input matInput [matDatepicker]="toDatePicker" formControlName="toDate" placeholder="بحث الي تاريخ">
+          <mat-datepicker-toggle matIconSuffix [for]="toDatePicker">
+            <mat-icon matDatepickerToggleIcon>date_range</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #toDatePicker></mat-datepicker>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit">
+          بحث
+          <mat-icon>search</mat-icon>
+        </button>
+      </form>
 
       <div class="w-100 mt-2 rounded-2 shadow-sm overflow-x-scroll">
           <table mat-table [dataSource]="dataSource" style="direction: rtl;">

@@ -11,49 +11,17 @@ export class TransactionService {
   constructor(private http: HttpClient) { }
 
   collectFindAll(): Observable<any> {
-    return this.http.get(baseURL + '/transactions/collect');
+    return this.http.get(baseURL + '/transactions/collectFindAll');
   }
 
   exchangeFindAll(): Observable<any> {
-    return this.http.get(baseURL + '/transactions/exchange');
+    return this.http.get(baseURL + '/transactions/exchangeFindAll');
   }
 
 
 
-  public save(data: any, formMode:FormMode): Observable<any> {
-
-    if(formMode=== FormMode.CREATE){
-      const payLoad = {
-        name: data.name,
-        accountType: {
-          id: data.accountType
-        },
-        isParent:   data.isParent,
-        accountNumber: data.accountNumber,
-        startBalanceStatus: data.startBalanceStatus,
-        startBalance: data.startBalance,
-        notes: data.notes,
-        active: data.active
-        }
-      return this.http.post<any>(baseURL+ '/accounts/save',  payLoad);
-    }else{
-      const payLoad = {
-        id: data.id,
-        name: data.name,
-        accountType: {
-          id: data.accountType
-        },
-        isParent:   data.isParent,
-        accountNumber: data.accountNumber,
-        startBalanceStatus: data.startBalanceStatus,
-        startBalance: data.startBalance,
-        notes: data.notes,
-        active: data.active
-        }
-      return this.http.put<any>(baseURL+ '/accounts/update',  payLoad);
-    }
-
-
+  public collect(data: any ): Observable<any> {
+    return this.http.post<any>(baseURL+ '/transactions/collect',  data);
   }
 
 

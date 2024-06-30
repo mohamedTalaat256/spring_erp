@@ -5,7 +5,6 @@ import { Observable, map, startWith, take } from 'rxjs';
 import { FormMode } from 'src/app/constants/constants';
 import Swal from 'sweetalert2';
 import { AppResponse } from 'src/app/model/app_response.model';
-import { Account } from 'src/app/model/accounty';
 import { MatPaginator } from '@angular/material/paginator';
 import { SupplierOrder } from 'src/app/model/supplierOrder';
 import { SupplierOrderService } from 'src/app/service/supplierOrder.service';
@@ -53,9 +52,8 @@ export class SuppliersOrdersComponent {
     private supplierOrderService: SupplierOrderService
     ) {
 
-      this.searchForm = fb.group({
+      this.searchForm = this.fb.group({
         barCode: [null],
-        store: [null],
         supplier: [null],
         fromDate: [null],
         toDate: [null]

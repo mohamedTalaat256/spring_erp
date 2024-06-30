@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 import { AppResponse } from 'src/app/model/app_response.model';
 import { Account } from 'src/app/model/accounty';
 import { MatPaginator } from '@angular/material/paginator';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { SaleFormDialogComponent } from '../sale-form-dialog/sale-form-dialog.component';
 import { SalesService } from 'src/app/service/sale.service';
 
@@ -23,7 +23,7 @@ export class SalesComponent implements OnInit {
 
   customers: any[] = [];
   filteredcustomer: Observable<any[]>;
-
+  searchForm: FormGroup;
 
   sales: any[] = [];
 
@@ -43,9 +43,17 @@ export class SalesComponent implements OnInit {
   dataSource = new MatTableDataSource<any>(this.sales);
 
   constructor(public dialog: MatDialog,
-    private salesService: SalesService
-
-    ) { }
+    private salesService: SalesService,
+    private fb: FormBuilder
+    ) {
+      this.searchForm = this.fb.group({
+        barCode: [null],
+        store: [null],
+        supplier: [null],
+        fromDate: [null],
+        toDate: [null]
+      });
+     }
 
 
 
@@ -77,7 +85,7 @@ export class SalesComponent implements OnInit {
     });
   }
 
-  onSubmit(){}
+  onSubmitSearch(){}
 
 
   openAddNew() {
