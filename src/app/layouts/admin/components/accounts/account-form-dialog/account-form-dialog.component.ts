@@ -20,10 +20,11 @@ export class AccountFormDialogComponent {
 
 
 
-  accountTypes:AccountType[]=[]; 
+  accountTypes:AccountType[]=[];
   parentAccounts: Account[]=[];
   accountForm: FormGroup;
   title:string;
+  startBalanceReadOnly: boolean = false;
 
   showParentAccounts: boolean= false;
   formMode:FormMode;
@@ -40,7 +41,7 @@ export class AccountFormDialogComponent {
     }else{
       this.accountForm =  this.accountForm =  this.accountFormControl.setForm(this.data.account);
     }
- 
+
     this.accountTypes = this.data.accountTypes;
     this.parentAccounts= this.data.parentAccounts;
 
@@ -52,17 +53,17 @@ export class AccountFormDialogComponent {
 
   filteredIems: Observable<any[]>;
 
-  ngOnInit() { 
-    
- 
-  } 
- 
+  ngOnInit() {
+
+
+  }
+
 
   onSubmit(){
     console.log(this.accountForm.value);
 
     this.accountService.save(this.accountForm.value, this.data.formMode).subscribe({
-      next:(response: AppResponse)=>{  
+      next:(response: AppResponse)=>{
         if(response.ok){
           Swal.fire({
             icon: "success",
@@ -84,10 +85,28 @@ export class AccountFormDialogComponent {
     });
     //this.dialogRef.close(this.accountForm.value);
   }
- 
+
   isParentChange(event:MatSelectChange){
     this.showParentAccounts = !event.value;
-  } 
+  }
+
+  balanceStatusChange(event:MatSelectChange){
+
+    if(event.value === 3){
+      this.accountForm.patchValue({
+        startBalance: 0
+      });
+      this.startBalanceReadOnly = true;
+
+    }
+    else{
+      this.accountForm.patchValue({
+        startBalance: null
+      });
+      this.startBalanceReadOnly = false;
+
+    }
+  }
 
 
 }

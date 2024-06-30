@@ -1,18 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormMode } from 'src/app/constants/constants';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, map, startWith, take } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import Swal from 'sweetalert2';
 import { MatSelectChange } from '@angular/material/select';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { SuppliersOrderItemDetailsFormDialogComponent } from '../suppliers-order-item-details-form-dialog/suppliers-order-item-details-form-dialog.component';
-import { InvItemService } from 'src/app/service/invItem.service';
 import { AppResponse } from 'src/app/model/app_response.model';
-import { InvItem } from 'src/app/model/invItem';
 import { SupplierOrderService } from 'src/app/service/supplierOrder.service';
-import { InvUom } from 'src/app/model/invUom';
 import { ActivatedRoute } from '@angular/router';
 import { SupplierOrderDetailsService } from 'src/app/service/supplierOrderDetails.service';
 
@@ -24,8 +20,6 @@ import { SupplierOrderDetailsService } from 'src/app/service/supplierOrderDetail
   styleUrls: ['./supplier-order-details.component.scss']
 })
 export class SupplierOrderDetailsComponent implements OnInit {
-
-
 
 
   discountType:number=0;
@@ -118,16 +112,7 @@ export class SupplierOrderDetailsComponent implements OnInit {
           this.dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
 
           this.supplierOrder = response.data;
-          this.invoiceForm = this.fb.group({
-            orderId:          [this.supplierOrder.id,  ],
-            discountType:    [this.supplierOrder.discountType, [Validators.required]],
-            discountPercent: [this.supplierOrder.discountPercent, [Validators.required]],
-            discountValue:   [this.supplierOrder.discountValue, [Validators.required]],
-            pillType:        [this.supplierOrder.pillType, [Validators.required]],
-            whatPaid:        [this.supplierOrder.whatPaid, [Validators.required]],
-            whatRemain:      [this.supplierOrder.whatRemain, [Validators.required]],
-            notes:            [this.supplierOrder.notes],
-          });
+          this.setInvoice();
         }
       },
       error: (error: Error) => {
@@ -138,6 +123,19 @@ export class SupplierOrderDetailsComponent implements OnInit {
         });
       }
 
+    });
+  }
+
+  setInvoice(){
+    this.invoiceForm = this.fb.group({
+      orderId:          [this.supplierOrder.id,  ],
+      discountType:    [this.supplierOrder.discountType, [Validators.required]],
+      discountPercent: [this.supplierOrder.discountPercent, [Validators.required]],
+      discountValue:   [this.supplierOrder.discountValue, [Validators.required]],
+      pillType:        [this.supplierOrder.pillType, [Validators.required]],
+      whatPaid:        [this.supplierOrder.whatPaid, [Validators.required]],
+      whatRemain:      [this.supplierOrder.whatRemain, [Validators.required]],
+      notes:            [this.supplierOrder.notes],
     });
   }
 
@@ -166,7 +164,9 @@ export class SupplierOrderDetailsComponent implements OnInit {
           });
           return;
         }
-        this.supplierOrderDetailsItems= result;
+
+        this.supplierOrder =result;
+        this.supplierOrderDetailsItems= this.supplierOrder.supplierOrderDetailsItems;
         this.dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
 
         this.calculateInvoiceItemTotal();
@@ -224,7 +224,6 @@ export class SupplierOrderDetailsComponent implements OnInit {
             next:(response: any)=>{
 
               if(response.ok){
-               // this.supplierOrderDetailsItems.removeAt(index);
 
                 Swal.fire({
                   icon: "success",
@@ -232,8 +231,9 @@ export class SupplierOrderDetailsComponent implements OnInit {
                   showConfirmButton: false,
                   timer: 1500
                 });
-                this.supplierOrderDetailsItems = response.data;
-
+                this.supplierOrder =response.data;
+                this.supplierOrderDetailsItems= this.supplierOrder.supplierOrderDetailsItems;
+                this.dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
               }
 
 

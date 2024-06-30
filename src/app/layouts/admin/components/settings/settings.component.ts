@@ -28,7 +28,6 @@ export class SettingsComponent implements OnInit {
       phone: null,
       photo: null,
       customerParentAccountNumber:1,
-      employeesParentAccountNumber:1,
       suppliersParentAccountNumber:1,
       notes: null
     });

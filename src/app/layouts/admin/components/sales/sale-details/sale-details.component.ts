@@ -113,17 +113,7 @@ export class SaleDetailsComponent {
           this.dataSource = new MatTableDataSource<any>(this.salesInvoiceDetails);
 
           this.salesOrder = response.data;
-          this.invoiceForm = this.fb.group({
-            id:          [this.salesOrder.id,  ],
-            discountType:    [this.salesOrder.discountType, [Validators.required]],
-            discountPercent: [this.salesOrder.discountPercent, [Validators.required]],
-            discountValue:   [this.salesOrder.discountValue, [Validators.required]],
-            pillType:        [this.salesOrder.pillType, [Validators.required]],
-            whatPaid:        [this.salesOrder.whatPaid, [Validators.required]],
-            whatRemain:      [this.salesOrder.whatRemain, [Validators.required]],
-            taxPercent:  [this.salesOrder.taxPercent, [Validators.required]],
-            notes:            [this.salesOrder.notes],
-          });
+          this.setInvoice();
         }
       },
       error: (error: Error) => {
@@ -134,6 +124,20 @@ export class SaleDetailsComponent {
         });
       }
 
+    });
+  }
+
+  setInvoice(){
+    this.invoiceForm = this.fb.group({
+      id:          [this.salesOrder.id,  ],
+      discountType:    [this.salesOrder.discountType, [Validators.required]],
+      discountPercent: [this.salesOrder.discountPercent, [Validators.required]],
+      discountValue:   [this.salesOrder.discountValue, [Validators.required]],
+      pillType:        [this.salesOrder.pillType, [Validators.required]],
+      whatPaid:        [this.salesOrder.whatPaid, [Validators.required]],
+      whatRemain:      [this.salesOrder.whatRemain, [Validators.required]],
+      taxPercent:  [this.salesOrder.taxPercent, [Validators.required]],
+      notes:            [this.salesOrder.notes],
     });
   }
 
@@ -162,8 +166,10 @@ export class SaleDetailsComponent {
           });
           return;
         }
-        this.salesInvoiceDetails= result;
+        this.salesOrder= result;
+        this.salesInvoiceDetails = this.salesOrder.salesInvoiceDetails;
         this.dataSource = new MatTableDataSource<any>(this.salesInvoiceDetails);
+        this.setInvoice();
 
         this.calculateInvoiceItemTotal();
 

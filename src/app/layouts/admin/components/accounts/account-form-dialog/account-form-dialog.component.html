@@ -21,8 +21,8 @@
             </mat-error>
         </mat-form-field>
 
-        
-       
+
+
 
         <mat-form-field fxFlex="48">
             <mat-label>هل الحساب أب</mat-label>
@@ -39,19 +39,19 @@
         <mat-form-field fxFlex="48" *ngIf="showParentAccounts">
             <mat-label>الحسابات الأب</mat-label>
             <mat-select formControlName="parentAccountNumber">
-                 
+
                 <mat-option *ngFor="let parentAccount of parentAccounts" [value]="parentAccount.accountNumber"> {{parentAccount.name}}</mat-option>
             </mat-select>
             <mat-error>
                 <app-validation-msg [control]="accountForm.get('parentAccountNumber')"
                     fieldName="الحقل"></app-validation-msg>
             </mat-error>
-        </mat-form-field>  
+        </mat-form-field>
 
 
-        <mat-form-field fxFlex="48" *ngIf="formMode===0">
+        <mat-form-field fxFlex="48" *ngIf="formMode===0" >
             <mat-label>حالة رصيد اول المدة</mat-label>
-            <mat-select formControlName="startBalanceStatus">
+            <mat-select formControlName="startBalanceStatus" (selectionChange)="balanceStatusChange($event)">
                 <mat-option [value]="1">دائن</mat-option>
                 <mat-option [value]="2">مدين</mat-option>
                 <mat-option [value]="3">متزن</mat-option>
@@ -65,13 +65,13 @@
 
         <mat-form-field fxFlex="48"  *ngIf="formMode===0">
             <mat-label>رصيد أول المدة للحساب</mat-label>
-            <input matInput formControlName="startBalance" placeholder="رصيد أول المدة للحساب" type="number">
+            <input matInput formControlName="startBalance" placeholder="رصيد أول المدة للحساب" type="number" [readonly]="startBalanceReadOnly">
             <mat-error>
                 <app-validation-msg [control]="accountForm.get('startBalance')" fieldName="رصيد أول المدة للحساب"></app-validation-msg>
             </mat-error>
-        </mat-form-field> 
+        </mat-form-field>
 
-  
+
         <mat-form-field fxFlex="48" >
             <mat-label>ملاحظات</mat-label>
             <input matInput formControlName="notes" placeholder="ملاحظات">
@@ -79,10 +79,10 @@
                 <app-validation-msg [control]="accountForm.get('notes')" fieldName="ملاحظات"></app-validation-msg>
             </mat-error>
         </mat-form-field>
-  
+
         <mat-form-field fxFlex="48">
             <mat-label>حالة التفعيل</mat-label>
-            <mat-select formControlName="active"> 
+            <mat-select formControlName="active">
                 <mat-option [value]="true">نعم</mat-option>
                 <mat-option [value]="false">لا</mat-option>
             </mat-select>
@@ -91,7 +91,7 @@
                     fieldName="حالة التفعيل"></app-validation-msg>
             </mat-error>
         </mat-form-field>
- 
+
 
     <mat-dialog-actions fxLayoutAlign="center">
         <button mat-button mat-dialog-close color="danger">الغاء</button>

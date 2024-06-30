@@ -1,10 +1,11 @@
+import { Account, emptyAccount } from "./accounty";
 import { SupplierCategory } from "./supplierCategory";
 
 export interface Supplier{
 
     id: number,
     name: string,
-    accountNumber: number,
+    account: Account,
     supplierCategory: SupplierCategory,
     startBalanceStatus: number,
     startBalance: number,
@@ -21,7 +22,7 @@ export const emptySupplier ={
 
   id: 0,
   name: '',
-  accountNumber: 0,
+  account:emptyAccount,
   supplierCategory: {
     id: 0,
     name: '',

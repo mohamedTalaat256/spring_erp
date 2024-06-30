@@ -22,7 +22,7 @@ export class InvItemFormDialogComponent {
   salesItemTypes= SALES_ITEM_TYPES;
 
   ITEM_TYPES= ITEM_TYPES;
-  
+
   invItemForm: FormGroup;
   title:string;
 
@@ -55,19 +55,19 @@ export class InvItemFormDialogComponent {
     }
 
     console.log(this.data.createData);
- 
+
     this.invUomsChild = this.data.createData.invUomsChild;
     this.invUomsParent = this.data.createData.invUomsParent;
     this.invItemsCategories = this.data.createData.invItemsCategories;
     this.invItems = this.data.createData.invItems;
-    
+
     this.title = this.data.title;
   }
 
 
   filteredIems: Observable<any[]>;
 
-  ngOnInit() { 
+  ngOnInit() {
 
 
     /* this.filteredIems = this.invItemForm.controls['parentInvItemCard'].valueChanges.pipe(
@@ -80,10 +80,10 @@ export class InvItemFormDialogComponent {
   }
 
 
-  
+
 
   displayFn(item: any): string {
-    
+
     return item && item.name ? item.name : '';
   }
 
@@ -93,7 +93,7 @@ export class InvItemFormDialogComponent {
   }
 
 
-  onInvItemChange(itemId){ 
+  onInvItemChange(itemId){
 
     const price = this.invItems.filter(i=> i.id ===itemId )[0].price;
     this.invItemForm.patchValue({
@@ -106,7 +106,7 @@ export class InvItemFormDialogComponent {
     console.log(this.invItemForm.value);
 
     this.invItemService.save(this.invItemForm, this.data.formMode).subscribe({
-      next:(response: AppResponse)=>{  
+      next:(response: AppResponse)=>{
         if(response.ok){
           Swal.fire({
             icon: "success",
@@ -125,14 +125,17 @@ export class InvItemFormDialogComponent {
         });
       }
 
-    }); 
-     
+    });
+
   }
- 
+
   doesHasRetailUnitChange(event:MatSelectChange){
     this.doesHasRetailUnit = event.value;
 
+    console.log(this.doesHasRetailUnit);
+
     if(this.doesHasRetailUnit){
+
 
       this.invItemForm.controls['retailUom'].setValidators([Validators.required]);
       this.invItemForm.controls['retailUomQuntToParent'].setValidators([Validators.required]);
@@ -144,16 +147,16 @@ export class InvItemFormDialogComponent {
       this.invItemForm.markAllAsTouched();
 
     }else{
-      this.invItemForm.controls['retailUom'].clearValidators();
-      this.invItemForm.controls['retailUomQuntToParent'].clearValidators();
-      this.invItemForm.controls['priceRetail'].clearValidators();
-      this.invItemForm.controls['nosGomlaPriceRetail'].clearValidators();
-      this.invItemForm.controls['gomlaPriceRetail'].clearValidators();
-      this.invItemForm.controls['costPriceRetail'].clearValidators();
+      this.invItemForm.get('retailUom').removeValidators([Validators.required]);
+      this.invItemForm.get('retailUomQuntToParent').removeValidators([Validators.required]);
+      this.invItemForm.get('priceRetail').removeValidators([Validators.required]);
+      this.invItemForm.get('nosGomlaPriceRetail').removeValidators([Validators.required]);
+      this.invItemForm.get('gomlaPriceRetail').removeValidators([Validators.required]);
+      this.invItemForm.get('costPriceRetail').removeValidators([Validators.required]);
       this.invItemForm.updateValueAndValidity();
 
     }
-    
+
   }
 
   retailUomQuntToParentChange(event:MatSelectChange){
@@ -161,18 +164,11 @@ export class InvItemFormDialogComponent {
   }
 
 
-
-
-
-
-
-
-
-  uomChange(event:MatSelectChange){ 
+  uomChange(event:MatSelectChange){
     this.parentUomName = this.invUomsParent.filter( i=> i.id === event.value)[0].name;
   }
 
-  retialUomChange(event:MatSelectChange){ 
+  retialUomChange(event:MatSelectChange){
     this.childUomName = this.invUomsChild.filter( i=> i.id === event.value)[0].name;
   }
 }
