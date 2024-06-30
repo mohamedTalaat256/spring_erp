@@ -1,0 +1,130 @@
+<h2 mat-dialog-title class="text-capitalize">{{title}}</h2>
+
+<form (ngSubmit)="onSubmit()" [formGroup]="newInvItemForm" class="p-5">
+
+  <div fxLayout="row wrap" fxLayoutGap="10">
+
+
+    <mat-form-field fxFlex="100">
+      <mat-label>المخزن</mat-label>
+      <mat-select formControlName="store">
+        <mat-option *ngFor="let store of stores" [value]="store.id">{{store.name}}</mat-option>
+      </mat-select>
+      <mat-error>
+        <app-validation-msg [control]="newInvItemForm.get('store')" fieldName="المخزن"></app-validation-msg>
+      </mat-error>
+    </mat-form-field>
+
+
+
+    <mat-form-field fxFlex="100">
+      <mat-label>الصنف</mat-label>
+
+      <input type="text" placeholder="الصنف" matInput [formControl]="invItemFormControl"
+        [matAutocomplete]="invItemAutoComplete">
+
+      <mat-autocomplete #invItemAutoComplete="matAutocomplete" [displayWith]="invItemDisplayFn"
+        (optionSelected)="selectedInvItem($event)">
+        <ng-container *ngFor="let option of filteredInvItems | async; trackBy: invItemDisplayFn">
+          <mat-option [value]="option">{{ option.name }}</mat-option>
+        </ng-container>
+      </mat-autocomplete>
+
+      <mat-error>
+        <app-validation-msg [control]="invItemFormControl" fieldName="الصنف"></app-validation-msg>
+      </mat-error>
+    </mat-form-field>
+
+
+
+
+
+    <mat-form-field fxFlex="100">
+      <mat-label>الوحدة</mat-label>
+      <mat-select [value]="selectedItem.uom.id" formControlName="uom" (selectionChange)="onUomChange($event)">
+
+        <mat-option *ngIf="selectedItem.doesHasRetailUnit" [value]="selectedItem.uom.id"> {{ selectedItem.uom.name }}
+          (وحده اب)</mat-option>
+        <mat-option *ngIf="selectedItem.doesHasRetailUnit" [value]="selectedItem.retailUom.id">{{
+          selectedItem.retailUom.name }} (وحدة تجزئة)</mat-option>
+
+
+
+
+        <mat-option *ngIf="!selectedItem.doesHasRetailUnit" [value]="selectedItem.uom.id">{{ selectedItem.uom.name }}
+          (وحده اب)</mat-option>
+      </mat-select>
+      <mat-error>
+        <app-validation-msg [control]="newInvItemForm.get('uom')" fieldName="الوحدة"></app-validation-msg>
+      </mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field fxFlex="100">
+      <mat-label>الكميات بالمخزن المحدد</mat-label>
+      <mat-select formControlName="batch">
+
+        <ng-container *ngIf="selectedUom.master">
+
+          <mat-option *ngFor="let batch of itemBatches" [value]="batch.id">
+            عدد
+            {{ batch.quantity }} {{ selectedUom.name }} بتكلفة {{ batch.unitCostPrice }}
+            للوحدة
+          </mat-option>
+
+        </ng-container>
+
+        <ng-container *ngIf="!selectedUom.master">
+
+          <mat-option *ngFor="let batch of itemBatches" [value]="batch.id">
+            عدد
+            {{ batch.quantity * selectedItem.retailUomQuntToParent }} {{ selectedUom.name }}
+
+            بتكلفة {{ batch.unit_cost_price / selectedItem.retailUomQuntToParent }}
+            للوحدة
+          </mat-option>
+        </ng-container>
+
+
+
+      </mat-select>
+      <mat-error>
+        <app-validation-msg [control]="newInvItemForm.get('batch')"
+          fieldName="الكميات بالمخزن المحدد"></app-validation-msg>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field fxFlex="100">
+      <mat-label>الكمية المرتجعة</mat-label>
+      <input matInput formControlName="itemQuantity" placeholder="الكمية المرتجعة" type="number">
+
+      <mat-error>
+        <app-validation-msg [control]="newInvItemForm.get('itemQuantity')" fieldName="الكمية المرتجعة"></app-validation-msg>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="100">
+      <mat-label>سعر المرتجع</mat-label>
+      <input matInput formControlName="unitPrice" placeholder="سعر المرتجع" type="number">
+      <mat-error>
+        <app-validation-msg [control]="newInvItemForm.get('unitPrice')" fieldName="سعر المرتجع"></app-validation-msg>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="100">
+      <mat-label>سعر تكلفة شراء الوحدة</mat-label>
+      <input matInput formControlName="unitCostPrice" placeholder="سعر تكلفة شراء الوحدة" type="number">
+      <mat-error>
+        <app-validation-msg [control]="newInvItemForm.get('unitCostPrice')" fieldName="سعر تكلفة شراء الوحدة"></app-validation-msg>
+      </mat-error>
+    </mat-form-field>
+
+
+  </div>
+
+
+
+  <mat-dialog-actions fxLayoutAlign="center">
+    <button mat-button mat-dialog-close color="danger">الغاء</button>
+    <button mat-raised-button color="primary" type="submit"> حفظ</button>
+  </mat-dialog-actions>
+</form>

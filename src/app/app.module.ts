@@ -69,6 +69,10 @@ import { SupplierOrdersReturnComponent } from './layouts/admin/components/suppli
 import { SupplierOrdersReturnFormDialogComponent } from './layouts/admin/components/supplierOrderReturn/supplier-orders-return-form-dialog/supplier-orders-return-form-dialog.component';
 import { SupplierOrdersReturnDetailsFormDialogComponent } from './layouts/admin/components/supplierOrderReturn/supplier-orders-return-details-form-dialog/supplier-orders-return-details-form-dialog.component';
 import { SupplierOrdersReturnDetailsComponent } from './layouts/admin/components/supplierOrderReturn/supplier-orders-return-details/supplier-orders-return-details.component';
+import { SalesReturnComponent } from './layouts/admin/components/salesReturn/sales-return/sales-return.component';
+import { SaleReturnDetailsComponent } from './layouts/admin/components/salesReturn/sale-return-details/sale-return-details.component';
+import { SaleReturnFormDialogComponent } from './layouts/admin/components/salesReturn/sale-return-form-dialog/sale-return-form-dialog.component';
+import { SaleReturnDetailsFormDialogComponent } from './layouts/admin/components/salesReturn/sale-return-details-form-dialog/sale-return-details-form-dialog.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -130,6 +134,10 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     SupplierOrdersReturnFormDialogComponent,
     SupplierOrdersReturnDetailsFormDialogComponent,
     SupplierOrdersReturnDetailsComponent,
+    SalesReturnComponent,
+    SaleReturnDetailsComponent,
+    SaleReturnFormDialogComponent,
+    SaleReturnDetailsFormDialogComponent
 
   ],
   imports: [

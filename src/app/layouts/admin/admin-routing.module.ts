@@ -23,6 +23,8 @@ import { SaleDetailsComponent } from './components/sales/sale-details/sale-detai
 import { ItemsBalanceComponent } from './components/items-balance/items-balance.component';
 import { SupplierOrdersReturnComponent } from './components/supplierOrderReturn/supplier-orders-return/supplier-orders-return.component';
 import { SupplierOrdersReturnDetailsComponent } from './components/supplierOrderReturn/supplier-orders-return-details/supplier-orders-return-details.component';
+import { SalesReturnComponent } from './components/salesReturn/sales-return/sales-return.component';
+import { SaleReturnDetailsComponent } from './components/salesReturn/sale-return-details/sale-return-details.component';
 
 const routes: Routes = [
   {
@@ -61,9 +63,11 @@ const routes: Routes = [
 
 
       /* sales */
-
       {path:'sales', component: SalesComponent},
       {path:'salseDetails/:id', component: SaleDetailsComponent},
+
+      {path:'salesReturn', component: SalesReturnComponent},
+      {path:'salseReturnDetails/:id', component: SaleReturnDetailsComponent},
 
 
 

@@ -141,15 +141,9 @@ const TREE_DATA: FoodNode[] = [
         url: '/admin/sales'
       },
       {
-        name: 'الشجرة (الحسابات المالية)',
-        icon: 'stores',
-        url: '/admin/accounts'
-      },
-      {
-        name: 'حسابات العملاء',
-        icon: 'text_format',
-        url: '/admin/inv-uoms'
-
+        name: 'مرتجع المبيعات العام',
+        icon: 'menu',
+        url: '/admin/salesReturn'
       }
     ],
   }, {
