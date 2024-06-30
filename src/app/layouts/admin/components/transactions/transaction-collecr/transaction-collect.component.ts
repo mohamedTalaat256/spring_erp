@@ -28,11 +28,11 @@ export class TransactionCollectComponent implements OnInit {
   transactions: any[]=[];
 
 
-  displayedColumns: string[] = ['id', 'name', 'active','actions'];
+  displayedColumns: string[] = ['id', 'treasure', 'money', 'moveType', 'account', 'bayan', 'by'];
   dataSource = new MatTableDataSource<any>(this.transactions);
 
 
-  constructor(private fb: FormBuilder,private accountService: AccountService
+  constructor(private fb: FormBuilder
     ,private transactionService: TransactionService
   ){
 
@@ -47,16 +47,17 @@ export class TransactionCollectComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAccounts();
     this.findAll();
   }
 
-  getAccounts(){
+  findAll(){
 
-    this.accountService.findAll().subscribe({
+    this.transactionService.collectFindAll().subscribe({
       next: (response: AppResponse) => {
         if (response.ok) {
           this.accounts = response.data.accounts;
+          this.transactions = response.data.treasuresTransactions;
+          this.dataSource = new MatTableDataSource<any>(this.transactions);
         }
       },
       error: (error: Error) => {
@@ -70,24 +71,7 @@ export class TransactionCollectComponent implements OnInit {
     });
   }
 
-  findAll(){
-  /*   this.transactionService.findAll().subscribe({
-      next:(response: AppResponse)=>{
-        if(response.ok){
-           this.supplierCategories= response.data;
-           this.dataSource = new MatTableDataSource<any>(this.supplierCategories);
-        }
-      },
-      error:(error: Error)=>{
-        Swal.fire({
-          icon: "error",
-          title: error.message,
-          showConfirmButton: true
-        });
-      }
 
-    }); */
-  }
 
   onAccountChange(event: MatSelectChange){
     this.currentBalance = this.accounts.find(i=> i.id=== event.value ).currentBalance ;

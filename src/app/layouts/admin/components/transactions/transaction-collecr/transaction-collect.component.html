@@ -81,6 +81,99 @@
   </mat-form-field>
 
 
+  <div class="w-100 mt-2 rounded-2 shadow-sm overflow-x-scroll">
+
+    <table mat-table [dataSource]="dataSource" style="direction: rtl;">
+
+
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> الاسم</th>
+        <td mat-cell *matCellDef="let supplier"> {{supplier.name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="supplierCategory">
+        <th mat-header-cell *matHeaderCellDef> الفئة</th>
+        <td mat-cell *matCellDef="let supplier"> {{supplier.supplierCategory.name}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="accountNumber">
+        <th mat-header-cell *matHeaderCellDef> رقم الحساب </th>
+        <td mat-cell *matCellDef="let supplier"> {{supplier.accountNumber.id}} </td>
+      </ng-container>
+
+
+
+      <ng-container matColumnDef="currentBalance">
+        <th mat-header-cell *matHeaderCellDef> الرصيد</th>
+        <td mat-cell *matCellDef="let supplier">
+
+          <span *ngIf="supplier.currentBalance > 0"> مدين ب ({{ supplier.currentBalance*1 }}) جنيه
+          </span>
+
+          <span *ngIf="supplier.currentBalance < 0"> دائن ب ({{ supplier.currentBalance* -1 }}) جنيه
+          </span>
+
+          <span *ngIf="supplier.currentBalance < 1 && supplier.currentBalance >-1">
+            متزن
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> رقم الايصال</th>
+        <td mat-cell *matCellDef="let transaction"> {{transaction.id}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="treasure">
+        <th mat-header-cell *matHeaderCellDef>الخزنة</th>
+        <td mat-cell *matCellDef="let transaction"> {{transaction.treasure.name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="money">
+        <th mat-header-cell *matHeaderCellDef>المبلغ</th>
+        <td mat-cell *matCellDef="let transaction"> {{transaction.money}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="moveType">
+        <th mat-header-cell *matHeaderCellDef>الحركة</th>
+        <td mat-cell *matCellDef="let transaction"> {{transaction.movType.name}} </td>
+      </ng-container>
+
+
+
+      <ng-container matColumnDef="account">
+        <th mat-header-cell *matHeaderCellDef> الحساب المالي</th>
+        <td mat-cell *matCellDef="let transaction"> {{transaction.account.name}} ({{transaction.account.accountType.name}}) </td>
+      </ng-container>
+
+      <ng-container matColumnDef="bayan">
+        <th mat-header-cell *matHeaderCellDef> البيان</th>
+        <td mat-cell *matCellDef="let transaction"> {{transaction.byan}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="by">
+        <th mat-header-cell *matHeaderCellDef> المستخدم</th>
+        <td mat-cell *matCellDef="let transaction"> {{transaction.addedBy.name}}
+        <br>
+        <span>
+          {{transaction.createdAt }}
+        </span>
+
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[10, 30, 100]" showFirstLastButtons aria-label="Select page of periodic elements">
+    </mat-paginator>
+  </div>
+
+
 
 
   <mat-dialog-actions fxLayoutAlign="center">

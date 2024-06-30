@@ -10,8 +10,12 @@ export class TransactionService {
 
   constructor(private http: HttpClient) { }
 
-  findAll(): Observable<any> {
-    return this.http.get(baseURL + '/accounts');
+  collectFindAll(): Observable<any> {
+    return this.http.get(baseURL + '/transactions/collect');
+  }
+
+  exchangeFindAll(): Observable<any> {
+    return this.http.get(baseURL + '/transactions/exchange');
   }
 
 
