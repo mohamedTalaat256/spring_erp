@@ -37,11 +37,11 @@ export class TransactionExchangeComponent implements OnInit {
   ){
 
     this.exchangeTransactionForm = this.fb.group({
-      date: [null, [Validators.required]],
+      moveDate:    [null, [Validators.required]],
       account: [null, [Validators.required]],
       movType: [null, [Validators.required]],
-      money: [null, [Validators.required]],
-      bayan: [null, [Validators.required]],
+      money:   [null, [Validators.required]],
+      byan:   [null, [Validators.required]],
     });
 
   }
@@ -57,6 +57,7 @@ export class TransactionExchangeComponent implements OnInit {
         if (response.ok) {
           this.accounts = response.data.accounts;
           this.transactions = response.data.treasuresTransactions;
+          this.availableBalance = response.data.availableBalance;
           this.dataSource = new MatTableDataSource<any>(this.transactions);
         }
       },
@@ -72,11 +73,38 @@ export class TransactionExchangeComponent implements OnInit {
   }
 
 
+
   onAccountChange(event: MatSelectChange){
     this.currentBalance = this.accounts.find(i=> i.id=== event.value ).currentBalance ;
   }
 
   onSubmit(){
+
+    this.transactionService.exchange(this.exchangeTransactionForm.value).subscribe({
+      next: (response: AppResponse) => {
+        if (response.ok) {
+          this.accounts = response.data.accounts;
+          this.transactions.push(response.data.transaction);
+          this.availableBalance = response.data.availableBalance;
+          this.dataSource = new MatTableDataSource<any>(this.transactions);
+
+          Swal.fire({
+            icon: "success",
+            title: response.message,
+            showConfirmButton: true
+          });
+          this.exchangeTransactionForm.reset();
+          this.currentBalance=0;
+        }
+      },
+      error: (error: Error) => {
+        Swal.fire({
+          icon: "error",
+          title: error.message,
+          showConfirmButton: true
+        });
+      }
+    });
 
   }
 

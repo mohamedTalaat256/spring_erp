@@ -1,181 +1,182 @@
 <h2 mat-dialog-title class="text-capitalize">صرف النقدية </h2>
 
-<form (ngSubmit)="onSubmit()" [formGroup]="exchangeTransactionForm" fxLayout="row-reverse wrap" fxLayoutGap="15" class="p-5">
+<form (ngSubmit)="onSubmit()" [formGroup]="exchangeTransactionForm" fxLayout="row-reverse wrap" fxLayoutGap="15"
+  class="p-5">
 
-    <mat-form-field fxFlex="32" fxFlex.sm="100" fxFlex.xs="100">
-        <mat-label>تاريخ الحركة</mat-label>
-        <input matInput [matDatepicker]="datePicker" formControlName="date">
-        <mat-datepicker-toggle matIconSuffix [for]="datePicker">
-            <mat-icon matDatepickerToggleIcon>date_range</mat-icon>
-        </mat-datepicker-toggle>
-        <mat-datepicker #datePicker></mat-datepicker>
-        <mat-error>
-            <app-validation-msg [control]="exchangeTransactionForm.get('date')" fieldName="تاريخ الحركة"></app-validation-msg>
-        </mat-error>
-    </mat-form-field>
-
-
-    <mat-form-field fxFlex="32" fxFlex.sm="100" fxFlex.xs="100">
-        <mat-label> الحسابات المالية</mat-label>
-        <mat-select formControlName="account" (selectionChange)="onAccountChange($event)">
-
-            <mat-option *ngFor="let account of accounts" [value]="account.id"> {{account.name}}</mat-option>
-        </mat-select>
-        <mat-error>
-            <app-validation-msg [control]="exchangeTransactionForm.get('account')"
-                fieldName="الحقل"></app-validation-msg>
-        </mat-error>
-    </mat-form-field>
-
-    <div fxFlex="32" fxFlex.sm="100" fxFlex.xs="100">
-
-            <span *ngIf="currentBalance > 0"> مدين ب ({{ currentBalance*1 }}) جنيه
-            </span>
-
-            <span *ngIf="currentBalance < 0"> دائن ب ({{ currentBalance* -1 }}) جنيه
-            </span>
-
-            <span *ngIf="currentBalance < 1 && currentBalance >-1">
-                متزن
-            </span>
-
-    </div>
-
-    <mat-form-field fxFlex="32" fxFlex.sm="100" fxFlex.xs="100">
-        <mat-label> نوع الحركة</mat-label>
-        <mat-select fsscssormControlName="movType">
-
-            <mat-option *ngFor="let movType of movTypes" [value]="movType.id"> {{movType.name}}</mat-option>
-        </mat-select>
-        <mat-error>
-            <app-validation-msg [control]="exchangeTransactionForm.get('movType')" fieldName="نوع الحركة" ></app-validation-msg>
-        </mat-error>
-    </mat-form-field>
+  <mat-form-field fxFlex="32" fxFlex.sm="100" fxFlex.xs="100">
+    <mat-label>تاريخ الحركة</mat-label>
+    <input matInput [matDatepicker]="datePicker" formControlName="moveDate">
+    <mat-datepicker-toggle matIconSuffix [for]="datePicker">
+      <mat-icon matDatepickerToggleIcon>date_range</mat-icon>
+    </mat-datepicker-toggle>
+    <mat-datepicker #datePicker></mat-datepicker>
+    <mat-error>
+      <app-validation-msg [control]="exchangeTransactionForm.get('moveDate')" fieldName="تاريخ الحركة"></app-validation-msg>
+    </mat-error>
+  </mat-form-field>
 
 
-    <mat-form-field fxFlex="32" fxFlex.sm="100" fxFlex.xs="100">
-        <mat-label>قيمة المبلغ المحصل </mat-label>
-        <input matInput formControlName="money" placeholder="قيمة المبلغ المحصل " type="number">
-        <mat-error>
-            <app-validation-msg [control]="exchangeTransactionForm.get('docNo')"
-                fieldName="قيمة المبلغ المحصل "></app-validation-msg>
-        </mat-error>
-    </mat-form-field>
+  <mat-form-field fxFlex="32" fxFlex.sm="100" fxFlex.xs="100">
+    <mat-label> الحسابات المالية</mat-label>
+    <mat-select formControlName="account" (selectionChange)="onAccountChange($event)">
+
+      <mat-option *ngFor="let account of accounts" [value]="account.id"> {{account.name}}</mat-option>
+    </mat-select>
+    <mat-error>
+      <app-validation-msg [control]="exchangeTransactionForm.get('account')" fieldName="الحقل"></app-validation-msg>
+    </mat-error>
+  </mat-form-field>
+
+  <div fxFlex="32" fxFlex.sm="100" fxFlex.xs="100">
+
+    <span *ngIf="currentBalance > 0"> مدين ب ({{ currentBalance*1 }}) جنيه
+    </span>
+
+    <span *ngIf="currentBalance < 0"> دائن ب ({{ currentBalance* -1 }}) جنيه
+    </span>
+
+    <span *ngIf="currentBalance < 1 && currentBalance >-1">
+      متزن
+    </span>
+
+  </div>
+
+  <mat-form-field fxFlex="32" fxFlex.sm="100" fxFlex.xs="100">
+    <mat-label> نوع الحركة</mat-label>
+    <mat-select formControlName="movType">
+
+      <mat-option *ngFor="let movType of movTypes" [value]="movType.id"> {{movType.name}}</mat-option>
+    </mat-select>
+    <mat-error>
+      <app-validation-msg [control]="exchangeTransactionForm.get('movType')" fieldName="نوع الحركة"></app-validation-msg>
+    </mat-error>
+  </mat-form-field>
 
 
-    <mat-form-field fxFlex="100">
-        <mat-label>البيان</mat-label>
-        <textarea matInput formControlName="bayan" placeholder="البيان"></textarea>
+  <mat-form-field fxFlex="32" fxFlex.sm="100" fxFlex.xs="100">
+    <mat-label>قيمة المبلغ المحصل </mat-label>
+    <input matInput formControlName="money" placeholder="قيمة المبلغ المحصل " type="number">
+    <mat-error>
+      <app-validation-msg [control]="exchangeTransactionForm.get('money')"
+        fieldName="قيمة المبلغ المحصل "></app-validation-msg>
+    </mat-error>
+  </mat-form-field>
+  <div fxFlex="32" fxFlex.sm="100" fxFlex.xs="100">
+    <p>الرصيد المتاح بالخزنة</p>
+    {{availableBalance}}
 
-        <mat-error>
-            <app-validation-msg [control]="exchangeTransactionForm.get('bayan')" fieldName="البيان"></app-validation-msg>
-        </mat-error>
-    </mat-form-field>
-
-
-
-
-    <mat-dialog-actions fxLayoutAlign="center">
-        <button mat-button mat-dialog-close color="danger">الغاء</button>
-        <button [disabled]="!exchangeTransactionForm.valid" mat-raised-button color="primary" type="submit" > حفظ</button>
-    </mat-dialog-actions>
+  </div>
 
 
-    <div class="w-100 mt-2 rounded-2 shadow-sm overflow-x-scroll">
+  <mat-form-field fxFlex="100">
+    <mat-label>البيان</mat-label>
+    <textarea matInput formControlName="byan" placeholder="البيان"></textarea>
 
-      <table mat-table [dataSource]="dataSource" style="direction: rtl;">
+    <mat-error>
+      <app-validation-msg [control]="exchangeTransactionForm.get('byan')" fieldName="البيان"></app-validation-msg>
+    </mat-error>
+  </mat-form-field>
 
+  <mat-dialog-actions fxLayoutAlign="center">
+    <button mat-button mat-dialog-close color="danger">الغاء</button>
+    <button [disabled]="!exchangeTransactionForm.valid" mat-raised-button color="primary" type="submit"> حفظ</button>
+  </mat-dialog-actions>
 
+  <div class="w-100 mt-2 rounded-2 shadow-sm overflow-x-scroll">
 
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> الاسم</th>
-          <td mat-cell *matCellDef="let supplier"> {{supplier.name}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="supplierCategory">
-          <th mat-header-cell *matHeaderCellDef> الفئة</th>
-          <td mat-cell *matCellDef="let supplier"> {{supplier.supplierCategory.name}} </td>
-        </ng-container>
-
-
-        <ng-container matColumnDef="accountNumber">
-          <th mat-header-cell *matHeaderCellDef> رقم الحساب </th>
-          <td mat-cell *matCellDef="let supplier"> {{supplier.accountNumber.id}} </td>
-        </ng-container>
+    <table mat-table [dataSource]="dataSource" style="direction: rtl;">
 
 
 
-        <ng-container matColumnDef="currentBalance">
-          <th mat-header-cell *matHeaderCellDef> الرصيد</th>
-          <td mat-cell *matCellDef="let supplier">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> الاسم</th>
+        <td mat-cell *matCellDef="let supplier"> {{supplier.name}} </td>
+      </ng-container>
 
-            <span *ngIf="supplier.currentBalance > 0"> مدين ب ({{ supplier.currentBalance*1 }}) جنيه
-            </span>
-
-            <span *ngIf="supplier.currentBalance < 0"> دائن ب ({{ supplier.currentBalance* -1 }}) جنيه
-            </span>
-
-            <span *ngIf="supplier.currentBalance < 1 && supplier.currentBalance >-1">
-              متزن
-            </span>
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef> رقم الايصال</th>
-          <td mat-cell *matCellDef="let transaction"> {{transaction.id}} </td>
-        </ng-container>
+      <ng-container matColumnDef="supplierCategory">
+        <th mat-header-cell *matHeaderCellDef> الفئة</th>
+        <td mat-cell *matCellDef="let supplier"> {{supplier.supplierCategory.name}} </td>
+      </ng-container>
 
 
-        <ng-container matColumnDef="treasure">
-          <th mat-header-cell *matHeaderCellDef>الخزنة</th>
-          <td mat-cell *matCellDef="let transaction"> {{transaction.treasure.name}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="money">
-          <th mat-header-cell *matHeaderCellDef>المبلغ</th>
-          <td mat-cell *matCellDef="let transaction"> {{transaction.moneyForAccount}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="moveType">
-          <th mat-header-cell *matHeaderCellDef>الحركة</th>
-          <td mat-cell *matCellDef="let transaction"> {{transaction.movType.name}} </td>
-        </ng-container>
+      <ng-container matColumnDef="accountNumber">
+        <th mat-header-cell *matHeaderCellDef> رقم الحساب </th>
+        <td mat-cell *matCellDef="let supplier"> {{supplier.accountNumber.id}} </td>
+      </ng-container>
 
 
 
-        <ng-container matColumnDef="account">
-          <th mat-header-cell *matHeaderCellDef> الحساب المالي</th>
-          <td mat-cell *matCellDef="let transaction">
+      <ng-container matColumnDef="currentBalance">
+        <th mat-header-cell *matHeaderCellDef> الرصيد</th>
+        <td mat-cell *matCellDef="let supplier">
 
-            <span *ngIf="transaction.isAccount">
-              {{transaction.account.name}} ({{transaction.account.accountType.name}})
-            </span>
-            </td>
-        </ng-container>
+          <span *ngIf="supplier.currentBalance > 0"> مدين ب ({{ supplier.currentBalance*1 }}) جنيه
+          </span>
 
-        <ng-container matColumnDef="bayan">
-          <th mat-header-cell *matHeaderCellDef> البيان</th>
-          <td mat-cell *matCellDef="let transaction"> {{transaction.byan}} </td>
-        </ng-container>
+          <span *ngIf="supplier.currentBalance < 0"> دائن ب ({{ supplier.currentBalance* -1 }}) جنيه
+          </span>
 
-        <ng-container matColumnDef="by">
-          <th mat-header-cell *matHeaderCellDef> المستخدم</th>
-          <td mat-cell *matCellDef="let transaction"> {{transaction.addedBy.name}}
+          <span *ngIf="supplier.currentBalance < 1 && supplier.currentBalance >-1">
+            متزن
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> رقم الايصال</th>
+        <td mat-cell *matCellDef="let transaction"> {{transaction.id}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="treasure">
+        <th mat-header-cell *matHeaderCellDef>الخزنة</th>
+        <td mat-cell *matCellDef="let transaction"> {{transaction.treasure.name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="money">
+        <th mat-header-cell *matHeaderCellDef>المبلغ</th>
+        <td mat-cell *matCellDef="let transaction"> {{transaction.money * -1}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="moveType">
+        <th mat-header-cell *matHeaderCellDef>الحركة</th>
+        <td mat-cell *matCellDef="let transaction"> {{transaction.movType.name}} </td>
+      </ng-container>
+
+
+
+      <ng-container matColumnDef="account">
+        <th mat-header-cell *matHeaderCellDef> الحساب المالي</th>
+        <td mat-cell *matCellDef="let transaction">
+
+          <span *ngIf="transaction.isAccount">
+            {{transaction.account.name}} ({{transaction.account.accountType.name}})
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="bayan">
+        <th mat-header-cell *matHeaderCellDef> البيان</th>
+        <td mat-cell *matCellDef="let transaction"> {{transaction.byan}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="by">
+        <th mat-header-cell *matHeaderCellDef> المستخدم</th>
+        <td mat-cell *matCellDef="let transaction"> {{transaction.addedBy.name}}
           <br>
           <span>
             {{transaction.createdAt }}
           </span>
 
-          </td>
-        </ng-container>
+        </td>
+      </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
 
-      <mat-paginator [pageSizeOptions]="[10, 30, 100]" showFirstLastButtons aria-label="Select page of periodic elements">
-      </mat-paginator>
-    </div>
-
+    <mat-paginator [pageSizeOptions]="[10, 30, 100]" showFirstLastButtons aria-label="Select page of periodic elements">
+    </mat-paginator>
+  </div>
 </form>
+

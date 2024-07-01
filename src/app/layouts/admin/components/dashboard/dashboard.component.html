@@ -1,150 +1,157 @@
 <div fxLayout="column" fxLayoutAlign="center" class="px-2">
- 
 
-    <div  fxLayout="row wrap" fxLayout.sm="column" fxLayout.sx="column" fxLayoutAlign="space-around center" fxLayoutGap="10" >
 
-        
-        <div  fxFlex.lg="23" fxFlex.md="48" fxFlex.sm="100" fxFlex.xs="100" fxFlex="23" fxLayout="column" fxLayoutAlign="space-between center"
-        fxLayout="row" 
-            class="p-3 my-2 mat-bg-light-warn rounded-1 shadow-sm dash-card">
-                <div  fxLayout="row" fxLayoutGap="15">
-                    <mat-icon>my_library_books</mat-icon>
-                    <h1>التوريدات</h1>
-                </div>
-                <h1>230</h1> 
-        </div>
+  <div fxLayout="row wrap" fxLayout.sm="column" fxLayout.sx="column" fxLayoutAlign="space-around center"
+    fxLayoutGap="10">
 
-        <div  fxFlex.lg="23" fxFlex.md="48" fxFlex.sm="100" fxFlex.xs="100" fxFlex="23" fxLayout="column" fxLayoutAlign="space-between center"
-        fxLayout="row" 
-            class="p-3 my-2 mat-bg-light-primary rounded-1 shadow-sm dash-card">
-                <div  fxLayout="row" fxLayoutGap="15">
-                    <mat-icon>menu</mat-icon>
-                    <h1>المستخلصات</h1>
-                </div>
-                <h1>230</h1> 
-        </div>
 
-        <div  fxFlex.lg="23" fxFlex.md="48" fxFlex.sm="100" fxFlex.xs="100" fxFlex="23" fxLayout="column" fxLayoutAlign="space-between center"
-        fxLayout="row" 
-            class="p-3 my-2 mat-bg-light-danger rounded-1 shadow-sm dash-card">
-                <div  fxLayout="row" fxLayoutGap="15">
-                    <mat-icon>store</mat-icon>
-                    <h1>المخازن</h1>
-                </div>
-                <h1>2</h1> 
-        </div>
-
-        <div  fxFlex.lg="23" fxFlex.md="48" fxFlex.sm="100" fxFlex.xs="100" fxFlex="23" fxLayout="column" fxLayoutAlign="space-between center"
-        fxLayout="row" 
-            class="p-3 my-2 mat-bg-light-success rounded-1 shadow-sm dash-card">
-                <div  fxLayout="row" fxLayoutGap="15">
-                    <mat-icon>group</mat-icon>
-                    <h1>العملاء</h1>
-                </div>
-                <h1>72</h1> 
-        </div>
+    <div fxFlex.lg="23" fxFlex.md="48" fxFlex.sm="100" fxFlex.xs="100" fxFlex="23" fxLayout="column"
+      fxLayoutAlign="space-between center" fxLayout="row"
+      class="p-3 my-2 mat-bg-light-warn rounded-1 shadow-sm dash-card">
+      <div fxLayout="row" fxLayoutGap="15">
+        <mat-icon>my_library_books</mat-icon>
+        <h1>التوريدات</h1>
+      </div>
+      <h1>230</h1>
     </div>
 
- 
-    <div fxLayout="row wrap"  fxLayout.md="column" fxLayout.sm="column"  fxLayout.xs="column"  fxLayoutAlign="space-between center" fxFlex="100" class="mt-3">
-        <div fxLayout="row wrap" fxLayout.sm="column"  fxLayout.xs="column"  fxFlex.xl="49"   fxFlex.ls="49"  fxFlex.md="49"  fxFlex.sm="100" fxFlex.xs="100" fxLayoutAlign="space-between center" class="w-100">
+    <div fxFlex.lg="23" fxFlex.md="48" fxFlex.sm="100" fxFlex.xs="100" fxFlex="23" fxLayout="column"
+      fxLayoutAlign="space-between center" fxLayout="row"
+      class="p-3 my-2 mat-bg-light-primary rounded-1 shadow-sm dash-card">
+      <div fxLayout="row" fxLayoutGap="15">
+        <mat-icon>menu</mat-icon>
+        <h1>المستخلصات</h1>
+      </div>
+      <h1>230</h1>
+    </div>
 
-            <div fxFlex="49" class="rounded-1 shadow-sm p-3 dash-card-square w-100" >
-                <h2>اّخر العمليات المالية علي الخزنة</h2>
-                <div class="timeline-wrapper">
-                    <ul class="StepProgress">
-    
-                        <li *ngFor="let transaction of lastTransaction" class="StepProgress-item is-done ">
-                            <div class="bold time"> {{transaction.date}}</div>
-                            <div>
-                                <div fxLayout="column">
-                                    <div class="bold">
-                                        <span class="word-space">عملية تمت بواسطة</span>
-                                        <span class="word-space mat-text-primary">{{transaction.createdBy}}</span>
-                                    </div>
-                                </div>
-                                <div>
-    
-                                    <span class="word-space">
-    
-                                        {{transaction.type}}
-                                        {{transaction.amount}}
-    
-                                        <span *ngIf="transaction.type === 'سحب'"> من حساب</span>
-                                        <span *ngIf="transaction.type === 'ايداع'"> الي حساب</span>
-    
-                                        {{transaction.account}}
-    
-    
-                                    </span>
-                                </div>
-                            </div>
-    
-    
-                        </li>
-                    </ul>
+    <div fxFlex.lg="23" fxFlex.md="48" fxFlex.sm="100" fxFlex.xs="100" fxFlex="23" fxLayout="column"
+      fxLayoutAlign="space-between center" fxLayout="row"
+      class="p-3 my-2 mat-bg-light-danger rounded-1 shadow-sm dash-card">
+      <div fxLayout="row" fxLayoutGap="15">
+        <mat-icon>group</mat-icon>
+        <h1>الموردين</h1>
+      </div>
+      <h1>{{supplierCount}}</h1>
+    </div>
+
+    <div fxFlex.lg="23" fxFlex.md="48" fxFlex.sm="100" fxFlex.xs="100" fxFlex="23" fxLayout="column"
+      fxLayoutAlign="space-between center" fxLayout="row"
+      class="p-3 my-2 mat-bg-light-success rounded-1 shadow-sm dash-card">
+      <div fxLayout="row" fxLayoutGap="15">
+        <mat-icon>group</mat-icon>
+        <h1>العملاء</h1>
+      </div>
+      <h1>{{customerCount}}</h1>
+    </div>
+  </div>
+
+
+  <div fxLayout="row wrap" fxLayout.md="column" fxLayout.sm="column" fxLayout.xs="column"
+    fxLayoutAlign="space-between center" fxFlex="100" class="mt-3">
+
+    <div fxFlex="49" class="rounded-1 shadow-sm p-3 dash-card-square w-100">
+      <h2>اّخر العمليات المالية علي الخزنة</h2>
+      <div class="timeline-wrapper">
+        <ul class="StepProgress">
+
+          <li *ngFor="let transaction of last5Transaction" class="StepProgress-item is-done ">
+            <div class="bold time"> {{transaction.date}}</div>
+            <div>
+              <div fxLayout="column">
+                <div class="bold">
+                  <span class="word-space">{{transaction.movType.name}}</span>
+                  <span class="word-space mat-text-primary">{{transaction.account.name}}</span>
+                  <span class="word-space">مبلغ</span>
+                  <span *ngIf="transaction.moneyForAccount < 0" class="word-space">{{ transaction.moneyForAccount * -1 }}</span>
+                  <span  *ngIf="transaction.moneyForAccount > 0" class="word-space">{{transaction.moneyForAccount}}</span>
                 </div>
-    
+              </div>
+              <div>
+                <span class="word-space">
+                  {{transaction.createdAt | dateConverter}}
+                  في
+                  {{transaction.addedBy.name}}
+                  تمت بواسطة
+                </span>
+              </div>
             </div>
+          </li>
+        </ul>
+      </div>
 
-            <div fxFlex="49" class="rounded-1 shadow-sm p-3 dash-card-square w-100">
-                <h2>اّخر الاصناف</h2> 
-                    <mat-list class="px-3">
-                            <mat-list-item *ngFor="let invItem of lastInvItems" class="inv-item mat-bg-light-success m-2  rounded-1">
-                                <div matListItemTitle fxLayout="row"fxLayoutAlign="space-between center" class="sid-nav-item">
-                                    <span>{{invItem.name}} </span>
-                                    <span>{{invItem.amount}} : عدد</span>
-                              </div>
-                            </mat-list-item> 
-                    </mat-list> 
-    
-            </div>
 
-        </div>
-
-        <div fxFlex="49" class="rounded-1 shadow-sm p-3 dash-card-square">
-
-            <h2>اّخر فواتير مبيعات</h2>
-            <table mat-table [dataSource]="dataSource" style="direction: rtl;">
-
-                <ng-container matColumnDef="id">
-                    <th mat-header-cell *matHeaderCellDef> رقم الفاتورة </th>
-                    <td mat-cell *matCellDef="let salesInv"> {{salesInv.id}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="total">
-                    <th mat-header-cell *matHeaderCellDef> الاجمالي</th>
-                    <td mat-cell *matCellDef="let salesInv"> {{salesInv.total}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="pillType">
-                    <th mat-header-cell *matHeaderCellDef> نوع الدفع</th>
-                    <td mat-cell *matCellDef="let salesInv"> {{salesInv.pillType}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="discount">
-                    <th mat-header-cell *matHeaderCellDef> الخصم </th>
-                    <td mat-cell *matCellDef="let salesInv"> {{salesInv.discount}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="clientName">
-                    <th mat-header-cell *matHeaderCellDef> العملي </th>
-                    <td mat-cell *matCellDef="let salesInv"> {{salesInv.clientName}} </td>
-                </ng-container>
- 
- 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-
-        </div>
     </div>
 
-    <!-- charts -->
-    <div fxFlex="100%" class="mt-5" id="chart">
-        <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [dataLabels]="chartOptions.dataLabels"
-            [plotOptions]="chartOptions.plotOptions" [yaxis]="chartOptions.yaxis" [xaxis]="chartOptions.xaxis"
-            [fill]="chartOptions.fill" [title]="chartOptions.title"></apx-chart>
+    <div fxFlex="49" class="rounded-1 shadow-sm p-3 dash-card-square">
+
+      <h2>اّخر فواتير مبيعات</h2>
+      <table mat-table [dataSource]="dataSource" style="direction: rtl;">
+
+        <ng-container matColumnDef="autoSerial">
+          <th mat-header-cell *matHeaderCellDef>كود</th>
+          <td mat-cell *matCellDef="let salesOrder"> {{salesOrder.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="supplierName">
+          <th mat-header-cell *matHeaderCellDef>العميل</th>
+          <td mat-cell *matCellDef="let salesOrder"> {{salesOrder.customer.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="orderDate">
+          <th mat-header-cell *matHeaderCellDef> تاريخ الفاتورة</th>
+          <td mat-cell *matCellDef="let salesOrder"> {{salesOrder.invoiceDate}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="pillType">
+          <th mat-header-cell *matHeaderCellDef> نوع الفاتورة</th>
+          <td mat-cell *matCellDef="let salesOrder">
+            <mat-chip-row *ngIf="salesOrder.pillType===1" color="success">
+              <mat-icon class="icons-sm">monetization_on</mat-icon>
+              كاش
+            </mat-chip-row>
+            <mat-chip-row *ngIf="salesOrder.pillType===2" color="danger">
+              اّجل
+            </mat-chip-row>
+
+          </td>
+        </ng-container>
+
+
+
+
+        <ng-container matColumnDef="totalCost">
+          <th mat-header-cell *matHeaderCellDef> اجمالي الفاتورة</th>
+          <td mat-cell *matCellDef="let salesOrder"> {{salesOrder.totalCost * 1}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="approveStatus">
+          <th mat-header-cell *matHeaderCellDef>حالة الفاتورة</th>
+          <td mat-cell *matCellDef="let salesOrder">
+            <mat-chip-row *ngIf="salesOrder.isApproved" color="danger">
+              معتمدة
+            </mat-chip-row>
+            <mat-chip-row *ngIf="!salesOrder.isApproved" color="light-success">
+              مفتوحة
+            </mat-chip-row>
+          </td>
+        </ng-container>
+
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
     </div>
-  
+  </div>
+
+  <!-- charts -->
+  <div fxFlex="100%" class="mt-5" id="chart">
+    <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [dataLabels]="chartOptions.dataLabels"
+      [plotOptions]="chartOptions.plotOptions" [yaxis]="chartOptions.yaxis" [xaxis]="chartOptions.xaxis"
+      [fill]="chartOptions.fill" [title]="chartOptions.title"></apx-chart>
+  </div>
+
 </div>

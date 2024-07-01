@@ -5,7 +5,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MovType, movTypes } from 'src/app/model/MovType';
 import { Account } from 'src/app/model/accounty';
 import { AppResponse } from 'src/app/model/app_response.model';
-import { AccountService } from 'src/app/service/account.service';
 import { TransactionService } from 'src/app/service/transactions.service';
 import Swal from 'sweetalert2';
 
@@ -41,7 +40,7 @@ export class TransactionCollectComponent implements OnInit {
       account: [null, [Validators.required]],
       movType: [null, [Validators.required]],
       money:   [null, [Validators.required]],
-      bayan:   [null, [Validators.required]],
+      byan:   [null, [Validators.required]],
     });
 
   }
@@ -84,10 +83,19 @@ export class TransactionCollectComponent implements OnInit {
       next: (response: AppResponse) => {
         if (response.ok) {
           this.accounts = response.data.accounts;
-          this.transactions = response.data.treasuresTransactions;
+          this.transactions.push(response.data.transaction);
           this.availableBalance = response.data.availableBalance;
           this.dataSource = new MatTableDataSource<any>(this.transactions);
+
+          Swal.fire({
+            icon: "success",
+            title: response.message,
+            showConfirmButton: true
+          });
+          this.collectTransactionForm.reset();
+          this.currentBalance=0;
         }
+
       },
       error: (error: Error) => {
         Swal.fire({

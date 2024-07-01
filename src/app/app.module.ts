@@ -31,7 +31,7 @@ import { InvoiceComponent } from './layouts/admin/components/invoice/invoice.com
 import { InvItemFormDialogComponent } from './layouts/admin/components/inventory/inv-item-form-dialog/inv-item-form-dialog.component';
 import { DashboardComponent } from './layouts/admin/components/dashboard/dashboard.component';
 import { NgxPrintModule } from 'ngx-print';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { DatePipe, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AdminRoutingModule } from './layouts/admin/admin-routing.module';
 import { AdminSideNavListComponent } from './layouts/admin/global/admin-side-nav-list/admin-side-nav-list.component';
 import { AdminToolbarListComponent } from './layouts/admin/global/admin-toolbar-list/admin-toolbar-list.component';
@@ -163,6 +163,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     })
   ],
   providers: [
+    DatePipe,
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: appearance

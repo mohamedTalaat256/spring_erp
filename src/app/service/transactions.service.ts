@@ -24,5 +24,9 @@ export class TransactionService {
     return this.http.post<any>(baseURL+ '/transactions/collect',  data);
   }
 
+  public exchange(data: any ): Observable<any> {
+    return this.http.post<any>(baseURL+ '/transactions/exchange',  data);
+  }
+
 
 }
