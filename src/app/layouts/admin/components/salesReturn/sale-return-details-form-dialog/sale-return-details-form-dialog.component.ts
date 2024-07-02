@@ -154,6 +154,12 @@ export class SaleReturnDetailsFormDialogComponent implements OnInit {
 
   }
 
+  selectedInvUom(event) {
+    console.log(event);
+    this.setSelectedItem(this.selectedItem.id);
+    this.selectedUom = this.newInvItemForm.value.uom;
+  }
+
 
   setSelectedItem(id:number) {
 

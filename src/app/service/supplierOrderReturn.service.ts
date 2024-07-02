@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable } from "rxjs";
 import { Injectable } from "@angular/core";
-import { baseURL } from "../constants/constants";
+import { FormMode, baseURL } from "../constants/constants";
 
 @Injectable({ providedIn: 'root' })
 export class SupplierOrderReturnService {
@@ -20,14 +20,25 @@ export class SupplierOrderReturnService {
 
 
 
-  public save(data: any): Observable<any> {
-    return this.http.post<any>(baseURL + '/supplierOrderReturn',  data);
+  public save(data: any, formMode: FormMode): Observable<any> {
+    if(formMode === FormMode.CREATE){
+      return this.http.post<any>(baseURL + '/supplierOrderReturn',  data);
+    }else{
+      return this.http.put<any>(baseURL + '/supplierOrderReturn',  data);
+    }
+
   }
 
 
   public upprove(data: any): Observable<any> {
     return this.http.post<any>(baseURL + '/supplierOrderReturn/approve',  data);
   }
+
+
+  public delete(id: any): Observable<any> {
+    return this.http.delete<any>(baseURL + '/supplierOrderReturn/'+id);
+  }
+
 
 
 }

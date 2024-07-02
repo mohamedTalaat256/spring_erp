@@ -1,81 +1,80 @@
 <h2 mat-dialog-title class="text-capitalize">{{title}}</h2>
 
-<form (ngSubmit)="onSubmit()" [formGroup]="supplierOrderReturnForm"  class="p-5">
+<form (ngSubmit)="onSubmit()" [formGroup]="supplierOrderReturnForm" class="p-5">
 
     <div fxLayout="row wrap" fxLayoutGap="10">
 
-    <mat-form-field fxFlex="48">
-        <mat-label>تاريخ الفاتورة</mat-label>
-        <input matInput [matDatepicker]="orderDatePicker" formControlName="orderDate">
-        <mat-datepicker-toggle matIconSuffix [for]="orderDatePicker">
-            <mat-icon matDatepickerToggleIcon>date_range</mat-icon>
-        </mat-datepicker-toggle>
-        <mat-datepicker #orderDatePicker></mat-datepicker>
-        <mat-error>
-            <app-validation-msg [control]="supplierOrderReturnForm.get('orderDate')"
-                fieldName="تاريخ الفاتورة"></app-validation-msg>
-        </mat-error>
-    </mat-form-field>
+        <mat-form-field fxFlex="48">
+            <mat-label>تاريخ الفاتورة</mat-label>
+            <input matInput [matDatepicker]="orderDatePicker" formControlName="orderDate">
+            <mat-datepicker-toggle matIconSuffix [for]="orderDatePicker">
+                <mat-icon matDatepickerToggleIcon>date_range</mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #orderDatePicker></mat-datepicker>
+            <mat-error>
+                <app-validation-msg [control]="supplierOrderReturnForm.get('orderDate')"
+                    fieldName="تاريخ الفاتورة"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
 
-    <mat-form-field fxFlex="48">
-        <mat-label>المورد</mat-label>
+        <mat-form-field fxFlex="48">
+            <mat-label>المورد</mat-label>
 
-        <input type="text"   placeholder="المورد" matInput
-            [formControl]="supplierFormControl" [matAutocomplete]="supplierAutoComplete">
+            <input type="text" placeholder="المورد" matInput [formControl]="supplierFormControl"
+                [matAutocomplete]="supplierAutoComplete">
 
-        <mat-autocomplete #supplierAutoComplete="matAutocomplete" [displayWith]="supplierDisplayFn"  (optionSelected)="selectedSupllier($event)">
-            <ng-container *ngFor="let option of filteredSuppliers | async; trackBy: supplierDisplayFn">
-                <mat-option [value]="option">{{ option.name }}</mat-option>
-            </ng-container>
-        </mat-autocomplete>
-        <mat-error>
-        <app-validation-msg [control]="supplierFormControl" fieldName="المورد"></app-validation-msg>
-          </mat-error>
-    </mat-form-field>
+            <mat-autocomplete #supplierAutoComplete="matAutocomplete" [displayWith]="supplierDisplayFn"
+                (optionSelected)="selectedSupllier($event)">
+                <ng-container *ngFor="let option of filteredSuppliers | async; trackBy: supplierDisplayFn">
+                    <mat-option [value]="option">{{ option.name }}</mat-option>
+                </ng-container>
+            </mat-autocomplete>
+            <mat-error>
+                <app-validation-msg [control]="supplierFormControl" fieldName="المورد"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
 
-    <mat-form-field fxFlex="48">
-    <mat-label>بيانات المخازن</mat-label>
-    <input type="text"  placeholder="المخزن" matInput [formControl]="storeFormControl" [matAutocomplete]="storeAutoComplete">
-
-    <mat-autocomplete #storeAutoComplete="matAutocomplete" [displayWith]="storeDisplayFn" (optionSelected)="selectedStore($event)">
-        <ng-container *ngFor="let option of filteredStores | async; trackBy: storeDisplayFn">
-            <mat-option [value]="option">{{ option.name }}</mat-option>
-        </ng-container>
-    </mat-autocomplete>
-    <app-validation-msg [control]="supplierOrderReturnForm.get('storeId')" fieldName="المخزن"></app-validation-msg>
-
-    </mat-form-field>
+        <mat-form-field fxFlex="48">
+            <mat-label>بيانات المخازن</mat-label>
+            <mat-select formControlName="store">
+              <mat-option *ngFor="let store of stores" [value]="store.id">{{store.name}}</mat-option>
+            </mat-select>
+            <mat-error>
+              <app-validation-msg [control]="supplierOrderReturnForm.get('store')" fieldName="المخزن"></app-validation-msg>
+            </mat-error>
+          </mat-form-field>
 
 
 
 
-    <mat-form-field fxFlex="48">
-        <mat-label>نوع الفاتورة</mat-label>
-        <mat-select formControlName="pillType">
-            <mat-option [value]="1">كاش</mat-option>
-            <mat-option [value]="2">اّجل</mat-option>
-        </mat-select>
-        <mat-error>
-            <app-validation-msg [control]="supplierOrderReturnForm.get('pillType')"
-                fieldName="نوع الفاتورة"></app-validation-msg>
-        </mat-error>
-    </mat-form-field>
+        <mat-form-field fxFlex="48">
+            <mat-label>نوع الفاتورة</mat-label>
+            <mat-select formControlName="pillType">
+                <mat-option [value]="1">كاش</mat-option>
+                <mat-option [value]="2">اّجل</mat-option>
+            </mat-select>
+            <mat-error>
+                <app-validation-msg [control]="supplierOrderReturnForm.get('pillType')"
+                    fieldName="نوع الفاتورة"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
 
 
-    <mat-form-field fxFlex="100">
-        <mat-label>ملاحظات</mat-label>
-        <textarea matInput formControlName="notes" placeholder="ملاحظات"></textarea>
+        <mat-form-field fxFlex="100">
+            <mat-label>ملاحظات</mat-label>
+            <textarea matInput formControlName="notes" placeholder="ملاحظات"></textarea>
 
-        <mat-error>
-            <app-validation-msg [control]="supplierOrderReturnForm.get('notes')" fieldName="ملاحظات"></app-validation-msg>
-        </mat-error>
-    </mat-form-field>
+            <mat-error>
+                <app-validation-msg [control]="supplierOrderReturnForm.get('notes')"
+                    fieldName="ملاحظات"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
     </div>
 
 
 
     <mat-dialog-actions fxLayoutAlign="center">
         <button mat-button mat-dialog-close color="danger">الغاء</button>
-        <button mat-raised-button    color="primary" type="submit"> حفظ</button>
+        <button mat-raised-button color="primary" type="submit"> حفظ</button>
     </mat-dialog-actions>
 </form>

@@ -1,23 +1,16 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormMode, ITEM_TYPES } from 'src/app/constants/constants';
+import { FormMode } from 'src/app/constants/constants';
 import { Observable, map, startWith, take } from 'rxjs';
 import { AppResponse } from 'src/app/model/app_response.model';
 import Swal from 'sweetalert2';
-import { MatSelectChange } from '@angular/material/select';
-import { supplierOrderFormControl } from '../../../form-controls/supplier-order-form';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { SupplierOrderService } from 'src/app/service/supplierOrder.service';
-import { Router } from '@angular/router';
 import { InvItem, emptyItem, emptyUom } from 'src/app/model/invItem';
-import { SupplierOrderDetailsItemForm } from '../../../form-controls/supplierOrderDetailsItem-form';
 import { InvItemService } from 'src/app/service/invItem.service';
-import { InvUomService } from 'src/app/service/invUom.service';
 import { InvUom } from 'src/app/model/invUom';
 import { SupplierOrderReturnDetailsFormControl } from '../../../form-controls/supplierOrderReturnDetails-form';
 import { Store } from 'src/app/model/store';
-import { SalesService } from 'src/app/service/sale.service';
 import { SupplierOrderReturnDetailsService } from 'src/app/service/supplierOrderReturnDetails.service';
 import { ItemsBalanceService } from 'src/app/service/itemsBalance.service';
 
@@ -45,7 +38,6 @@ export class SupplierOrdersReturnDetailsFormDialogComponent {
 
 
   constructor(
-    private invItemService: InvItemService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<SupplierOrdersReturnDetailsFormDialogComponent>,
     private supplierOrderReturnDetailsFormControl: SupplierOrderReturnDetailsFormControl,
@@ -72,7 +64,8 @@ export class SupplierOrdersReturnDetailsFormDialogComponent {
     this.storeId = this.data.storeId;
 
     this.newInvItemForm.patchValue({
-      orderId: Number(this.orderId)
+      orderId: Number(this.orderId),
+      store: this.storeId
     });
   }
 
@@ -116,7 +109,7 @@ export class SupplierOrdersReturnDetailsFormDialogComponent {
               showConfirmButton: false,
               timer: 1500,
             });
-          this.dialogRef.close(response.data);
+            this.dialogRef.close(response.data);
           }
         },
         error: (error: AppResponse) => {
@@ -160,6 +153,12 @@ export class SupplierOrdersReturnDetailsFormDialogComponent {
 
   }
 
+  selectedInvUom(event) {
+    console.log(event);
+
+    this.setSelectedItem(this.selectedItem.id);
+    this.selectedUom = this.newInvItemForm.value.uom;
+  }
 
   setSelectedItem(id:number) {
 
@@ -198,18 +197,5 @@ export class SupplierOrdersReturnDetailsFormDialogComponent {
         }
       );
     }
-
-
-
-
   }
-
-
-  onUomChange(event){
-
-    this.selectedUom = this.newInvItemForm.value.uom;
-  }
-
-
-
 }

@@ -41,7 +41,7 @@
 
     <mat-form-field fxFlex="100">
       <mat-label>الوحدة</mat-label>
-      <mat-select [value]="selectedItem.uom.id" formControlName="uom" (selectionChange)="onUomChange($event)">
+      <mat-select [value]="selectedItem.uom.id" formControlName="uom" (selectionChange)="selectedInvUom($event)">
 
         <mat-option *ngIf="selectedItem.doesHasRetailUnit" [value]="selectedItem.uom.id"> {{ selectedItem.uom.name }}
           (وحده اب)</mat-option>

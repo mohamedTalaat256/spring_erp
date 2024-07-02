@@ -12,6 +12,7 @@ import { SupplierOrdersReturnDetailsFormDialogComponent } from '../supplier-orde
 import { SupplierOrderReturnService } from 'src/app/service/supplierOrderReturn.service';
 import { SupplierOrdersReturnFormDialogComponent } from '../supplier-orders-return-form-dialog/supplier-orders-return-form-dialog.component';
 import { SupplierOrderReturn } from 'src/app/model/supplierOrderReturn';
+import { SupplierOrder } from 'src/app/model/supplierOrder';
 
 @Component({
   selector: 'app-supplier-orders-return',
@@ -89,7 +90,7 @@ export class SupplierOrdersReturnComponent {
   onSubmit(){}
 
 
-  openAddInvItemDialog() {
+  openAddNew() {
 
     const data = {
       title: 'اضافة فاتورة مرتجع مشتريات عام من مورد',
@@ -97,18 +98,12 @@ export class SupplierOrdersReturnComponent {
       suppliers: this.suppliers,
       stores: this.stores
     };
-    /* const dialogRef = */ this.dialog.open(SupplierOrdersReturnFormDialogComponent, {
+      this.dialog.open(SupplierOrdersReturnFormDialogComponent, {
       width: '650px',
       height: 'auto',
       data: data
     });
-
-   /*  dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
-      if (result) {
-        this.accounts.push(result);
-        this.dataSource = new MatTableDataSource<Account>(this.accounts);
-      }
-    }); */
+ 
   }
 
 
@@ -119,18 +114,6 @@ export class SupplierOrdersReturnComponent {
       account: account
 
     };
-   /*  const dialogRef = this.dialog.open(SupplierOrdersReturnDetailsFormDialogComponent, {
-      width: '80%',
-      height: 'auto',
-      data: data
-    });
-
-    dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
-      if (result) {
-        this.accounts.push(result);
-        this.dataSource = new MatTableDataSource<Account>(this.accounts);
-      }
-    }); */
   }
 
 
@@ -171,6 +154,82 @@ export class SupplierOrdersReturnComponent {
   private _storeFilter(name: string): any[] {
     const filterValue = name.toLowerCase();
     return this.stores.filter(option => option.name.toLowerCase().includes(filterValue));
+  }
+
+
+  deleteInvoice(invoiceId: number){
+
+    Swal.fire({
+      icon: 'warning',
+      title: 'تأكيد',
+      showDenyButton: true,
+      confirmButtonText: 'نعم',
+      confirmButtonColor: '#ed1818',
+      denyButtonText: 'لا',
+      denyButtonColor: '#54e9ac',
+      customClass: {
+        actions: 'my-actions',
+        cancelButton: 'order-1 right-gap',
+        confirmButton: 'order-2'
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this.supplierOrderReturnService.delete(invoiceId).subscribe(
+          {
+            next:(response: AppResponse)=>{
+              if(response.ok){
+
+                Swal.fire({
+                  icon: "success",
+                  title: response.message,
+                  showConfirmButton: false,
+                  timer: 1500
+                });
+                this.supplierOrdersReturn = this.supplierOrdersReturn.filter(i=> i.id !== invoiceId);
+              }
+
+
+            },
+            error:(error: AppResponse)=>{
+              Swal.fire({
+                icon: "error",
+                title: error.message,
+                showConfirmButton: false,
+                timer: 1500
+              });
+            }
+          }
+        );
+       }}
+      );
+
+  }
+
+  openEditDialog(order: SupplierOrder) {
+    const data = {
+      title: 'تعديل فاتورة مرتجع مبيعات',
+      formMode: FormMode.EDIT,
+      supplierOrder: order,
+      suppliers: this.suppliers,
+      stores: this.stores
+
+    };
+
+    const dialogRef = this.dialog.open(SupplierOrdersReturnFormDialogComponent, {
+      width: '650px',
+      height: 'auto',
+      data: data
+    });
+
+
+   /*
+    dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
+      if (result) {
+        this.accounts.push(result);
+        this.dataSource = new MatTableDataSource<Account>(this.accounts);
+      }
+    }); */
   }
 
 }

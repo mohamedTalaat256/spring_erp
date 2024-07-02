@@ -153,6 +153,13 @@ export class SaleDetailsFormDialogComponent implements OnInit {
 
   }
 
+  selectedInvUom(event) {
+    console.log(event);
+
+    this.setSelectedItem(this.selectedItem.id);
+    this.selectedUom = this.newInvItemForm.value.uom;
+  }
+
 
   setSelectedItem(id:number) {
 
@@ -197,11 +204,6 @@ export class SaleDetailsFormDialogComponent implements OnInit {
 
   }
 
-
-  onUomChange(event){
-
-    this.selectedUom = this.newInvItemForm.value.uom;
-  }
-
+ 
 
 }

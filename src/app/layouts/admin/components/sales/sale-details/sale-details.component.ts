@@ -130,15 +130,19 @@ export class SaleDetailsComponent {
   setInvoice(){
     this.invoiceForm = this.fb.group({
       id:          [this.salesOrder.id,  ],
-      discountType:    [this.salesOrder.discountType, [Validators.required]],
-      discountPercent: [this.salesOrder.discountPercent, [Validators.required]],
-      discountValue:   [this.salesOrder.discountValue, [Validators.required]],
-      pillType:        [this.salesOrder.pillType, [Validators.required]],
-      whatPaid:        [this.salesOrder.whatPaid, [Validators.required]],
-      whatRemain:      [this.salesOrder.whatRemain, [Validators.required]],
-      taxPercent:  [this.salesOrder.taxPercent, [Validators.required]],
+      discountType:    [this.salesOrder.discountType !== null ? this.salesOrder.discountType : 0, [Validators.required]],
+      discountPercent: [this.salesOrder.discountPercent !== null ? this.salesOrder.discountPercent : 0, [Validators.required]],
+      discountValue:   [this.salesOrder.discountValue !== null ? this.salesOrder.discountValue : 0, [Validators.required]],
+      pillType:        [this.salesOrder.pillType !== null ? this.salesOrder.pillType : 0, [Validators.required]],
+      whatPaid:        [this.salesOrder.whatPaid !== null ? this.salesOrder.whatPaid : 0, [Validators.required]],
+      whatRemain:      [this.salesOrder.whatRemain !== null ? this.salesOrder.whatRemain : 0, [Validators.required]],
+      taxPercent:  [this.salesOrder.taxPercent !== null ? this.salesOrder.taxPercent : 0, [Validators.required]],
       notes:            [this.salesOrder.notes],
     });
+
+    this.discountValue = this.salesOrder.discountValue;
+    this.whatPaid = this.salesOrder.whatPaid;
+    this.whatRemain = this.salesOrder.whatRemain;
   }
 
   openAddInvItemDialog() {
@@ -171,8 +175,7 @@ export class SaleDetailsComponent {
         this.dataSource = new MatTableDataSource<any>(this.salesInvoiceDetails);
         this.setInvoice();
 
-        this.calculateInvoiceItemTotal();
-
+ 
       }
     });
   }
@@ -226,20 +229,16 @@ export class SaleDetailsComponent {
             next:(response: any)=>{
 
               if(response.ok){
-               // this.salesInvoiceDetails.removeAt(index);
-
-               this.salesOrder = response.data;
-
-               this.salesInvoiceDetails = response.data.salesInvoiceDetails;
-               this.dataSource = new MatTableDataSource<any>(this.salesInvoiceDetails);
-
                 Swal.fire({
                   icon: "success",
                   title: response.message,
                   showConfirmButton: false,
                   timer: 1500
                 });
-                this.salesInvoiceDetails = response.data;
+                this.salesOrder = response.data;
+
+               this.salesInvoiceDetails = response.data.salesInvoiceDetails;
+               this.dataSource = new MatTableDataSource<any>(this.salesInvoiceDetails);
 
               }
 
@@ -255,35 +254,36 @@ export class SaleDetailsComponent {
             }
           }
         );
-        Swal.fire('تم الحذف', '', 'success')
       }}
       );
-    this.salesInvoiceDetails = this.salesInvoiceDetails.filter(i=> i.id !== invItem.invItem);
-  }
-
-  calculateInvoiceItemTotal(){
-    let total = 0;
-  //  this.invItems.forEach(i=> total+= (i.price * i.amount));
-    this.invoceTotal = total;
-    this.pillType = 1;
-    this.invoiceForm.patchValue({
-      pillType: total
-    });
   }
 
   onDiscountTypeChange(event:MatSelectChange){
     this.discountType = Number(event.value);
+
+    this.ondiscountValueChange(null);
+
   }
 
-  ondiscountValueChange(){
+  ondiscountValueChange(event){
     if(this.discountType ===1){
-      this.discountValue =   this.invoceTotal * (this.invoiceForm.value.discountPercent / 100);
+      this.discountValue =   this.salesOrder.totalCost * (this.invoiceForm.value.discountPercent / 100);
 
     }else if(this.discountType ===2){
       this.discountValue =  this.invoiceForm.value.discountValue ;
     }else{
       this.discountValue =0;
     }
+
+    this.whatPaid = this.invoiceForm.value.whatPaid;
+    this.whatRemain = this.salesOrder.totalCost - this.discountValue - this.whatPaid;
+
+    this.invoiceForm.patchValue(
+      {
+        whatPaid: this.whatPaid,
+        whatRemain:  this.whatRemain
+      }
+    );
   }
 
   onPillTypeChange(event:MatSelectChange){
@@ -305,6 +305,17 @@ export class SaleDetailsComponent {
     }
   }
 
+  whatPaidChange(event){ 
+    this.whatPaid = Number(event.target.value);
+    this.whatRemain = this.salesOrder.totalCost - this.discountValue - this.whatPaid;
+
+    this.invoiceForm.patchValue(
+      {
+        whatPaid: this.whatPaid,
+        whatRemain:  this.whatRemain
+      }
+    );
+  } 
 
 
 }

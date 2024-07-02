@@ -59,6 +59,7 @@ export class SupplierOrderDetailsComponent implements OnInit {
       whatRemain:      [null, [Validators.required]],
       notes:           [null],
     });
+    
   }
 
   filteredClients: Observable<any[]>;
@@ -86,6 +87,12 @@ export class SupplierOrderDetailsComponent implements OnInit {
             title: response.message,
             showConfirmButton: true
           });
+
+          this.supplierOrderDetailsItems = response.data.supplierOrderDetailsItems;
+          this.dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
+
+          this.supplierOrder = response.data;
+          this.setInvoice();
         }
       },
       error: (error: Error) => {
@@ -128,15 +135,19 @@ export class SupplierOrderDetailsComponent implements OnInit {
 
   setInvoice(){
     this.invoiceForm = this.fb.group({
-      orderId:          [this.supplierOrder.id,  ],
+      orderId:         [this.supplierOrder.id,  ],
       discountType:    [this.supplierOrder.discountType, [Validators.required]],
       discountPercent: [this.supplierOrder.discountPercent, [Validators.required]],
       discountValue:   [this.supplierOrder.discountValue, [Validators.required]],
-      pillType:        [this.supplierOrder.pillType, [Validators.required]],
-      whatPaid:        [this.supplierOrder.whatPaid, [Validators.required]],
-      whatRemain:      [this.supplierOrder.whatRemain, [Validators.required]],
-      notes:            [this.supplierOrder.notes],
+      pillType:        [this.supplierOrder.pillType !== null ? this.supplierOrder.pillType: 0 , [Validators.required]],
+      whatPaid:        [this.supplierOrder.whatPaid !== null ? this.supplierOrder.whatPaid :0, [Validators.required]],
+      whatRemain:      [this.supplierOrder.whatRemain !== null ? this.supplierOrder.whatRemain : 0, [Validators.required]],
+      notes:           [this.supplierOrder.notes],
     });
+    this.discountValue = this.supplierOrder.discountValue;
+    this.whatPaid = this.supplierOrder.whatPaid;
+    this.whatRemain = this.supplierOrder.whatRemain;
+  
   }
 
   openAddInvItemDialog() {
@@ -168,9 +179,6 @@ export class SupplierOrderDetailsComponent implements OnInit {
         this.supplierOrder =result;
         this.supplierOrderDetailsItems= this.supplierOrder.supplierOrderDetailsItems;
         this.dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
-
-        this.calculateInvoiceItemTotal();
-
       }
     });
   }
@@ -254,29 +262,33 @@ export class SupplierOrderDetailsComponent implements OnInit {
     this.supplierOrderDetailsItems = this.supplierOrderDetailsItems.filter(i=> i.id !== invItem.invItem);
   }
 
-  calculateInvoiceItemTotal(){
-    let total = 0;
-  //  this.invItems.forEach(i=> total+= (i.price * i.amount));
-    this.invoceTotal = total;
-    this.pillType = 1;
-    this.invoiceForm.patchValue({
-      pillType: total
-    });
-  }
 
   onDiscountTypeChange(event:MatSelectChange){
     this.discountType = Number(event.value);
+
+    this.ondiscountValueChange(null);
+
   }
 
-  ondiscountValueChange(){
+  ondiscountValueChange(event){
     if(this.discountType ===1){
-      this.discountValue =   this.invoceTotal * (this.invoiceForm.value.discountPercent / 100);
+      this.discountValue =   this.supplierOrder.totalCost * (this.invoiceForm.value.discountPercent / 100);
 
     }else if(this.discountType ===2){
       this.discountValue =  this.invoiceForm.value.discountValue ;
     }else{
       this.discountValue =0;
     }
+
+    this.whatPaid = this.invoiceForm.value.whatPaid;
+    this.whatRemain = this.supplierOrder.totalCost - this.discountValue - this.whatPaid;
+
+    this.invoiceForm.patchValue(
+      {
+        whatPaid: this.whatPaid,
+        whatRemain:  this.whatRemain
+      }
+    );
   }
 
   onPillTypeChange(event:MatSelectChange){
@@ -298,6 +310,15 @@ export class SupplierOrderDetailsComponent implements OnInit {
     }
   }
 
+  whatPaidChange(event){ 
+    this.whatPaid = Number(event.target.value);
+    this.whatRemain = this.supplierOrder.totalCost - this.discountValue - this.whatPaid;
 
-
+    this.invoiceForm.patchValue(
+      {
+        whatPaid: this.whatPaid,
+        whatRemain:  this.whatRemain
+      }
+    );
+  } 
 }

@@ -37,8 +37,8 @@ export class SupplierOrdersReturnDetailsComponent implements OnInit {
   displayedColumns: string[] = ['id', 'unit', 'orderItem', 'price', 'amount', 'total', 'actions'];
 
 
-  supplierOrderReturnDetailsItems: any []=[];
-  dataSource = new MatTableDataSource<any>(this.supplierOrderReturnDetailsItems);
+  supplierOrderDetailsItems: any []=[];
+  dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
   orderId: number;
 
 
@@ -86,6 +86,9 @@ export class SupplierOrdersReturnDetailsComponent implements OnInit {
             title: response.message,
             showConfirmButton: true
           });
+
+          this.supplierOrderReturn = response.data;
+          this.setInvoiceFrom();
         }
       },
       error: (error: Error) => {
@@ -108,20 +111,11 @@ export class SupplierOrdersReturnDetailsComponent implements OnInit {
     this.supplierOrderReturnService.findById(id).subscribe({
       next: (response: AppResponse) => {
         if (response.ok) {
-          this.supplierOrderReturnDetailsItems = response.data.supplierOrderReturnDetailsItems;
-          this.dataSource = new MatTableDataSource<any>(this.supplierOrderReturnDetailsItems);
+          this.supplierOrderDetailsItems = response.data.supplierOrderDetailsItems;
+          this.dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
 
           this.supplierOrderReturn = response.data;
-          this.invoiceForm = this.fb.group({
-            orderId:          [this.supplierOrderReturn.id,  ],
-            discountType:    [this.supplierOrderReturn.discountType, [Validators.required]],
-            discountPercent: [this.supplierOrderReturn.discountPercent, [Validators.required]],
-            discountValue:   [this.supplierOrderReturn.discountValue, [Validators.required]],
-            pillType:        [this.supplierOrderReturn.pillType, [Validators.required]],
-            whatPaid:        [this.supplierOrderReturn.whatPaid, [Validators.required]],
-            whatRemain:      [this.supplierOrderReturn.whatRemain, [Validators.required]],
-            notes:            [this.supplierOrderReturn.notes],
-          });
+          this.setInvoiceFrom();
         }
       },
       error: (error: Error) => {
@@ -133,6 +127,23 @@ export class SupplierOrdersReturnDetailsComponent implements OnInit {
       }
 
     });
+  }
+
+  setInvoiceFrom(){
+    this.invoiceForm = this.fb.group({
+      orderId:          [this.supplierOrderReturn.id,  ],
+      discountType:    [this.supplierOrderReturn.discountType !== null ? this.supplierOrderReturn.discountType : 0, [Validators.required]],
+      discountPercent: [this.supplierOrderReturn.discountPercent!== null ? this.supplierOrderReturn.discountPercent : 0, [Validators.required]],
+      discountValue:   [this.supplierOrderReturn.discountValue!== null ?this.supplierOrderReturn.discountValue : 0 , [Validators.required]],
+      pillType:        [this.supplierOrderReturn.pillType !== null ? this.supplierOrderReturn.pillType: 0 , [Validators.required]],
+      whatPaid:        [this.supplierOrderReturn.whatPaid !== null ? this.supplierOrderReturn.whatPaid :0, [Validators.required]],
+      whatRemain:      [this.supplierOrderReturn.whatRemain !== null ? this.supplierOrderReturn.whatRemain : 0, [Validators.required]],
+      notes:            [this.supplierOrderReturn.notes],
+    });
+
+    this.discountValue = this.supplierOrderReturn.discountValue;
+    this.whatPaid = this.supplierOrderReturn.whatPaid;
+    this.whatRemain = this.supplierOrderReturn.whatRemain;
   }
 
   openAddInvItemDialog() {
@@ -151,7 +162,7 @@ export class SupplierOrdersReturnDetailsComponent implements OnInit {
     dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
 
       if(result){
-        let index = this.supplierOrderReturnDetailsItems.find(i=> i.invItemCard.id=== result.invItemId);
+        let index = this.supplierOrderDetailsItems.find(i=> i.invItemCard.id=== result.invItemId);
         if(index){
           Swal.fire({
             icon: "error",
@@ -161,10 +172,12 @@ export class SupplierOrdersReturnDetailsComponent implements OnInit {
           });
           return;
         }
-        this.supplierOrderReturnDetailsItems= result;
-        this.dataSource = new MatTableDataSource<any>(this.supplierOrderReturnDetailsItems);
 
-        this.calculateInvoiceItemTotal();
+        console.log(result);
+        this.supplierOrderReturn = result;
+
+        this.supplierOrderDetailsItems= this.supplierOrderReturn.supplierOrderDetailsItems;
+        this.dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
 
       }
     });
@@ -189,9 +202,10 @@ export class SupplierOrdersReturnDetailsComponent implements OnInit {
 
 
       if(result){
-        this.supplierOrderReturnDetailsItems= result;
-        this.dataSource = new MatTableDataSource<any>(this.supplierOrderReturnDetailsItems);
-
+        this.supplierOrderReturn = result;
+        this.supplierOrderDetailsItems = result.supplierOrderDetailsItems;
+        this.dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
+       
       }
     });
   }
@@ -228,8 +242,9 @@ export class SupplierOrdersReturnDetailsComponent implements OnInit {
                   showConfirmButton: false,
                   timer: 1500
                 });
-                this.supplierOrderReturnDetailsItems = response.data;
-
+                this.supplierOrderReturn = response.data;
+                this.supplierOrderDetailsItems= this.supplierOrderReturn.supplierOrderDetailsItems;
+                this.dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
               }
 
 
@@ -247,32 +262,35 @@ export class SupplierOrdersReturnDetailsComponent implements OnInit {
         Swal.fire('تم الحذف', '', 'success')
       }}
       );
-    this.supplierOrderReturnDetailsItems = this.supplierOrderReturnDetailsItems.filter(i=> i.id !== invItem.invItem);
-  }
+   }
 
-  calculateInvoiceItemTotal(){
-    let total = 0;
-  //  this.invItems.forEach(i=> total+= (i.price * i.amount));
-    this.invoceTotal = total;
-    this.pillType = 1;
-    this.invoiceForm.patchValue({
-      pillType: total
-    });
-  }
 
   onDiscountTypeChange(event:MatSelectChange){
     this.discountType = Number(event.value);
+
+    this.ondiscountValueChange(null);
+
   }
 
-  ondiscountValueChange(){
+  ondiscountValueChange(event){
     if(this.discountType ===1){
-      this.discountValue =   this.invoceTotal * (this.invoiceForm.value.discountPercent / 100);
+      this.discountValue =   this.supplierOrderReturn.totalCost * (this.invoiceForm.value.discountPercent / 100);
 
     }else if(this.discountType ===2){
       this.discountValue =  this.invoiceForm.value.discountValue ;
     }else{
       this.discountValue =0;
     }
+
+    this.whatPaid = this.invoiceForm.value.whatPaid;
+    this.whatRemain = this.supplierOrderReturn.totalCost - this.discountValue - this.whatPaid;
+
+    this.invoiceForm.patchValue(
+      {
+        whatPaid: this.whatPaid,
+        whatRemain:  this.whatRemain
+      }
+    );
   }
 
   onPillTypeChange(event:MatSelectChange){
@@ -293,6 +311,18 @@ export class SupplierOrdersReturnDetailsComponent implements OnInit {
       );
     }
   }
+
+  whatPaidChange(event){ 
+    this.whatPaid = Number(event.target.value);
+    this.whatRemain = this.supplierOrderReturn.totalCost - this.discountValue - this.whatPaid;
+
+    this.invoiceForm.patchValue(
+      {
+        whatPaid: this.whatPaid,
+        whatRemain:  this.whatRemain
+      }
+    );
+  } 
 
 
 

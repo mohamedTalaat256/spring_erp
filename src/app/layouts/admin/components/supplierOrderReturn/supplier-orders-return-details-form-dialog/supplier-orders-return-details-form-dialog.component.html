@@ -12,7 +12,7 @@
                 [matAutocomplete]="supplierAutoComplete" >
 
             <mat-autocomplete #supplierAutoComplete="matAutocomplete" [displayWith]="invItemDisplayFn"
-                (optionSelected)="selectedInvItem($event)">
+            (optionSelected)="selectedInvItem($event)">
 
                 <ng-container *ngFor="let option of filteredInvItems | async; trackBy: invItemDisplayFn">
                     <mat-option [value]="option">{{ option.name }}</mat-option>
@@ -29,7 +29,7 @@
 
         <mat-form-field fxFlex="100">
             <mat-label>وحدة المرتجع</mat-label>
-            <mat-select formControlName="uom">
+            <mat-select formControlName="uom"  (selectionChange)="selectedInvUom($event)">
 
                 <mat-option *ngIf="selectedItem.doesHasRetailUnit"  [value]="selectedItem.uom.id"> {{ selectedItem.uom.name  }} (وحده اب)</mat-option>
                 <mat-option *ngIf="selectedItem.doesHasRetailUnit"  [value]="selectedItem.retailUom.id">{{ selectedItem.retailUom.name  }} (وحدة تجزئة)</mat-option>
@@ -79,10 +79,10 @@
 
         <mat-form-field fxFlex="100">
             <mat-label>الكمية المرتجعة</mat-label>
-            <input matInput formControlName="deliveredQuantity" placeholder="الكمية المستلمة" type="number">
+            <input matInput formControlName="itemQuantity" placeholder="الكمية المرتجعة" type="number">
 
             <mat-error>
-                <app-validation-msg [control]="newInvItemForm.get('deliveredQuantity')" fieldName="الكمية المستلمة"></app-validation-msg>
+                <app-validation-msg [control]="newInvItemForm.get('itemQuantity')" fieldName="الكمية المرتجعة"></app-validation-msg>
             </mat-error>
         </mat-form-field>
 

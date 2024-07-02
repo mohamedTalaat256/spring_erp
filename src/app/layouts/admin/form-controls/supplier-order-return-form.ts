@@ -29,7 +29,7 @@ export class SupplierOrderReturnFormControl {
         orderDate: [data.orderDate, [Validators.required]],
         supplier:  [data.supplier, [Validators.required]],
         pillType:  [data.pillType, [Validators.required]],
-        store:     [data.store, [Validators.required]],
+        store:     [data.store.id, [Validators.required]],
         notes:     [data.notes, [Validators.maxLength(1000)]],
       }
     );

@@ -27,7 +27,8 @@ export interface SupplierOrderReturn{
     store: Store,
     approvedBy: any,
     totalBeforeDiscount: number,
-    active: boolean
+    active: boolean,
+    supplierOrderDetailsItems: any[]
 
 }
 
@@ -56,6 +57,7 @@ export const emptySupplierOrderReturn:SupplierOrderReturn = {
     store:emptyStore,
     approvedBy: null,
     totalBeforeDiscount: 0,
-    active: false
+    active: false,
+    supplierOrderDetailsItems: []
 }
 

@@ -45,6 +45,14 @@ export class SupplierOrdersReturnFormDialogComponent {
       this.supplierOrderReturnForm = this.supplierOrderReturnFormControl.createForm();
     } else {
       this.supplierOrderReturnForm = this.supplierOrderReturnFormControl.setForm(this.data.supplierOrder);
+
+      this.supplierFormControl.setValue( {
+        id: this.data.supplierOrder.supplier.id,
+        name: this.data.supplierOrder.supplier.name
+      });
+      this.supplierOrderReturnForm.patchValue({
+        supplier: this.data.supplierOrder.supplier.id
+      });
     }
 
     this.suppliers = this.data.suppliers;
@@ -67,7 +75,7 @@ export class SupplierOrdersReturnFormDialogComponent {
     console.log(this.supplierOrderReturnForm.value);
 
     this.supplierOrderReturnService
-      .save(this.supplierOrderReturnForm.value)
+      .save(this.supplierOrderReturnForm.value, this.data.formMode)
       .pipe(take(1))
       .subscribe({
         next: (response: AppResponse) => {
@@ -105,13 +113,7 @@ export class SupplierOrdersReturnFormDialogComponent {
         return name ? this._supplierFilter(name as string) : this.suppliers.slice();
       }),
     );
-    this.filteredStores = this.storeFormControl.valueChanges.pipe(
-      startWith(''),
-      map(value => {
-        const name = typeof value === 'string' ? value : value?.name;
-        return name ? this._storeFilter(name as string) : this.stores.slice();
-      }),
-    );
+
 
   }
 
@@ -122,23 +124,6 @@ export class SupplierOrdersReturnFormDialogComponent {
   private _supplierFilter(name: string): any[] {
     const filterValue = name.toLowerCase();
     return this.suppliers.filter(option => option.name.toLowerCase().includes(filterValue));
-  }
-
-  storeDisplayFn(store: any): string {
-    return store && store.name ? store.name : '';
-  }
-
-  private _storeFilter(name: string): any[] {
-    const filterValue = name.toLowerCase();
-    return this.stores.filter(option => option.name.toLowerCase().includes(filterValue));
-  }
-
-  selectedStore(event: MatAutocompleteSelectedEvent){
-
-    this.supplierOrderReturnForm.patchValue({
-      store: event.option.value.id
-    },{onlySelf:true, emitEvent: true});
-
   }
 
   selectedSupllier(event: MatAutocompleteSelectedEvent){

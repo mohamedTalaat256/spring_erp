@@ -2,7 +2,7 @@
 
   <div class="w-100 mt-2 rounded-2">
       <div fxLayout="row" class="my-3 p-1" fxLayoutAlign="space-between center">
-          <button mat-raised-button color="primary" (click)="openAddInvItemDialog()">اضافة جديد</button>
+          <button mat-raised-button color="primary" (click)="openAddNew()">اضافة جديد</button>
           <h1>فواتير مرتجع المشتريات العام
           </h1>
       </div>
@@ -108,13 +108,18 @@
                           <mat-icon color="danger">remove_red_eye</mat-icon>
                       </button>
 
+                      <button *ngIf="!supplierOrderReturn.isApproved" mat-icon-button (click)="openEditDialog(supplierOrderReturn)">
+                        <mat-icon color="primary">edit</mat-icon>
+                      </button>
+          
+                      <button *ngIf="!supplierOrderReturn.isApproved" mat-icon-button (click)="deleteInvoice( supplierOrderReturn.id)">
+                        <mat-icon color="danger">delete</mat-icon>
+                      </button>
+
                       <button mat-icon-button>
                           <mat-icon color="primary">local_print_shop</mat-icon>
                       </button>
-                      <button mat-icon-button>
-                          <mat-icon color="warn">local_print_shop</mat-icon>
-                      </button>
-
+                    
 
                   </td>
               </ng-container>
