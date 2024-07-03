@@ -12,6 +12,7 @@ import { SalesOrderDetailsService } from 'src/app/service/salesOrderDetails.serv
 import { emptySalesOrder } from 'src/app/model/sales-order.model';
 import { SaleReturnDetailsFormDialogComponent } from '../sale-return-details-form-dialog/sale-return-details-form-dialog.component';
 import { SalesReturnService } from 'src/app/service/saleReturn.service';
+import { SalesReturnOrderDetailsService } from 'src/app/service/salesReturnOrderDetails.service';
  @Component({
   selector: 'app-return-sale-details',
   templateUrl: './sale-return-details.component.html',
@@ -45,7 +46,7 @@ export class SaleReturnDetailsComponent {
   constructor(private fb: FormBuilder,
     public dialog: MatDialog,
     private salesReturnService: SalesReturnService,
-    private salesOrderDetailsService: SalesOrderDetailsService,
+    private salesReturnOrderDetailsService: SalesReturnOrderDetailsService,
     private route: ActivatedRoute,
 
   ){
@@ -162,10 +163,10 @@ export class SaleReturnDetailsComponent {
           });
           return;
         }
-        this.salesInvoicesReturnDetails= result;
+        this.salesOrder = result;
+        this.salesInvoicesReturnDetails= result.salesInvoicesReturnDetails;
         this.dataSource = new MatTableDataSource<any>(this.salesInvoicesReturnDetails);
-
-        this.calculateInvoiceItemTotal();
+ 
 
       }
     });
@@ -215,7 +216,7 @@ export class SaleReturnDetailsComponent {
     }).then((result) => {
       if (result.isConfirmed) {
 
-        this.salesOrderDetailsService.delete(invItem.id).subscribe(
+        this.salesReturnOrderDetailsService.delete(invItem.id).subscribe(
           {
             next:(response: any)=>{
 
@@ -232,8 +233,7 @@ export class SaleReturnDetailsComponent {
                   title: response.message,
                   showConfirmButton: false,
                   timer: 1500
-                });
-                this.salesInvoicesReturnDetails = response.data;
+                }); 
 
               }
 
@@ -255,16 +255,7 @@ export class SaleReturnDetailsComponent {
     this.salesInvoicesReturnDetails = this.salesInvoicesReturnDetails.filter(i=> i.id !== invItem.invItem);
   }
 
-  calculateInvoiceItemTotal(){
-    let total = 0;
-  //  this.invItems.forEach(i=> total+= (i.price * i.amount));
-    this.invoceTotal = total;
-    this.pillType = 1;
-    this.invoiceForm.patchValue({
-      pillType: total
-    });
-  }
-
+ 
   onDiscountTypeChange(event:MatSelectChange){
     this.discountType = Number(event.value);
   }
@@ -286,14 +277,16 @@ export class SaleReturnDetailsComponent {
       this.invoiceForm.patchValue(
         {
           whatPaid: this.invoceTotal,
-          whatRemain: 0
+          whatRemain: 0,
+          discountValue: this.discountValue
         }
       );
     }else if(this.pillType === 2){
       this.invoiceForm.patchValue(
         {
           whatPaid: 0,
-          whatRemain: this.invoceTotal
+          whatRemain: this.invoceTotal,
+          discountValue: this.discountValue
         }
       );
     }

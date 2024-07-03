@@ -1,5 +1,5 @@
 <div class=" m-2">
-  <h1 class="inv-title  my-3">تفاصيل فاتورة المبيعات</h1>
+  <h1 class="inv-title  my-3">تفاصيل فاتورة مرتجع المبيعات</h1>
 
 
   <div class="my-3" fxLayout="row" fxLayoutAlign="space-between center">
@@ -56,9 +56,9 @@
               <td mat-cell *matCellDef="let orderItem">
 
 
-                <button mat-icon-button (click)="openEditInvItemDialog(orderItem)">
+              <!--   <button mat-icon-button (click)="openEditInvItemDialog(orderItem)">
                   <mat-icon color="primary">mode_edit</mat-icon>
-                </button>
+                </button> -->
                 <button mat-icon-button (click)="deleteInvItem(orderItem)">
                   <mat-icon color="danger">delete</mat-icon>
                 </button>

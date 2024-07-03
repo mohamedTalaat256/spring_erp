@@ -281,7 +281,8 @@ export class SaleDetailsComponent {
     this.invoiceForm.patchValue(
       {
         whatPaid: this.whatPaid,
-        whatRemain:  this.whatRemain
+        whatRemain:  this.whatRemain,
+        discountValue: this.discountValue
       }
     );
   }
@@ -292,14 +293,16 @@ export class SaleDetailsComponent {
       this.invoiceForm.patchValue(
         {
           whatPaid: this.invoceTotal,
-          whatRemain: 0
+          whatRemain: 0,
+          discountValue: this.discountValue
         }
       );
     }else if(this.pillType === 2){
       this.invoiceForm.patchValue(
         {
           whatPaid: 0,
-          whatRemain: this.invoceTotal
+          whatRemain: this.invoceTotal,
+          discountValue: this.discountValue
         }
       );
     }
@@ -312,7 +315,8 @@ export class SaleDetailsComponent {
     this.invoiceForm.patchValue(
       {
         whatPaid: this.whatPaid,
-        whatRemain:  this.whatRemain
+        whatRemain:  this.whatRemain,
+        discountValue: this.discountValue
       }
     );
   } 
