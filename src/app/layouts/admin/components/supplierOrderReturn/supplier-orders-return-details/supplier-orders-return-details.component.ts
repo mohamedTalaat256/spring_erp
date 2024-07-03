@@ -161,7 +161,7 @@ export class SupplierOrdersReturnDetailsComponent implements OnInit {
 
     dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
 
-      if(result){
+      if(result !== null){
         let index = this.supplierOrderDetailsItems.find(i=> i.invItemCard.id=== result.invItemId);
         if(index){
           Swal.fire({
