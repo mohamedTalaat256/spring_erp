@@ -164,10 +164,7 @@ export class SaleReturnDetailsFormDialogComponent implements OnInit {
   setSelectedItem(id:number) {
 
     this.selectedItem = this.invItems.filter( i=> i.id === id)[0];
-    this.newInvItemForm.patchValue({
-      unitPrice: this.selectedItem.price
-    });
-
+    
     const formData = {
       invItemId: this.selectedItem.id ,
       storeId: this.newInvItemForm.value.store,
@@ -176,6 +173,18 @@ export class SaleReturnDetailsFormDialogComponent implements OnInit {
 
     if( this.newInvItemForm.value.uom !== null && this.newInvItemForm.value.store !== null){
 
+      if(this.selectedUom.master){
+        this.newInvItemForm.patchValue({
+          unitPrice: this.selectedItem.priceRetail
+        });
+      }else{
+      
+
+        this.newInvItemForm.patchValue({
+          unitPrice: this.selectedItem.price
+        });
+      }
+      
 
       this.itemsBalanceService.getItemBatches(formData).subscribe(
         {

@@ -69,8 +69,8 @@
         <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100">
             <mat-label>هل للصنف وحدة تجزئة ابن</mat-label>
             <mat-select formControlName="doesHasRetailUnit" (selectionChange)="doesHasRetailUnitChange($event)"> 
-                <mat-option [value]="true">نعم</mat-option>
                 <mat-option [value]="false">لا</mat-option>
+                <mat-option [value]="true">نعم</mat-option>
             </mat-select>
             <mat-error>
                 <app-validation-msg [control]="invItemForm.get('doesHasRetailUnit')"

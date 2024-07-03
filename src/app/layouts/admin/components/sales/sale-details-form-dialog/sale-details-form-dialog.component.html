@@ -41,10 +41,13 @@
 
     <mat-form-field fxFlex="100">
       <mat-label>الوحدة</mat-label>
-      <mat-select [value]="selectedItem.uom.id" formControlName="uom" (selectionChange)="selectedInvUom($event)" >
+      <mat-select   formControlName="uom" (selectionChange)="selectedInvUom($event)" >
 
-        <mat-option *ngIf="selectedItem.doesHasRetailUnit" [value]="selectedItem.uom.id"> {{ selectedItem.uom.name }}
-          (وحده اب)</mat-option>
+        <mat-option *ngIf="selectedItem.doesHasRetailUnit" [value]="selectedItem.uom.id"> 
+          {{ selectedItem.uom.name }}
+          (وحده اب)
+        </mat-option>
+        
         <mat-option *ngIf="selectedItem.doesHasRetailUnit" [value]="selectedItem.retailUom.id">{{
           selectedItem.retailUom.name }} (وحدة تجزئة)</mat-option>
 
@@ -80,7 +83,7 @@
             عدد
             {{ batch.quantity * selectedItem.retailUomQuntToParent }} {{ selectedUom.name }}
 
-            بتكلفة {{ batch.unit_cost_price / selectedItem.retailUomQuntToParent }}
+            بتكلفة {{ batch.unitCostPrice / selectedItem.retailUomQuntToParent }}
             للوحدة
           </mat-option>
         </ng-container>

@@ -129,35 +129,7 @@ export class InvItemFormDialogComponent {
 
   }
 
-  doesHasRetailUnitChange(event:MatSelectChange){
-    this.doesHasRetailUnit = event.value;
 
-    console.log(this.doesHasRetailUnit);
-
-    if(this.doesHasRetailUnit){
-
-
-      this.invItemForm.controls['retailUom'].setValidators([Validators.required]);
-      this.invItemForm.controls['retailUomQuntToParent'].setValidators([Validators.required]);
-      this.invItemForm.controls['priceRetail'].setValidators([Validators.required]);
-      this.invItemForm.controls['nosGomlaPriceRetail'].setValidators([Validators.required]);
-      this.invItemForm.controls['gomlaPriceRetail'].setValidators([Validators.required]);
-      this.invItemForm.controls['costPriceRetail'].setValidators([Validators.required]);
-      this.invItemForm.updateValueAndValidity();
-      this.invItemForm.markAllAsTouched();
-
-    }else{
-      this.invItemForm.get('retailUom').removeValidators([Validators.required]);
-      this.invItemForm.get('retailUomQuntToParent').removeValidators([Validators.required]);
-      this.invItemForm.get('priceRetail').removeValidators([Validators.required]);
-      this.invItemForm.get('nosGomlaPriceRetail').removeValidators([Validators.required]);
-      this.invItemForm.get('gomlaPriceRetail').removeValidators([Validators.required]);
-      this.invItemForm.get('costPriceRetail').removeValidators([Validators.required]);
-      this.invItemForm.updateValueAndValidity();
-
-    }
-
-  }
 
   retailUomQuntToParentChange(event:MatSelectChange){
     this.showPricesFeilds = event.value;
@@ -170,5 +142,61 @@ export class InvItemFormDialogComponent {
 
   retialUomChange(event:MatSelectChange){
     this.childUomName = this.invUomsChild.filter( i=> i.id === event.value)[0].name;
+  }
+
+
+  doesHasRetailUnitChange(event:MatSelectChange){
+    this.doesHasRetailUnit = event.value;
+
+    console.log(this.doesHasRetailUnit);
+
+    if(this.doesHasRetailUnit){
+
+
+      this.invItemForm.get('retailUom').setValidators([Validators.required]);
+      this.invItemForm.get('retailUom').updateValueAndValidity();
+
+      this.invItemForm.get('retailUomQuntToParent').setValidators([Validators.required]);
+      this.invItemForm.get('retailUomQuntToParent').updateValueAndValidity();
+      
+      this.invItemForm.get('priceRetail').setValidators([Validators.required]);
+      this.invItemForm.get('priceRetail').updateValueAndValidity();
+      
+      this.invItemForm.get('nosGomlaPriceRetail').setValidators([Validators.required]);
+      this.invItemForm.get('nosGomlaPriceRetail').updateValueAndValidity();
+      
+      this.invItemForm.get('gomlaPriceRetail').setValidators([Validators.required]);
+      this.invItemForm.get('gomlaPriceRetail').updateValueAndValidity();
+      
+      this.invItemForm.get('costPriceRetail').setValidators([Validators.required]);
+      this.invItemForm.get('costPriceRetail').updateValueAndValidity();
+
+
+      this.invItemForm.updateValueAndValidity();
+      this.invItemForm.markAllAsTouched();
+
+    }else{
+      this.invItemForm.get('retailUom').removeValidators([Validators.required]);
+      this.invItemForm.get('retailUom').updateValueAndValidity();
+      
+      this.invItemForm.get('retailUomQuntToParent').removeValidators([Validators.required]);
+      this.invItemForm.get('retailUomQuntToParent').updateValueAndValidity();
+
+      this.invItemForm.get('priceRetail').removeValidators([Validators.required]);
+      this.invItemForm.get('priceRetail').updateValueAndValidity();
+
+      this.invItemForm.get('nosGomlaPriceRetail').removeValidators([Validators.required]);
+      this.invItemForm.get('nosGomlaPriceRetail').updateValueAndValidity();
+
+      this.invItemForm.get('gomlaPriceRetail').removeValidators([Validators.required]);
+      this.invItemForm.get('gomlaPriceRetail').updateValueAndValidity();
+      
+      this.invItemForm.get('costPriceRetail').removeValidators([Validators.required]);
+      this.invItemForm.get('costPriceRetail').updateValueAndValidity();
+      
+      this.invItemForm.updateValueAndValidity();
+
+    }
+
   }
 }
