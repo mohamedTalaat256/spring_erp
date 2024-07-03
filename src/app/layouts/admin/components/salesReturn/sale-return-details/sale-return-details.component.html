@@ -8,7 +8,7 @@
     <span>العميل  : {{salesOrder.isHasCustomer? salesOrder.customer.name: 'طياري'}}</span>
 
   </div>
-  <button mat-raised-button type="button" color="warn" (click)="openAddInvItemDialog()"> اضافة اصناف الي
+  <button *ngIf="!salesOrder.isApproved" mat-raised-button type="button" color="warn" (click)="openAddInvItemDialog()"> اضافة اصناف الي
       الفاتورة</button>
 
 
@@ -56,10 +56,10 @@
               <td mat-cell *matCellDef="let orderItem">
 
 
-              <!--   <button mat-icon-button (click)="openEditInvItemDialog(orderItem)">
+              <!--   <button *ngIf="!salesOrder.isApproved" mat-icon-button (click)="openEditInvItemDialog(orderItem)">
                   <mat-icon color="primary">mode_edit</mat-icon>
                 </button> -->
-                <button mat-icon-button (click)="deleteInvItem(orderItem)">
+                <button *ngIf="!salesOrder.isApproved" mat-icon-button (click)="deleteInvItem(orderItem)">
                   <mat-icon color="danger">delete</mat-icon>
                 </button>
               </td>
@@ -86,9 +86,9 @@
                 <th>{{salesOrder.totalBeforeDiscount}}</th>
                 <th>{{discountValue}}</th>
                 <th>{{salesOrder.totalCost}}</th>
-                <th>{{ salesOrder.pillType===1? 'كاش':  'اّجل'}}</th>
-                <th>{{salesOrder.whatPaid}}</th>
-                <th>{{salesOrder.whatRemain}}</th>
+                <th>{{salesOrder.pillType===1? 'كاش': 'اّجل'}}</th>
+                <th>{{whatPaid}}</th>
+                <th>{{whatRemain}}</th>
 
               </tr>
             </tbody>
@@ -103,7 +103,7 @@
 
 
 
-        <div fxLayout="row-reverse" fxLayoutAlign="start center" fxLayoutGap="20" class="my-3">
+        <div *ngIf="!salesOrder.isApproved" fxLayout="row-reverse" fxLayoutAlign="start center" fxLayoutGap="20" class="my-3">
           <mat-form-field>
             <mat-label>نوع الخصم</mat-label>
             <mat-select formControlName="discountType" (selectionChange)="onDiscountTypeChange($event)">
@@ -118,21 +118,21 @@
 
           <mat-form-field *ngIf="discountType===1">
             <mat-label>نسبة الخصم</mat-label>
-           <input matInput formControlName="discountPercent" placeholder="نسبة الخصم" type="number" (keyup)="ondiscountValueChange()">
+           <input matInput formControlName="discountPercent" placeholder="نسبة الخصم" type="number" (keyup)="ondiscountValueChange($event)">
             <mat-error>
               <app-validation-msg [control]="invoiceForm.get('discountPercent')" fieldName="نسبة الخصم"></app-validation-msg>
             </mat-error>
           </mat-form-field>
           <mat-form-field *ngIf="discountType===2">
             <mat-label>قيمة الخصم</mat-label>
-           <input matInput formControlName="discountValue" placeholder="قيمة الخصم" type="number" (keyup)="ondiscountValueChange()">
+           <input matInput formControlName="discountValue" placeholder="قيمة الخصم" type="number" (keyup)="ondiscountValueChange($event)">
             <mat-error>
               <app-validation-msg [control]="invoiceForm.get('discountValue')" fieldName="قيمة الخصم"></app-validation-msg>
             </mat-error>
           </mat-form-field>
         </div>
 
-        <div fxLayout="row-reverse" fxLayoutAlign="start center" fxLayoutGap="20" class="my-3">
+        <div *ngIf="!salesOrder.isApproved" fxLayout="row-reverse" fxLayoutAlign="start center" fxLayoutGap="20" class="my-3">
 
             <mat-form-field>
               <mat-label>نوع الدفع</mat-label>
@@ -145,9 +145,9 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field >
+            <mat-form-field>
               <mat-label>المدفوع</mat-label>
-             <input matInput formControlName="whatPaid" placeholder="المدفوع" type="number" [readonly]="discountType===1">
+              <input matInput formControlName="whatPaid" placeholder="المدفوع" type="number" (keyup)="whatPaidChange($event)" >
               <mat-error>
                 <app-validation-msg [control]="invoiceForm.get('whatPaid')" fieldName="المدفوع"></app-validation-msg>
               </mat-error>
@@ -184,8 +184,8 @@
         </div>
 
         <div fxLayout="row-reverse" fxLayoutAlign="space-between center" >
-          <button mat-raised-button color="primary" type="submit">حفظ و إعتماد الفاتورة</button>
-        <!--   <button mat-raised-button color="primary" type="button">طباعة</button> -->
+          <button *ngIf="!salesOrder.isApproved" mat-raised-button color="primary" type="submit">حفظ و إعتماد الفاتورة</button>
+
           <button  mat-raised-button color="primary" class="mx-2" [useExistingCss]="true"
           [printStyle]="{div : {'direction': 'rtl'}}"  [printTitle]="'asdasd'" printSectionId="print-section" ngxPrint>
               {{'download' | translate}}
