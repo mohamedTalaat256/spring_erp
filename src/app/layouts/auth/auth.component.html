@@ -61,13 +61,13 @@
             </div>
 
             <button *ngIf="isLoginMode" type="submit" mat-raised-button color="primary" class="py-3 my-2 ">{{'login' | translate}}</button>
-            <button *ngIf="!isLoginMode" type="submit"  mat-raised-button color="primary" class="py-3 mt-3 my-2 ">{{'register' | translate}}</button>
-            
-            <span class="mat-text-secondary f-w-500 m-auto"> OR </span>
-            
+<!--             <button *ngIf="!isLoginMode" type="submit"  mat-raised-button color="primary" class="py-3 mt-3 my-2 ">{{'register' | translate}}</button>
+ -->            
+<!--             <span class="mat-text-secondary f-w-500 m-auto"> OR </span>
+ -->            
             <button *ngIf="!isLoginMode"(click)="toggleMode()"  mat-raised-button color="light" class="py-3 my-2 ">{{'login' | translate}}</button>
-            <button *ngIf="isLoginMode" (click)="toggleMode()" type="submit" mat-raised-button color="light" class="py-3 mt-3 my-2 ">{{'register' | translate}}</button>
-
+<!--             <button *ngIf="isLoginMode" (click)="toggleMode()" type="submit" mat-raised-button color="light" class="py-3 mt-3 my-2 ">{{'register' | translate}}</button>
+ -->
 
             <div *ngIf="!isLoginMode" class="my-3" fxLayout="row" fxLayoutAlign="center center">
                 <section>

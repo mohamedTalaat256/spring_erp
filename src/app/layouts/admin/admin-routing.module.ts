@@ -91,7 +91,7 @@ const routes: Routes = [
 
       { path: '**', pathMatch :'full' , component: Page404Component},
     ],
-    //canActivate: [adminGuardService]
+    canActivate: [adminGuardService]
   }
 ];
 

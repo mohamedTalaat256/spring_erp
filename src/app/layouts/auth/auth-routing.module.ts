@@ -8,11 +8,11 @@ const routes: Routes = [
     component: AuthComponent,
     children: [{path:'', component: AuthComponent}]
   },
-  {
+/*   {
     path:'register',
     component: AuthComponent,
     children: [{path:'', component: AuthComponent}]
-  }
+  } */
 ];
 
 @NgModule({
