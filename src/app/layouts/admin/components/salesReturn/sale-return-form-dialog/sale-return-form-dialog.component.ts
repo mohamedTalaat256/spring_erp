@@ -30,7 +30,7 @@ export class SaleReturnFormDialogComponent {
 
   saleForm: FormGroup;
   title: string;
-
+  showCustomers: boolean = true;
   showParentAccounts: boolean = false;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -47,6 +47,16 @@ export class SaleReturnFormDialogComponent {
       this.saleForm = this.saleFormControl.createForm();
     } else {
       this.saleForm = this.saleFormControl.setForm(this.data.salesOrder);
+      if(this.data.salesOrder.isHasCustomer){
+        this.customerFormControl.setValue( {
+          id: this.data.salesOrder.customer.id,
+          name: this.data.salesOrder.customer.name
+        });
+        this.saleForm.patchValue({
+          customer: this.data.salesOrder.customer.id
+        });
+      }
+      this.showCustomers = this.data.salesOrder.isHasCustomer;
     }
 
     this.customers = this.data.customers;
@@ -68,7 +78,7 @@ export class SaleReturnFormDialogComponent {
     console.log(this.saleForm.value);
 
     this.salesReturnService
-      .save(this.saleForm.value)
+      .save(this.saleForm.value, this.data.formMode)
       .pipe(take(1))
       .subscribe({
         next: (response: AppResponse) => {
@@ -128,6 +138,34 @@ export class SaleReturnFormDialogComponent {
       customer: event.option.value.id
     },{onlySelf:true, emitEvent: true});
 
+  }
+
+
+  toggleShowCustomers(checked:boolean){
+    this.showCustomers = !checked;
+    
+
+    this.saleForm.patchValue({
+      isHasCustomer: !checked
+    })
+
+    if(checked){
+      this.customerFormControl.clearValidators();
+
+      this.customerFormControl.updateValueAndValidity();
+
+      this.saleForm.get('customer').removeValidators([Validators.required]);
+      this.saleForm.get('customer').updateValueAndValidity();
+      this.saleForm.updateValueAndValidity();
+    }else{
+      this.customerFormControl.setValidators([Validators.required]);
+      this.customerFormControl.updateValueAndValidity();
+
+      this.saleForm.get('customer').addValidators([Validators.required]);
+
+      this.saleForm.get('customer').updateValueAndValidity();
+      this.saleForm.updateValueAndValidity();
+    }
   }
 
 

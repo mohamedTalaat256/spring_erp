@@ -188,6 +188,9 @@ export class SuppliersOrdersComponent {
                   timer: 1500
                 });
                 this.supplierOrders = this.supplierOrders.filter(i=> i.id !== invoiceId);
+
+                this.dataSource = new MatTableDataSource<any>(this.supplierOrders);
+                this.dataSource.paginator = this.paginator;
               }
 
 

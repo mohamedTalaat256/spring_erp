@@ -116,8 +116,6 @@ export class SalesComponent implements OnInit {
       height: 'auto',
       data: data
     });
-
-
   }
 
 
@@ -175,6 +173,8 @@ export class SalesComponent implements OnInit {
                   timer: 1500
                 });
                 this.sales = this.sales.filter(i=> i.id !== invoiceId);
+                this.dataSource = new MatTableDataSource<any>(this.sales);
+                this.dataSource.paginator = this.paginator;
               }
 
 

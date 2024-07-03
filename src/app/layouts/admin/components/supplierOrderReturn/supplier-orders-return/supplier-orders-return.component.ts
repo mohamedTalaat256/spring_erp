@@ -187,6 +187,8 @@ export class SupplierOrdersReturnComponent {
                   timer: 1500
                 });
                 this.supplierOrdersReturn = this.supplierOrdersReturn.filter(i=> i.id !== invoiceId);
+                this.dataSource = new MatTableDataSource<any>(this.supplierOrdersReturn);
+                this.dataSource.paginator = this.paginator;
               }
 
 

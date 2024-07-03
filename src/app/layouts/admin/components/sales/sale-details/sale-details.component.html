@@ -5,7 +5,7 @@
     <div class="my-3" fxLayout="row" fxLayoutAlign="space-between center">
 
       <span>التاريخ : {{salesOrder.invoiceDate }}</span>
-      <span>العميل {{salesOrder.customer.name}}</span>
+      <span>العميل {{ salesOrder.isHasCustomer? salesOrder.customer.name: 'طياري'}}</span>
 
     </div>
     <button *ngIf="!salesOrder.isApproved" mat-raised-button type="button" color="warn"

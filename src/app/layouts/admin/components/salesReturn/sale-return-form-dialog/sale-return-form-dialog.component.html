@@ -17,8 +17,12 @@
         </mat-error>
     </mat-form-field>
 
+    <mat-checkbox fxFlex="48" color="primary"
+    [checked]="!showCustomers"  (change)="toggleShowCustomers($event.checked)"
+     >عميل طياري</mat-checkbox>
 
-    <mat-form-field fxFlex="48">
+
+    <mat-form-field fxFlex="48" *ngIf="showCustomers">
         <mat-label>العميل</mat-label>
 
         <input type="text"   placeholder="العميل" matInput

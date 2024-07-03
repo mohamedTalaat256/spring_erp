@@ -25,6 +25,8 @@ export class SaleFormDialogComponent {
   filteredSuppliers: Observable<any[]>;
   filteredStores: Observable<any[]>;
 
+  showCustomers: boolean = true;
+
   stores: any[] = [];
 
   saleForm: FormGroup;
@@ -47,14 +49,16 @@ export class SaleFormDialogComponent {
     } else {
       this.saleForm = this.saleFormControl.setForm(this.data.salesOrder);
 
-
-      this.customerFormControl.setValue( {
-        id: this.data.salesOrder.customer.id,
-        name: this.data.salesOrder.customer.name
-      });
-      this.saleForm.patchValue({
-        customer: this.data.salesOrder.customer.id
-      });
+      if(this.data.salesOrder.isHasCustomer){
+        this.customerFormControl.setValue( {
+          id: this.data.salesOrder.customer.id,
+          name: this.data.salesOrder.customer.name
+        });
+        this.saleForm.patchValue({
+          customer: this.data.salesOrder.customer.id
+        });
+      }
+      this.showCustomers = this.data.salesOrder.isHasCustomer;
     }
 
     this.customers = this.data.customers;
@@ -138,5 +142,32 @@ export class SaleFormDialogComponent {
 
   }
 
+
+  toggleShowCustomers(checked:boolean){
+    this.showCustomers = !checked;
+    
+
+    this.saleForm.patchValue({
+      isHasCustomer: !checked
+    })
+
+    if(checked){
+      this.customerFormControl.clearValidators();
+
+      this.customerFormControl.updateValueAndValidity();
+
+      this.saleForm.get('customer').removeValidators([Validators.required]);
+      this.saleForm.get('customer').updateValueAndValidity();
+      this.saleForm.updateValueAndValidity();
+    }else{
+      this.customerFormControl.setValidators([Validators.required]);
+      this.customerFormControl.updateValueAndValidity();
+
+      this.saleForm.get('customer').addValidators([Validators.required]);
+
+      this.saleForm.get('customer').updateValueAndValidity();
+      this.saleForm.updateValueAndValidity();
+    }
+  }
 
 }

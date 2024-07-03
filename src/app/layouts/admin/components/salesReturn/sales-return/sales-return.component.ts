@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 import { AppResponse } from 'src/app/model/app_response.model';
 import { Account } from 'src/app/model/accounty';
 import { MatPaginator } from '@angular/material/paginator';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
  import { SalesService } from 'src/app/service/sale.service';
 import { SaleReturnFormDialogComponent } from '../sale-return-form-dialog/sale-return-form-dialog.component';
 import { SalesReturnService } from 'src/app/service/saleReturn.service';
@@ -27,7 +27,7 @@ export class SalesReturnComponent {
 
 
   salesReturn: any[] = [];
-
+  searchForm: FormGroup;
   createData: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -44,17 +44,23 @@ export class SalesReturnComponent {
   dataSource = new MatTableDataSource<any>(this.salesReturn);
 
   constructor(public dialog: MatDialog,
-    private salesReturnService: SalesReturnService
+    private salesReturnService: SalesReturnService,
+    private fb: FormBuilder
 
-    ) { }
+    ) { 
+      this.searchForm = this.fb.group({
+        barCode: [null],
+        store: [null],
+        supplier: [null],
+        fromDate: [null],
+        toDate: [null]
+      });
+    }
 
 
 
   ngOnInit(): void {
     this.findAll();
-    this.setFilters();
-
-
   }
 
   findAll() {
@@ -67,7 +73,7 @@ export class SalesReturnComponent {
           this.dataSource = new MatTableDataSource<any>(this.salesReturn);
           this.dataSource.paginator = this.paginator;
 
-
+          this.setFilters();
         }
       },
       error: (error: Error) => {
@@ -81,7 +87,7 @@ export class SalesReturnComponent {
     });
   }
 
-  onSubmit(){}
+  onSubmitSearch(){}
 
 
   openAddNew() {
@@ -91,40 +97,27 @@ export class SalesReturnComponent {
       formMode: FormMode.CREATE,
       customers: this.customers
     };
-    /* const dialogRef = */ this.dialog.open(SaleReturnFormDialogComponent, {
+      this.dialog.open(SaleReturnFormDialogComponent, {
+      width: '650px',
+      height: 'auto',
+      data: data
+    }); 
+  }
+
+
+  openEditDialog(order: any) {
+    const data = {
+      title: 'تعديل فاتورة مرتجع مبيعات عام',
+      formMode: FormMode.EDIT,
+      salesOrder: order,
+      customers: this.customers
+
+    };
+    const dialogRef = this.dialog.open(SaleReturnFormDialogComponent, {
       width: '650px',
       height: 'auto',
       data: data
     });
-
-   /*  dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
-      if (result) {
-        this.accounts.push(result);
-        this.dataSource = new MatTableDataSource<Account>(this.accounts);
-      }
-    }); */
-  }
-
-
-  openEditInvItemDialog(account: Account) {
-    const data = {
-      title: 'تعديل الحساب',
-      formMode: FormMode.EDIT,
-      account: account
-
-    };
-   /*  const dialogRef = this.dialog.open(SaleDetailsFormDialogComponent, {
-      width: '80%',
-      height: 'auto',
-      data: data
-    });
-
-    dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
-      if (result) {
-        this.accounts.push(result);
-        this.dataSource = new MatTableDataSource<Account>(this.accounts);
-      }
-    }); */
   }
 
 
@@ -151,6 +144,57 @@ export class SalesReturnComponent {
     return this.customers.filter(option => option.name.toLowerCase().includes(filterValue));
   }
 
+
+  deleteInvoice(invoiceId: number){
+
+    Swal.fire({
+      icon: 'warning',
+      title: 'تأكيد',
+      showDenyButton: true,
+      confirmButtonText: 'نعم',
+      confirmButtonColor: '#ed1818',
+      denyButtonText: 'لا',
+      denyButtonColor: '#54e9ac',
+      customClass: {
+        actions: 'my-actions',
+        cancelButton: 'order-1 right-gap',
+        confirmButton: 'order-2'
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this.salesReturnService.delete(invoiceId).subscribe(
+          {
+            next:(response: AppResponse)=>{
+              if(response.ok){
+
+                Swal.fire({
+                  icon: "success",
+                  title: response.message,
+                  showConfirmButton: false,
+                  timer: 1500
+                });
+                this.salesReturn = this.salesReturn.filter(i=> i.id !== invoiceId);
+                this.dataSource = new MatTableDataSource<any>(this.salesReturn);
+                this.dataSource.paginator = this.paginator;
+              }
+
+
+            },
+            error:(error: AppResponse)=>{
+              Swal.fire({
+                icon: "error",
+                title: error.message,
+                showConfirmButton: false,
+                timer: 1500
+              });
+            }
+          }
+        );
+       }}
+      );
+
+  }
 
 
 
