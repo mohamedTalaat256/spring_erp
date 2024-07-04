@@ -186,8 +186,7 @@
           <button *ngIf="!salesOrder.isApproved" mat-raised-button color="primary" type="submit">حفظ و إعتماد
             الفاتورة</button>
 
-          <button mat-raised-button color="primary" class="mx-2" [useExistingCss]="true"
-            [printStyle]="{div : {'direction': 'rtl'}}" [printTitle]="'asdasd'" printSectionId="print-section" ngxPrint>
+          <button mat-raised-button color="primary" class="mx-2" [routerLink]="['/admin/print-sales', salesOrder.id]">
             طباعة
             <mat-icon class="mx-2">cloud_download</mat-icon></button>
         </div>

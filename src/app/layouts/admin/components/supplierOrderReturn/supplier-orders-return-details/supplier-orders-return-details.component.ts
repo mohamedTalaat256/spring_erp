@@ -76,7 +76,21 @@ export class SupplierOrdersReturnDetailsComponent implements OnInit {
 
   onSubmit() {
     console.log(this.invoiceForm.value);
-
+    Swal.fire({
+      icon: 'warning',
+      title: 'سيتم اعتماد الفاتورة و تصبح غير قابلة للتعدبل',
+      showDenyButton: true,
+      confirmButtonText: 'نعم',
+      confirmButtonColor: '#ed1818',
+      denyButtonText: 'لا',
+      denyButtonColor: '#54e9ac',
+      customClass: {
+        actions: 'my-actions',
+        cancelButton: 'order-1 right-gap',
+        confirmButton: 'order-2'
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
 
     this.supplierOrderReturnService.upprove(this.invoiceForm.value).subscribe({
       next: (response: AppResponse) => {
@@ -101,6 +115,7 @@ export class SupplierOrdersReturnDetailsComponent implements OnInit {
 
     });
 
+  }});
 
 
 
@@ -109,21 +124,7 @@ export class SupplierOrdersReturnDetailsComponent implements OnInit {
 
   getSupplierOrderDetails(id: number) {
 
-    Swal.fire({
-      icon: 'warning',
-      title: 'سيتم اعتماد الفاتورة و تصبح غير قابلة للتعدبل',
-      showDenyButton: true,
-      confirmButtonText: 'نعم',
-      confirmButtonColor: '#ed1818',
-      denyButtonText: 'لا',
-      denyButtonColor: '#54e9ac',
-      customClass: {
-        actions: 'my-actions',
-        cancelButton: 'order-1 right-gap',
-        confirmButton: 'order-2'
-      },
-    }).then((result) => {
-      if (result.isConfirmed) {
+
 
         this.supplierOrderReturnService.findById(id).subscribe({
           next: (response: AppResponse) => {
@@ -144,7 +145,6 @@ export class SupplierOrdersReturnDetailsComponent implements OnInit {
           }
 
         });
-      }});
   }
 
   setInvoiceFrom() {

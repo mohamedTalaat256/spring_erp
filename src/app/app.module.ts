@@ -73,6 +73,10 @@ import { SalesReturnComponent } from './layouts/admin/components/salesReturn/sal
 import { SaleReturnDetailsComponent } from './layouts/admin/components/salesReturn/sale-return-details/sale-return-details.component';
 import { SaleReturnFormDialogComponent } from './layouts/admin/components/salesReturn/sale-return-form-dialog/sale-return-form-dialog.component';
 import { SaleReturnDetailsFormDialogComponent } from './layouts/admin/components/salesReturn/sale-return-details-form-dialog/sale-return-details-form-dialog.component';
+import { PrintSalesComponent } from './layouts/admin/components/print/print-sales/print-sales.component';
+import { PrintSalesReturnComponent } from './layouts/admin/components/print/print-sales-return/print-sales-return.component';
+import { PrintSupplierOrderComponent } from './layouts/admin/components/print/print-supplier-order/print-supplier-order.component';
+import { PrintSupplierOrderReturnComponent } from './layouts/admin/components/print/print-supplier-order-return/print-supplier-order-return.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -137,7 +141,11 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     SalesReturnComponent,
     SaleReturnDetailsComponent,
     SaleReturnFormDialogComponent,
-    SaleReturnDetailsFormDialogComponent
+    SaleReturnDetailsFormDialogComponent,
+    PrintSalesComponent,
+    PrintSalesReturnComponent,
+    PrintSupplierOrderComponent,
+    PrintSupplierOrderReturnComponent
 
   ],
   imports: [

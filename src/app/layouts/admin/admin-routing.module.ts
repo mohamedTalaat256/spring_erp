@@ -25,6 +25,10 @@ import { SupplierOrdersReturnComponent } from './components/supplierOrderReturn/
 import { SupplierOrdersReturnDetailsComponent } from './components/supplierOrderReturn/supplier-orders-return-details/supplier-orders-return-details.component';
 import { SalesReturnComponent } from './components/salesReturn/sales-return/sales-return.component';
 import { SaleReturnDetailsComponent } from './components/salesReturn/sale-return-details/sale-return-details.component';
+import { PrintSalesComponent } from './components/print/print-sales/print-sales.component';
+import { PrintSalesReturnComponent } from './components/print/print-sales-return/print-sales-return.component';
+import { PrintSupplierOrderComponent } from './components/print/print-supplier-order/print-supplier-order.component';
+import { PrintSupplierOrderReturnComponent } from './components/print/print-supplier-order-return/print-supplier-order-return.component';
 
 const routes: Routes = [
   {
@@ -49,12 +53,14 @@ const routes: Routes = [
 
       {path:'suppliersOrders', component: SuppliersOrdersComponent},
       {path:'supplierOrderDetails/:id', component: SupplierOrderDetailsComponent},
+      {path:'print-supplierOrder/:id', component: PrintSupplierOrderComponent},
 
 
       /* supplierOrdersReturn */
 
       {path:'supplierOrdersReturn', component: SupplierOrdersReturnComponent},
       {path:'supplierOrderReturnDetails/:id', component: SupplierOrdersReturnDetailsComponent},
+      {path:'print-supplierOrderReturn/:id', component: PrintSupplierOrderReturnComponent},
 
 
 
@@ -65,10 +71,14 @@ const routes: Routes = [
       /* sales */
       {path:'sales', component: SalesComponent},
       {path:'salseDetails/:id', component: SaleDetailsComponent},
+      {path:'print-sales/:id', component: PrintSalesComponent},
+
+
 
       {path:'salesReturn', component: SalesReturnComponent},
       {path:'salseReturnDetails/:id', component: SaleReturnDetailsComponent},
 
+      {path:'print-salseReturn/:id', component: PrintSalesReturnComponent},
 
 
 

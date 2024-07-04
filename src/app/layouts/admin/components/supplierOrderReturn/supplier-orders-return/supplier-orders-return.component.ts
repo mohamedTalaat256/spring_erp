@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 import { AppResponse } from 'src/app/model/app_response.model';
 import { Account } from 'src/app/model/accounty';
 import { MatPaginator } from '@angular/material/paginator';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { SupplierOrdersReturnDetailsFormDialogComponent } from '../supplier-orders-return-details-form-dialog/supplier-orders-return-details-form-dialog.component';
 import { SupplierOrderReturnService } from 'src/app/service/supplierOrderReturn.service';
 import { SupplierOrdersReturnFormDialogComponent } from '../supplier-orders-return-form-dialog/supplier-orders-return-form-dialog.component';
@@ -24,7 +24,7 @@ export class SupplierOrdersReturnComponent {
   supplierFormControl = new FormControl<string | any>('');
   storeFormControl = new FormControl<string | any>('');
 
-
+  searchForm: FormGroup;
   suppliers: any[] = [];
   filteredSuppliers: Observable<any[]>;
   filteredStores: Observable<any[]>;
@@ -49,9 +49,17 @@ export class SupplierOrdersReturnComponent {
   dataSource = new MatTableDataSource<SupplierOrderReturn>(this.supplierOrdersReturn);
 
   constructor(public dialog: MatDialog,
+    private fb: FormBuilder,
     private supplierOrderReturnService: SupplierOrderReturnService
 
-    ) { }
+    ) {
+      this.searchForm = this.fb.group({
+        barCode: [null],
+        supplier: [null],
+        fromDate: [null],
+        toDate: [null]
+      });
+    }
 
 
 
@@ -87,7 +95,9 @@ export class SupplierOrdersReturnComponent {
     });
   }
 
-  onSubmit(){}
+  onSubmit(){}  onSubmitSearch(){
+    console.log(this.searchForm.value);
+  }
 
 
   openAddNew() {
@@ -103,7 +113,7 @@ export class SupplierOrdersReturnComponent {
       height: 'auto',
       data: data
     });
- 
+
   }
 
 
