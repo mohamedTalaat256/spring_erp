@@ -29,6 +29,7 @@ import { PrintSalesComponent } from './components/print/print-sales/print-sales.
 import { PrintSalesReturnComponent } from './components/print/print-sales-return/print-sales-return.component';
 import { PrintSupplierOrderComponent } from './components/print/print-supplier-order/print-supplier-order.component';
 import { PrintSupplierOrderReturnComponent } from './components/print/print-supplier-order-return/print-supplier-order-return.component';
+import { SarfPermissionsComponent } from './components/sarf-permission/sarf-permissions/sarf-permissions.component';
 
 const routes: Routes = [
   {
@@ -91,6 +92,10 @@ const routes: Routes = [
 
       {path:'transactionCollect', component: TransactionCollectComponent},
       {path:'transactionexchange', component: TransactionExchangeComponent},
+
+
+      {path:'sarfPermissions', component: SarfPermissionsComponent},
+
 
 
       {path:'adminSettings', component: SettingsComponent},

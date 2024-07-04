@@ -1,0 +1,116 @@
+<div fxLayout="row">
+
+  <div class="w-100 mt-2 rounded-2">
+      <div fxLayout="row" class="my-3 p-1" fxLayoutAlign="space-between center">
+          <button mat-raised-button color="primary" (click)="openAddNew()">اضافة جديد</button>
+          <h1>اذونات الصرف</h1>
+      </div>
+
+      <form  (ngSubmit)="onSubmitSearch()" [formGroup]="searchForm" fxLayout="row-reverse wrap" fxLayoutGap="15">
+        <mat-form-field fxFlex="16" fxFlex.sm="100" fxFlex.xs="100">
+          <mat-label>الكود</mat-label>
+          <input matInput formControlName="barCode" placeholder="الكود">
+        </mat-form-field>
+        <mat-form-field fxFlex="16" fxFlex.sm="100" fxFlex.xs="100">
+          <mat-label>بحث بالعملاء</mat-label>
+
+          <input type="text" placeholder="العميل" matInput [formControl]="customerFormControl"
+            [matAutocomplete]="supplierAutoComplete">
+
+          <mat-autocomplete #supplierAutoComplete="matAutocomplete" [displayWith]="customerDisplayFn">
+            <ng-container *ngFor="let option of filteredcustomer | async; trackBy: customerDisplayFn">
+              <mat-option [value]="option">{{ option.name }}</mat-option>
+            </ng-container>
+          </mat-autocomplete>
+
+
+        </mat-form-field>
+
+
+        <mat-form-field fxFlex="16" fxFlex.sm="100" fxFlex.xs="100">
+          <mat-label>بحث من تاريخ</mat-label>
+          <input matInput [matDatepicker]="fromDatePicker" formControlName="fromDate" placeholder="بحث من تاريخ">
+          <mat-datepicker-toggle matIconSuffix [for]="fromDatePicker">
+            <mat-icon matDatepickerToggleIcon>date_range</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #fromDatePicker></mat-datepicker>
+        </mat-form-field>
+
+
+        <mat-form-field fxFlex="16" fxFlex.sm="100" fxFlex.xs="100">
+          <mat-label>بحث الي تاريخ</mat-label>
+          <input matInput [matDatepicker]="toDatePicker" formControlName="toDate" placeholder="بحث الي تاريخ">
+          <mat-datepicker-toggle matIconSuffix [for]="toDatePicker">
+            <mat-icon matDatepickerToggleIcon>date_range</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #toDatePicker></mat-datepicker>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit">
+          بحث
+          <mat-icon>search</mat-icon>
+        </button>
+      </form>
+
+      <div class="w-100 mt-2 rounded-2 shadow-sm overflow-x-scroll">
+          <table mat-table [dataSource]="dataSource" style="direction: rtl;">
+              <ng-container matColumnDef="autoSerial">
+                  <th mat-header-cell *matHeaderCellDef>كود</th>
+                  <td mat-cell *matCellDef="let salesOrder"> {{salesOrder.id}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="supplierName">
+                  <th mat-header-cell *matHeaderCellDef>العميل</th>
+                  <td mat-cell *matCellDef="let salesOrder"> {{ salesOrder.customer.name}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="date">
+                  <th mat-header-cell *matHeaderCellDef> تاريخ الفاتورة</th>
+                  <td mat-cell *matCellDef="let salesOrder"> {{salesOrder.createdAt | dateConverter}} </td>
+              </ng-container>
+
+
+
+
+
+              <ng-container matColumnDef="totalCost">
+                  <th mat-header-cell *matHeaderCellDef> اجمالي الفاتورة</th>
+                  <td mat-cell *matCellDef="let salesOrder"> {{salesOrder.totalCost * 1}} </td>
+              </ng-container>
+
+
+
+              <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td mat-cell *matCellDef="let salesOrder">
+                      <button mat-icon-button [routerLink]="['/admin/salseDetails', salesOrder.id]">
+                          <mat-icon color="danger">remove_red_eye</mat-icon>
+                      </button>
+
+
+                      <button *ngIf="!salesOrder.isApproved" mat-icon-button (click)="openEditDialog(salesOrder)">
+                        <mat-icon color="primary">edit</mat-icon>
+                      </button>
+
+                      <button *ngIf="!salesOrder.isApproved" mat-icon-button (click)="deleteInvoice( salesOrder.id)">
+                        <mat-icon color="danger">delete</mat-icon>
+                      </button>
+
+                      <button mat-icon-button [routerLink]="['/admin/print-sales', salesOrder.id]">
+                          <mat-icon color="warn">local_print_shop</mat-icon>
+                      </button>
+
+
+                  </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+
+          <mat-paginator [pageSizeOptions]="[10, 30, 100]" showFirstLastButtons
+              aria-label="Select page of periodic elements">
+          </mat-paginator>
+      </div>
+  </div>
+</div>

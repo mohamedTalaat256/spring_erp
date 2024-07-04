@@ -131,6 +131,18 @@ const TREE_DATA: FoodNode[] = [
     ],
   },
   {
+    name: 'اذن صرف',
+    icon: 'shopping_cart',
+    iconColor: 'success',
+    children: [
+      {
+        name: 'اذن صرف',
+        icon: 'menu',
+        url: '/admin/sarfPermissions'
+      }
+    ],
+  },
+  {
     name: 'المبيعات',
     icon: 'shopping_cart',
     iconColor: 'success',

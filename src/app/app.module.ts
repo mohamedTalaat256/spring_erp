@@ -77,6 +77,7 @@ import { PrintSalesComponent } from './layouts/admin/components/print/print-sale
 import { PrintSalesReturnComponent } from './layouts/admin/components/print/print-sales-return/print-sales-return.component';
 import { PrintSupplierOrderComponent } from './layouts/admin/components/print/print-supplier-order/print-supplier-order.component';
 import { PrintSupplierOrderReturnComponent } from './layouts/admin/components/print/print-supplier-order-return/print-supplier-order-return.component';
+import { SarfPermissionsComponent } from './layouts/admin/components/sarf-permission/sarf-permissions/sarf-permissions.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -145,7 +146,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     PrintSalesComponent,
     PrintSalesReturnComponent,
     PrintSupplierOrderComponent,
-    PrintSupplierOrderReturnComponent
+    PrintSupplierOrderReturnComponent,
+    SarfPermissionsComponent
 
   ],
   imports: [
