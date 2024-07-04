@@ -22,22 +22,22 @@ import { SupplierOrderDetailsService } from 'src/app/service/supplierOrderDetail
 export class SupplierOrderDetailsComponent implements OnInit {
 
 
-  discountType:number=0;
-  discountValue:number=0;
+  discountType: number = 0;
+  discountValue: number = 0;
 
-  pillType:number=0;
-  whatPaid: number=0;
-  whatRemain: number=0;
+  pillType: number = 0;
+  whatPaid: number = 0;
+  whatRemain: number = 0;
   invoiceForm: FormGroup;
 
 
   supplierOrder: any;
 
-  invoceTotal:number =0;
+  invoceTotal: number = 0;
   displayedColumns: string[] = ['id', 'unit', 'orderItem', 'price', 'amount', 'total', 'actions'];
 
 
-  supplierOrderDetailsItems: any []=[];
+  supplierOrderDetailsItems: any[] = [];
   dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
   orderId: number;
 
@@ -48,18 +48,18 @@ export class SupplierOrderDetailsComponent implements OnInit {
     private supplierOrderDetailsService: SupplierOrderDetailsService,
     private route: ActivatedRoute,
 
-  ){
+  ) {
     this.invoiceForm = this.fb.group({
-      orderId:         [0,  ],
-      discountType:    [0, [Validators.required]],
+      orderId: [0,],
+      discountType: [0, [Validators.required]],
       discountPercent: [0, [Validators.required]],
-      discountValue:   [0, [Validators.required]],
-      pillType:        [null, [Validators.required]],
-      whatPaid:        [null, [Validators.required]],
-      whatRemain:      [null, [Validators.required]],
-      notes:           [null],
+      discountValue: [0, [Validators.required]],
+      pillType: [null, [Validators.required]],
+      whatPaid: [null, [Validators.required]],
+      whatRemain: [null, [Validators.required]],
+      notes: [null],
     });
-    
+
   }
 
   filteredClients: Observable<any[]>;
@@ -75,43 +75,58 @@ export class SupplierOrderDetailsComponent implements OnInit {
 
 
 
-  onSubmit(){
+  onSubmit() {
     console.log(this.invoiceForm.value);
-
-
-    this.supplierOrderService.upprove(this.invoiceForm.value).subscribe({
-      next: (response: AppResponse) => {
-        if (response.ok) {
-          Swal.fire({
-            icon: "success",
-            title: response.message,
-            showConfirmButton: true
-          });
-
-          this.supplierOrderDetailsItems = response.data.supplierOrderDetailsItems;
-          this.dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
-
-          this.supplierOrder = response.data;
-          this.setInvoice();
-        }
+    Swal.fire({
+      icon: 'warning',
+      title: 'سيتم اعتماد الفاتورة و تصبح غير قابلة للتعدبل',
+      showDenyButton: true,
+      confirmButtonText: 'نعم',
+      confirmButtonColor: '#ed1818',
+      denyButtonText: 'لا',
+      denyButtonColor: '#54e9ac',
+      customClass: {
+        actions: 'my-actions',
+        cancelButton: 'order-1 right-gap',
+        confirmButton: 'order-2'
       },
-      error: (error: Error) => {
-        Swal.fire({
-          icon: "error",
-          title: error.message,
-          showConfirmButton: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this.supplierOrderService.upprove(this.invoiceForm.value).subscribe({
+          next: (response: AppResponse) => {
+            if (response.ok) {
+              Swal.fire({
+                icon: "success",
+                title: response.message,
+                showConfirmButton: true
+              });
+
+              this.supplierOrderDetailsItems = response.data.supplierOrderDetailsItems;
+              this.dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
+
+              this.supplierOrder = response.data;
+              this.setInvoice();
+            }
+          },
+          error: (error: Error) => {
+            Swal.fire({
+              icon: "error",
+              title: error.message,
+              showConfirmButton: true
+            });
+          }
+
         });
       }
-
     });
-
 
 
 
 
   }
 
-  getSupplierOrderDetails(id: number){
+  getSupplierOrderDetails(id: number) {
     this.supplierOrderService.findById(id).subscribe({
       next: (response: AppResponse) => {
         if (response.ok) {
@@ -133,21 +148,21 @@ export class SupplierOrderDetailsComponent implements OnInit {
     });
   }
 
-  setInvoice(){
+  setInvoice() {
     this.invoiceForm = this.fb.group({
-      orderId:         [this.supplierOrder.id,  ],
-      discountType:    [this.supplierOrder.discountType, [Validators.required]],
+      orderId: [this.supplierOrder.id,],
+      discountType: [this.supplierOrder.discountType, [Validators.required]],
       discountPercent: [this.supplierOrder.discountPercent, [Validators.required]],
-      discountValue:   [this.supplierOrder.discountValue, [Validators.required]],
-      pillType:        [this.supplierOrder.pillType !== null ? this.supplierOrder.pillType: 0 , [Validators.required]],
-      whatPaid:        [this.supplierOrder.whatPaid !== null ? this.supplierOrder.whatPaid :0, [Validators.required]],
-      whatRemain:      [this.supplierOrder.whatRemain !== null ? this.supplierOrder.whatRemain : 0, [Validators.required]],
-      notes:           [this.supplierOrder.notes],
+      discountValue: [this.supplierOrder.discountValue, [Validators.required]],
+      pillType: [this.supplierOrder.pillType !== null ? this.supplierOrder.pillType : 0, [Validators.required]],
+      whatPaid: [this.supplierOrder.whatPaid !== null ? this.supplierOrder.whatPaid : 0, [Validators.required]],
+      whatRemain: [this.supplierOrder.whatRemain !== null ? this.supplierOrder.whatRemain : 0, [Validators.required]],
+      notes: [this.supplierOrder.notes],
     });
     this.discountValue = this.supplierOrder.discountValue;
     this.whatPaid = this.supplierOrder.whatPaid;
     this.whatRemain = this.supplierOrder.whatRemain;
-  
+
   }
 
   openAddInvItemDialog() {
@@ -164,9 +179,9 @@ export class SupplierOrderDetailsComponent implements OnInit {
 
     dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
 
-      if(result !== null){
-        let index = this.supplierOrderDetailsItems.find(i=> i.invItemCard.id=== result.invItemId);
-        if(index){
+      if (result !== null) {
+        let index = this.supplierOrderDetailsItems.find(i => i.invItemCard.id === result.invItemId);
+        if (index) {
           Swal.fire({
             icon: "error",
             title: "الصنف موجود بالفعل بالفاتورة, يمكنك التعديل عليه",
@@ -176,8 +191,8 @@ export class SupplierOrderDetailsComponent implements OnInit {
           return;
         }
 
-        this.supplierOrder =result;
-        this.supplierOrderDetailsItems= this.supplierOrder.supplierOrderDetailsItems;
+        this.supplierOrder = result;
+        this.supplierOrderDetailsItems = this.supplierOrder.supplierOrderDetailsItems;
         this.dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
       }
     });
@@ -188,7 +203,7 @@ export class SupplierOrderDetailsComponent implements OnInit {
     const data = {
       title: 'تعديل صنف في الفاتورة',
       formMode: FormMode.EDIT,
-      orderItem:orderItem,
+      orderItem: orderItem,
       orderId: this.orderId
     };
     const dialogRef = this.dialog.open(SuppliersOrderItemDetailsFormDialogComponent, {
@@ -200,8 +215,8 @@ export class SupplierOrderDetailsComponent implements OnInit {
     dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
 
 
-      if(result){
-        this.supplierOrderDetailsItems= result;
+      if (result) {
+        this.supplierOrderDetailsItems = result;
         this.dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
 
       }
@@ -209,7 +224,7 @@ export class SupplierOrderDetailsComponent implements OnInit {
   }
 
 
-  deleteInvItem(invItem){
+  deleteInvItem(invItem) {
 
     Swal.fire({
       icon: 'warning',
@@ -229,9 +244,9 @@ export class SupplierOrderDetailsComponent implements OnInit {
 
         this.supplierOrderDetailsService.delete(invItem.id).subscribe(
           {
-            next:(response: any)=>{
+            next: (response: any) => {
 
-              if(response.ok){
+              if (response.ok) {
 
                 Swal.fire({
                   icon: "success",
@@ -239,14 +254,14 @@ export class SupplierOrderDetailsComponent implements OnInit {
                   showConfirmButton: false,
                   timer: 1500
                 });
-                this.supplierOrder =response.data;
-                this.supplierOrderDetailsItems= this.supplierOrder.supplierOrderDetailsItems;
+                this.supplierOrder = response.data;
+                this.supplierOrderDetailsItems = this.supplierOrder.supplierOrderDetailsItems;
                 this.dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
               }
 
 
             },
-            error:(error: AppResponse)=>{
+            error: (error: AppResponse) => {
               Swal.fire({
                 icon: "error",
                 title: error.message,
@@ -257,27 +272,28 @@ export class SupplierOrderDetailsComponent implements OnInit {
           }
         );
         Swal.fire('تم الحذف', '', 'success')
-      }}
-      );
-    this.supplierOrderDetailsItems = this.supplierOrderDetailsItems.filter(i=> i.id !== invItem.invItem);
+      }
+    }
+    );
+    this.supplierOrderDetailsItems = this.supplierOrderDetailsItems.filter(i => i.id !== invItem.invItem);
   }
 
 
-  onDiscountTypeChange(event:MatSelectChange){
+  onDiscountTypeChange(event: MatSelectChange) {
     this.discountType = Number(event.value);
 
     this.ondiscountValueChange(null);
 
   }
 
-  ondiscountValueChange(event){
-    if(this.discountType ===1){
-      this.discountValue =   this.supplierOrder.totalCost * (this.invoiceForm.value.discountPercent / 100);
+  ondiscountValueChange(event) {
+    if (this.discountType === 1) {
+      this.discountValue = this.supplierOrder.totalCost * (this.invoiceForm.value.discountPercent / 100);
 
-    }else if(this.discountType ===2){
-      this.discountValue =  this.invoiceForm.value.discountValue ;
-    }else{
-      this.discountValue =0;
+    } else if (this.discountType === 2) {
+      this.discountValue = this.invoiceForm.value.discountValue;
+    } else {
+      this.discountValue = 0;
     }
 
     this.whatPaid = this.invoiceForm.value.whatPaid;
@@ -286,21 +302,21 @@ export class SupplierOrderDetailsComponent implements OnInit {
     this.invoiceForm.patchValue(
       {
         whatPaid: this.whatPaid,
-        whatRemain:  this.whatRemain
+        whatRemain: this.whatRemain
       }
     );
   }
 
-  onPillTypeChange(event:MatSelectChange){
+  onPillTypeChange(event: MatSelectChange) {
     this.pillType = Number(event.value);
-    if(this.pillType === 1){
+    if (this.pillType === 1) {
       this.invoiceForm.patchValue(
         {
           whatPaid: this.invoceTotal,
           whatRemain: 0
         }
       );
-    }else if(this.pillType === 2){
+    } else if (this.pillType === 2) {
       this.invoiceForm.patchValue(
         {
           whatPaid: 0,
@@ -310,15 +326,15 @@ export class SupplierOrderDetailsComponent implements OnInit {
     }
   }
 
-  whatPaidChange(event){ 
+  whatPaidChange(event) {
     this.whatPaid = Number(event.target.value);
     this.whatRemain = this.supplierOrder.totalCost - this.discountValue - this.whatPaid;
 
     this.invoiceForm.patchValue(
       {
         whatPaid: this.whatPaid,
-        whatRemain:  this.whatRemain
+        whatRemain: this.whatRemain
       }
     );
-  } 
+  }
 }

@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 import { MatSelectChange } from '@angular/material/select';
 import { AppResponse } from 'src/app/model/app_response.model';
 import { ActivatedRoute } from '@angular/router';
- import { SupplierOrdersReturnDetailsFormDialogComponent } from '../supplier-orders-return-details-form-dialog/supplier-orders-return-details-form-dialog.component';
+import { SupplierOrdersReturnDetailsFormDialogComponent } from '../supplier-orders-return-details-form-dialog/supplier-orders-return-details-form-dialog.component';
 import { SupplierOrderReturnService } from 'src/app/service/supplierOrderReturn.service';
 import { SupplierOrderReturnDetailsService } from 'src/app/service/supplierOrderReturnDetails.service';
 import { SupplierOrderReturn, emptySupplierOrderReturn } from 'src/app/model/supplierOrderReturn';
@@ -22,22 +22,22 @@ export class SupplierOrdersReturnDetailsComponent implements OnInit {
 
 
 
-  discountType:number=0;
-  discountValue:number=0;
+  discountType: number = 0;
+  discountValue: number = 0;
 
-  pillType:number=0;
-  whatPaid: number=0;
-  whatRemain: number=0;
+  pillType: number = 0;
+  whatPaid: number = 0;
+  whatRemain: number = 0;
   invoiceForm: FormGroup;
 
 
   supplierOrderReturn: SupplierOrderReturn = emptySupplierOrderReturn;
 
-  invoceTotal:number =0;
+  invoceTotal: number = 0;
   displayedColumns: string[] = ['id', 'unit', 'orderItem', 'price', 'amount', 'total', 'actions'];
 
 
-  supplierOrderDetailsItems: any []=[];
+  supplierOrderDetailsItems: any[] = [];
   dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
   orderId: number;
 
@@ -48,16 +48,16 @@ export class SupplierOrdersReturnDetailsComponent implements OnInit {
     private supplierOrderReturnDetailsService: SupplierOrderReturnDetailsService,
     private route: ActivatedRoute,
 
-  ){
+  ) {
     this.invoiceForm = this.fb.group({
-      orderId:         [0,  ],
-      discountType:    [0, [Validators.required]],
+      orderId: [0,],
+      discountType: [0, [Validators.required]],
       discountPercent: [0, [Validators.required]],
-      discountValue:   [0, [Validators.required]],
-      pillType:        [null, [Validators.required]],
-      whatPaid:        [null, [Validators.required]],
-      whatRemain:      [null, [Validators.required]],
-      notes:           [null],
+      discountValue: [0, [Validators.required]],
+      pillType: [null, [Validators.required]],
+      whatPaid: [null, [Validators.required]],
+      whatRemain: [null, [Validators.required]],
+      notes: [null],
     });
   }
 
@@ -74,7 +74,7 @@ export class SupplierOrdersReturnDetailsComponent implements OnInit {
 
 
 
-  onSubmit(){
+  onSubmit() {
     console.log(this.invoiceForm.value);
 
 
@@ -107,38 +107,56 @@ export class SupplierOrdersReturnDetailsComponent implements OnInit {
 
   }
 
-  getSupplierOrderDetails(id: number){
-    this.supplierOrderReturnService.findById(id).subscribe({
-      next: (response: AppResponse) => {
-        if (response.ok) {
-          this.supplierOrderDetailsItems = response.data.supplierOrderDetailsItems;
-          this.dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
+  getSupplierOrderDetails(id: number) {
 
-          this.supplierOrderReturn = response.data;
-          this.setInvoiceFrom();
-        }
+    Swal.fire({
+      icon: 'warning',
+      title: 'سيتم اعتماد الفاتورة و تصبح غير قابلة للتعدبل',
+      showDenyButton: true,
+      confirmButtonText: 'نعم',
+      confirmButtonColor: '#ed1818',
+      denyButtonText: 'لا',
+      denyButtonColor: '#54e9ac',
+      customClass: {
+        actions: 'my-actions',
+        cancelButton: 'order-1 right-gap',
+        confirmButton: 'order-2'
       },
-      error: (error: Error) => {
-        Swal.fire({
-          icon: "error",
-          title: error.message,
-          showConfirmButton: true
-        });
-      }
+    }).then((result) => {
+      if (result.isConfirmed) {
 
-    });
+        this.supplierOrderReturnService.findById(id).subscribe({
+          next: (response: AppResponse) => {
+            if (response.ok) {
+              this.supplierOrderDetailsItems = response.data.supplierOrderDetailsItems;
+              this.dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
+
+              this.supplierOrderReturn = response.data;
+              this.setInvoiceFrom();
+            }
+          },
+          error: (error: Error) => {
+            Swal.fire({
+              icon: "error",
+              title: error.message,
+              showConfirmButton: true
+            });
+          }
+
+        });
+      }});
   }
 
-  setInvoiceFrom(){
+  setInvoiceFrom() {
     this.invoiceForm = this.fb.group({
-      orderId:          [this.supplierOrderReturn.id,  ],
-      discountType:    [this.supplierOrderReturn.discountType !== null ? this.supplierOrderReturn.discountType : 0, [Validators.required]],
-      discountPercent: [this.supplierOrderReturn.discountPercent!== null ? this.supplierOrderReturn.discountPercent : 0, [Validators.required]],
-      discountValue:   [this.supplierOrderReturn.discountValue!== null ?this.supplierOrderReturn.discountValue : 0 , [Validators.required]],
-      pillType:        [this.supplierOrderReturn.pillType !== null ? this.supplierOrderReturn.pillType: 0 , [Validators.required]],
-      whatPaid:        [this.supplierOrderReturn.whatPaid !== null ? this.supplierOrderReturn.whatPaid :0, [Validators.required]],
-      whatRemain:      [this.supplierOrderReturn.whatRemain !== null ? this.supplierOrderReturn.whatRemain : 0, [Validators.required]],
-      notes:            [this.supplierOrderReturn.notes],
+      orderId: [this.supplierOrderReturn.id,],
+      discountType: [this.supplierOrderReturn.discountType !== null ? this.supplierOrderReturn.discountType : 0, [Validators.required]],
+      discountPercent: [this.supplierOrderReturn.discountPercent !== null ? this.supplierOrderReturn.discountPercent : 0, [Validators.required]],
+      discountValue: [this.supplierOrderReturn.discountValue !== null ? this.supplierOrderReturn.discountValue : 0, [Validators.required]],
+      pillType: [this.supplierOrderReturn.pillType !== null ? this.supplierOrderReturn.pillType : 0, [Validators.required]],
+      whatPaid: [this.supplierOrderReturn.whatPaid !== null ? this.supplierOrderReturn.whatPaid : 0, [Validators.required]],
+      whatRemain: [this.supplierOrderReturn.whatRemain !== null ? this.supplierOrderReturn.whatRemain : 0, [Validators.required]],
+      notes: [this.supplierOrderReturn.notes],
     });
 
     this.discountValue = this.supplierOrderReturn.discountValue;
@@ -161,9 +179,9 @@ export class SupplierOrdersReturnDetailsComponent implements OnInit {
 
     dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
 
-      if(result !== null){
-        let index = this.supplierOrderDetailsItems.find(i=> i.invItemCard.id=== result.invItemId);
-        if(index){
+      if (result !== null) {
+        let index = this.supplierOrderDetailsItems.find(i => i.invItemCard.id === result.invItemId);
+        if (index) {
           Swal.fire({
             icon: "error",
             title: "الصنف موجود بالفعل بالفاتورة, يمكنك التعديل عليه",
@@ -176,7 +194,7 @@ export class SupplierOrdersReturnDetailsComponent implements OnInit {
         console.log(result);
         this.supplierOrderReturn = result;
 
-        this.supplierOrderDetailsItems= this.supplierOrderReturn.supplierOrderDetailsItems;
+        this.supplierOrderDetailsItems = this.supplierOrderReturn.supplierOrderDetailsItems;
         this.dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
 
       }
@@ -188,7 +206,7 @@ export class SupplierOrdersReturnDetailsComponent implements OnInit {
     const data = {
       title: 'تعديل صنف في الفاتورة',
       formMode: FormMode.EDIT,
-      orderItem:orderItem,
+      orderItem: orderItem,
       orderId: this.orderId,
       storeId: this.supplierOrderReturn.store.id
     };
@@ -201,17 +219,17 @@ export class SupplierOrdersReturnDetailsComponent implements OnInit {
     dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
 
 
-      if(result){
+      if (result) {
         this.supplierOrderReturn = result;
         this.supplierOrderDetailsItems = result.supplierOrderDetailsItems;
         this.dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
-       
+
       }
     });
   }
 
 
-  deleteInvItem(invItem){
+  deleteInvItem(invItem) {
 
     Swal.fire({
       icon: 'warning',
@@ -231,10 +249,9 @@ export class SupplierOrdersReturnDetailsComponent implements OnInit {
 
         this.supplierOrderReturnDetailsService.delete(invItem.id).subscribe(
           {
-            next:(response: any)=>{
+            next: (response: any) => {
 
-              if(response.ok){
-               // this.supplierOrderReturnDetailsItems.removeAt(index);
+              if (response.ok) {
 
                 Swal.fire({
                   icon: "success",
@@ -243,13 +260,13 @@ export class SupplierOrdersReturnDetailsComponent implements OnInit {
                   timer: 1500
                 });
                 this.supplierOrderReturn = response.data;
-                this.supplierOrderDetailsItems= this.supplierOrderReturn.supplierOrderDetailsItems;
+                this.supplierOrderDetailsItems = this.supplierOrderReturn.supplierOrderDetailsItems;
                 this.dataSource = new MatTableDataSource<any>(this.supplierOrderDetailsItems);
               }
 
 
             },
-            error:(error: AppResponse)=>{
+            error: (error: AppResponse) => {
               Swal.fire({
                 icon: "error",
                 title: error.message,
@@ -260,26 +277,27 @@ export class SupplierOrdersReturnDetailsComponent implements OnInit {
           }
         );
         Swal.fire('تم الحذف', '', 'success')
-      }}
-      );
-   }
+      }
+    }
+    );
+  }
 
 
-  onDiscountTypeChange(event:MatSelectChange){
+  onDiscountTypeChange(event: MatSelectChange) {
     this.discountType = Number(event.value);
 
     this.ondiscountValueChange(null);
 
   }
 
-  ondiscountValueChange(event){
-    if(this.discountType ===1){
-      this.discountValue =   this.supplierOrderReturn.totalCost * (this.invoiceForm.value.discountPercent / 100);
+  ondiscountValueChange(event) {
+    if (this.discountType === 1) {
+      this.discountValue = this.supplierOrderReturn.totalCost * (this.invoiceForm.value.discountPercent / 100);
 
-    }else if(this.discountType ===2){
-      this.discountValue =  this.invoiceForm.value.discountValue ;
-    }else{
-      this.discountValue =0;
+    } else if (this.discountType === 2) {
+      this.discountValue = this.invoiceForm.value.discountValue;
+    } else {
+      this.discountValue = 0;
     }
 
     this.whatPaid = this.invoiceForm.value.whatPaid;
@@ -288,21 +306,21 @@ export class SupplierOrdersReturnDetailsComponent implements OnInit {
     this.invoiceForm.patchValue(
       {
         whatPaid: this.whatPaid,
-        whatRemain:  this.whatRemain
+        whatRemain: this.whatRemain
       }
     );
   }
 
-  onPillTypeChange(event:MatSelectChange){
+  onPillTypeChange(event: MatSelectChange) {
     this.pillType = Number(event.value);
-    if(this.pillType === 1){
+    if (this.pillType === 1) {
       this.invoiceForm.patchValue(
         {
           whatPaid: this.invoceTotal,
           whatRemain: 0
         }
       );
-    }else if(this.pillType === 2){
+    } else if (this.pillType === 2) {
       this.invoiceForm.patchValue(
         {
           whatPaid: 0,
@@ -312,17 +330,17 @@ export class SupplierOrdersReturnDetailsComponent implements OnInit {
     }
   }
 
-  whatPaidChange(event){ 
+  whatPaidChange(event) {
     this.whatPaid = Number(event.target.value);
     this.whatRemain = this.supplierOrderReturn.totalCost - this.discountValue - this.whatPaid;
 
     this.invoiceForm.patchValue(
       {
         whatPaid: this.whatPaid,
-        whatRemain:  this.whatRemain
+        whatRemain: this.whatRemain
       }
     );
-  } 
+  }
 
 
 
