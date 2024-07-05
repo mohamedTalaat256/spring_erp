@@ -39,7 +39,6 @@ export class SarfPermissionDetailsComponent {
   ) {
     this.invoiceForm = this.fb.group({
       id: [0,],
-      notes: [null],
     });
   }
 
@@ -129,7 +128,6 @@ export class SarfPermissionDetailsComponent {
   setInvoice() {
     this.invoiceForm = this.fb.group({
       id: [this.permission.id,],
-      notes: [this.permission.notes],
     });
   }
 

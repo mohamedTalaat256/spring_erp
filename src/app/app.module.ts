@@ -81,6 +81,10 @@ import { SarfPermissionsComponent } from './layouts/admin/components/sarf-permis
 import { SarfPermissionsFormDialogComponent } from './layouts/admin/components/sarf-permission/sarf-permissions-form-dialog/sarf-permissions-form-dialog.component';
 import { SarfPermissionDetailsComponent } from './layouts/admin/components/sarf-permission/sarf-permission-details/sarf-permission-details.component';
 import { SarfPermissionDetailsFormDialogComponent } from './layouts/admin/components/sarf-permission/sarf-permission-details-form-dialog/sarf-permission-details-form-dialog.component';
+import { PriceInvoiceDetailsComponent } from './layouts/admin/components/priceInvoice/price-invoice-details/price-invoice-details.component';
+import { PriceInvoiceDetailsFormDialogComponent } from './layouts/admin/components/priceInvoice/price-invoice-details-form-dialog/price-invoice-details-form-dialog.component';
+import { PriceInvoiceFormDialogComponent } from './layouts/admin/components/priceInvoice/price-invoice-form-dialog/price-invoice-invoice-form-dialog.component';
+import { PriceInvoicesComponent } from './layouts/admin/components/priceInvoice/price-invoices/price-invoices.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -153,7 +157,11 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     SarfPermissionsComponent,
     SarfPermissionsFormDialogComponent,
     SarfPermissionDetailsComponent,
-    SarfPermissionDetailsFormDialogComponent
+    SarfPermissionDetailsFormDialogComponent,
+    PriceInvoiceDetailsComponent,
+    PriceInvoiceDetailsFormDialogComponent,
+    PriceInvoiceFormDialogComponent,
+    PriceInvoicesComponent
 
   ],
   imports: [

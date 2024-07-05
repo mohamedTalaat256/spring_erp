@@ -8,24 +8,24 @@ import { AppResponse } from 'src/app/model/app_response.model';
 import { Account } from 'src/app/model/accounty';
 import { MatPaginator } from '@angular/material/paginator';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { SaleFormDialogComponent } from '../sale-form-dialog/sale-form-dialog.component';
 import { SalesService } from 'src/app/service/sale.service';
+import { PriceInvoiceService } from 'src/app/service/priceInvoice.service';
+import { PriceInvoiceFormDialogComponent } from '../price-invoice-form-dialog/price-invoice-invoice-form-dialog.component';
 
 @Component({
-  selector: 'app-sales',
-  templateUrl: './sales.component.html',
-  styleUrls: ['./sales.component.scss']
+  selector: 'app-price-invoices',
+  templateUrl: './price-invoices.component.html',
+  styleUrls: ['./price-invoices.component.scss']
 })
-export class SalesComponent implements OnInit {
+export class PriceInvoicesComponent implements OnInit {
   customerFormControl = new FormControl<string | any>('');
   storeFormControl = new FormControl<string | any>('');
 
 
   customers: any[] = [];
   filteredcustomer: Observable<any[]>;
-  searchForm: FormGroup;
 
-  sales: any[] = [];
+  priceInvoices: any[] = [];
 
   createData: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -33,26 +33,18 @@ export class SalesComponent implements OnInit {
 
   displayedColumns: string[] = [
     'autoSerial',
-    'supplierName',
     'orderDate',
-    'pillType',
     'totalCost',
-    'approveStatus',
+    'notes',
     'actions'
   ];
-  dataSource = new MatTableDataSource<any>(this.sales);
+  dataSource = new MatTableDataSource<any>(this.priceInvoices);
 
   constructor(public dialog: MatDialog,
-    private salesService: SalesService,
+    private priceInvoicesService: SalesService,
+    private priceInvoiceService: PriceInvoiceService,
     private fb: FormBuilder
     ) {
-      this.searchForm = this.fb.group({
-        barCode: [null],
-        store: [null],
-        supplier: [null],
-        fromDate: [null],
-        toDate: [null]
-      });
      }
 
 
@@ -62,15 +54,13 @@ export class SalesComponent implements OnInit {
   }
 
   findAll() {
-    this.salesService.findAll().subscribe({
+    this.priceInvoiceService.findAll().subscribe({
       next: (response: AppResponse) => {
         if (response.ok) {
-          this.customers = response.data.customers;
-          this.sales = response.data.sales;
+          this.priceInvoices = response.data;
 
-          this.dataSource = new MatTableDataSource<any>(this.sales);
+          this.dataSource = new MatTableDataSource<any>(this.priceInvoices);
           this.dataSource.paginator = this.paginator;
-          this.setFilters();
 
         }
       },
@@ -91,11 +81,10 @@ export class SalesComponent implements OnInit {
   openAddNew() {
 
     const data = {
-      title: 'اضافة فاتورة مبيعات',
+      title: 'اضافة فاتورة عرض اسعار',
       formMode: FormMode.CREATE,
-      customers: this.customers
     };
-    this.dialog.open(SaleFormDialogComponent, {
+    this.dialog.open( PriceInvoiceFormDialogComponent, {
       width: '650px',
       height: 'auto',
       data: data
@@ -103,44 +92,21 @@ export class SalesComponent implements OnInit {
   }
 
 
-  openEditDialog(order: any) {
+  openEditDialog(invoice: any) {
     const data = {
-      title: 'تعديل فاتورة مبيعات',
+      title: 'تعديل فاتورة عرض اسعار',
       formMode: FormMode.EDIT,
-      salesOrder: order,
+      priceInvoice: invoice,
       customers: this.customers
 
     };
-    const dialogRef = this.dialog.open(SaleFormDialogComponent, {
+    const dialogRef = this.dialog.open(PriceInvoiceFormDialogComponent, {
       width: '650px',
       height: 'auto',
       data: data
     });
   }
 
-
-
-
-  setFilters(){
-    this.filteredcustomer = this.customerFormControl.valueChanges.pipe(
-      startWith(''),
-      map(value => {
-        const name = typeof value === 'string' ? value : value?.name;
-        return name ? this._customerFilter(name as string) : this.customers.slice();
-      }),
-    );
-
-
-  }
-
-  customerDisplayFn(supplier: any): string {
-    return supplier && supplier.name ? supplier.name : '';
-  }
-
-  private _customerFilter(name: string): any[] {
-    const filterValue = name.toLowerCase();
-    return this.customers.filter(option => option.name.toLowerCase().includes(filterValue));
-  }
 
 
   deleteInvoice(invoiceId: number){
@@ -161,7 +127,7 @@ export class SalesComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
 
-        this.salesService.delete(invoiceId).subscribe(
+        this.priceInvoicesService.delete(invoiceId).subscribe(
           {
             next:(response: AppResponse)=>{
               if(response.ok){
@@ -172,8 +138,8 @@ export class SalesComponent implements OnInit {
                   showConfirmButton: false,
                   timer: 1500
                 });
-                this.sales = this.sales.filter(i=> i.id !== invoiceId);
-                this.dataSource = new MatTableDataSource<any>(this.sales);
+                this.priceInvoices = this.priceInvoices.filter(i=> i.id !== invoiceId);
+                this.dataSource = new MatTableDataSource<any>(this.priceInvoices);
                 this.dataSource.paginator = this.paginator;
               }
 
@@ -193,9 +159,6 @@ export class SalesComponent implements OnInit {
       );
 
   }
-
-
-
 
 
 }

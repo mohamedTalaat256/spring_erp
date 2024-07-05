@@ -1,0 +1,74 @@
+<div fxLayout="row">
+
+  <div class="w-100 mt-2 rounded-2">
+      <div fxLayout="row" class="my-3 p-1" fxLayoutAlign="space-between center">
+          <button mat-raised-button color="primary" (click)="openAddNew()">اضافة جديد</button>
+          <h1>فواتير عرض اسعار</h1>
+      </div>
+
+
+      <div class="w-100 mt-2 rounded-2 shadow-sm overflow-x-scroll">
+          <table mat-table [dataSource]="dataSource" style="direction: rtl;">
+              <ng-container matColumnDef="autoSerial">
+                  <th mat-header-cell *matHeaderCellDef>كود</th>
+                  <td mat-cell *matCellDef="let priceInvoice"> {{priceInvoice.id}} </td>
+              </ng-container>
+
+
+
+              <ng-container matColumnDef="orderDate">
+                  <th mat-header-cell *matHeaderCellDef> تاريخ الفاتورة</th>
+                  <td mat-cell *matCellDef="let priceInvoice"> {{priceInvoice.invoiceDate}} </td>
+              </ng-container>
+
+
+
+
+
+
+              <ng-container matColumnDef="totalCost">
+                  <th mat-header-cell *matHeaderCellDef> اجمالي الفاتورة</th>
+                  <td mat-cell *matCellDef="let priceInvoice"> {{priceInvoice.totalCost * 1}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="notes">
+                <th mat-header-cell *matHeaderCellDef>ملاحظات</th>
+                <td mat-cell *matCellDef="let priceInvoice"> {{priceInvoice.notes }} </td>
+            </ng-container>
+
+
+
+              <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td mat-cell *matCellDef="let priceInvoice">
+                      <button mat-icon-button [routerLink]="['/admin/priceInvoiceDetails', priceInvoice.id]">
+                          <mat-icon color="danger">remove_red_eye</mat-icon>
+                      </button>
+
+
+                      <button *ngIf="!priceInvoice.isApproved" mat-icon-button (click)="openEditDialog(priceInvoice)">
+                        <mat-icon color="primary">edit</mat-icon>
+                      </button>
+
+                      <button *ngIf="!priceInvoice.isApproved" mat-icon-button (click)="deleteInvoice( priceInvoice.id)">
+                        <mat-icon color="danger">delete</mat-icon>
+                      </button>
+
+                      <button mat-icon-button [routerLink]="['/admin/print-sales', priceInvoice.id]">
+                          <mat-icon color="warn">local_print_shop</mat-icon>
+                      </button>
+
+
+                  </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+
+          <mat-paginator [pageSizeOptions]="[10, 30, 100]" showFirstLastButtons
+              aria-label="Select page of periodic elements">
+          </mat-paginator>
+      </div>
+  </div>
+</div>

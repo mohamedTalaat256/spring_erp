@@ -31,6 +31,8 @@ import { PrintSupplierOrderComponent } from './components/print/print-supplier-o
 import { PrintSupplierOrderReturnComponent } from './components/print/print-supplier-order-return/print-supplier-order-return.component';
 import { SarfPermissionsComponent } from './components/sarf-permission/sarf-permissions/sarf-permissions.component';
 import { SarfPermissionDetailsComponent } from './components/sarf-permission/sarf-permission-details/sarf-permission-details.component';
+import { PriceInvoicesComponent } from './components/priceInvoice/price-invoices/price-invoices.component';
+import { PriceInvoiceDetailsComponent } from './components/priceInvoice/price-invoice-details/price-invoice-details.component';
 
 const routes: Routes = [
   {
@@ -84,6 +86,8 @@ const routes: Routes = [
 
 
 
+      {path:'priceInvoices', component: PriceInvoicesComponent},
+      {path:'priceInvoiceDetails/:id', component: PriceInvoiceDetailsComponent},
 
 
       /* customers */

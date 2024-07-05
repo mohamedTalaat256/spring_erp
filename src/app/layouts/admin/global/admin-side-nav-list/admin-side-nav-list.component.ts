@@ -156,7 +156,12 @@ const TREE_DATA: FoodNode[] = [
         name: 'مرتجع المبيعات العام',
         icon: 'menu',
         url: '/admin/salesReturn'
-      }
+      },
+      {
+        name: 'فاتورة عرض اسعار',
+        icon: 'menu',
+        url: '/admin/priceInvoices'
+      },
     ],
   }, {
     name: 'الضبط العام',
