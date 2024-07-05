@@ -18,8 +18,6 @@ export class SarfPermissionService {
     return this.http.get(baseURL + '/sarfPermissions/'+id);
   }
 
-
-
   public save(data: any, formMode: FormMode): Observable<any> {
     if(formMode === FormMode.CREATE){
       return this.http.post<any>(baseURL + '/sarfPermissions',  data);
@@ -30,6 +28,19 @@ export class SarfPermissionService {
 
   public delete(id: number): Observable<any> {
     return this.http.delete<any>(baseURL + '/sarfPermissions/'+id);
+  }
+
+  public approve(data: any): Observable<any> {
+    return this.http.post<any>(baseURL + '/sarfPermissions/approve',  data);
+  }
+
+  public saveItem(data: any): Observable<any> {
+    return this.http.post<any>(baseURL + '/sarfPermissions/saveItem',  data);
+  }
+
+
+  public deleteItem(id: number): Observable<any> {
+    return this.http.delete<any>(baseURL + '/sarfPermissions/deleteItem/'+id);
   }
 
 

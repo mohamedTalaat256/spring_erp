@@ -9,6 +9,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
  import { SalesService } from 'src/app/service/sale.service';
 import { SarfPermissionService } from 'src/app/service/sarfPermission.service';
+import { SarfPermissionsFormDialogComponent } from '../sarf-permissions-form-dialog/sarf-permissions-form-dialog.component';
 
 
 @Component({
@@ -36,6 +37,7 @@ export class SarfPermissionsComponent {
     'supplierName',
     'date',
     'totalCost',
+    'reciever',
     'actions'
   ];
   dataSource = new MatTableDataSource<any>(this.sarfPermissions);
@@ -89,31 +91,31 @@ export class SarfPermissionsComponent {
   openAddNew() {
 
     const data = {
-      title: 'اضافة فاتورة مبيعات',
+      title: 'اضافة اذن صرف ',
       formMode: FormMode.CREATE,
       customers: this.customers
     };
-/*     this.dialog.open(SaleFormDialogComponent, {
+    this.dialog.open(SarfPermissionsFormDialogComponent, {
       width: '650px',
       height: 'auto',
       data: data
-    }); */
+    });
   }
 
 
-  openEditDialog(order: any) {
+  openEditDialog(permission: any) {
     const data = {
-      title: 'تعديل الحساب',
+      title: 'تعديل اذن صرف',
       formMode: FormMode.EDIT,
-      sarfPermissionsOrder: order,
+      permission: permission,
       customers: this.customers
 
     };
-/*     const dialogRef = this.dialog.open(SaleFormDialogComponent, {
+    const dialogRef = this.dialog.open(SarfPermissionsFormDialogComponent, {
       width: '650px',
       height: 'auto',
       data: data
-    }); */
+    });
   }
 
 
@@ -141,7 +143,7 @@ export class SarfPermissionsComponent {
   }
 
 
-  deleteInvoice(invoiceId: number){
+  deletePermission(permissionId: number){
 
     Swal.fire({
       icon: 'warning',
@@ -159,7 +161,7 @@ export class SarfPermissionsComponent {
     }).then((result) => {
       if (result.isConfirmed) {
 
-        this.sarfPermissionService.delete(invoiceId).subscribe(
+        this.sarfPermissionService.delete(permissionId).subscribe(
           {
             next:(response: AppResponse)=>{
               if(response.ok){
@@ -170,7 +172,7 @@ export class SarfPermissionsComponent {
                   showConfirmButton: false,
                   timer: 1500
                 });
-                this.sarfPermissions = this.sarfPermissions.filter(i=> i.id !== invoiceId);
+                this.sarfPermissions = this.sarfPermissions.filter(i=> i.id !== permissionId);
                 this.dataSource = new MatTableDataSource<any>(this.sarfPermissions);
                 this.dataSource.paginator = this.paginator;
               }

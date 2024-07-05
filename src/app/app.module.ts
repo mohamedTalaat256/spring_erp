@@ -78,6 +78,9 @@ import { PrintSalesReturnComponent } from './layouts/admin/components/print/prin
 import { PrintSupplierOrderComponent } from './layouts/admin/components/print/print-supplier-order/print-supplier-order.component';
 import { PrintSupplierOrderReturnComponent } from './layouts/admin/components/print/print-supplier-order-return/print-supplier-order-return.component';
 import { SarfPermissionsComponent } from './layouts/admin/components/sarf-permission/sarf-permissions/sarf-permissions.component';
+import { SarfPermissionsFormDialogComponent } from './layouts/admin/components/sarf-permission/sarf-permissions-form-dialog/sarf-permissions-form-dialog.component';
+import { SarfPermissionDetailsComponent } from './layouts/admin/components/sarf-permission/sarf-permission-details/sarf-permission-details.component';
+import { SarfPermissionDetailsFormDialogComponent } from './layouts/admin/components/sarf-permission/sarf-permission-details-form-dialog/sarf-permission-details-form-dialog.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -147,7 +150,10 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     PrintSalesReturnComponent,
     PrintSupplierOrderComponent,
     PrintSupplierOrderReturnComponent,
-    SarfPermissionsComponent
+    SarfPermissionsComponent,
+    SarfPermissionsFormDialogComponent,
+    SarfPermissionDetailsComponent,
+    SarfPermissionDetailsFormDialogComponent
 
   ],
   imports: [

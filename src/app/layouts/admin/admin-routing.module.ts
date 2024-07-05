@@ -30,6 +30,7 @@ import { PrintSalesReturnComponent } from './components/print/print-sales-return
 import { PrintSupplierOrderComponent } from './components/print/print-supplier-order/print-supplier-order.component';
 import { PrintSupplierOrderReturnComponent } from './components/print/print-supplier-order-return/print-supplier-order-return.component';
 import { SarfPermissionsComponent } from './components/sarf-permission/sarf-permissions/sarf-permissions.component';
+import { SarfPermissionDetailsComponent } from './components/sarf-permission/sarf-permission-details/sarf-permission-details.component';
 
 const routes: Routes = [
   {
@@ -95,6 +96,7 @@ const routes: Routes = [
 
 
       {path:'sarfPermissions', component: SarfPermissionsComponent},
+      {path:'sarfPermissionDetails/:id', component: SarfPermissionDetailsComponent},
 
 
 
