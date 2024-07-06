@@ -85,6 +85,8 @@ import { PriceInvoiceDetailsComponent } from './layouts/admin/components/priceIn
 import { PriceInvoiceDetailsFormDialogComponent } from './layouts/admin/components/priceInvoice/price-invoice-details-form-dialog/price-invoice-details-form-dialog.component';
 import { PriceInvoiceFormDialogComponent } from './layouts/admin/components/priceInvoice/price-invoice-form-dialog/price-invoice-invoice-form-dialog.component';
 import { PriceInvoicesComponent } from './layouts/admin/components/priceInvoice/price-invoices/price-invoices.component';
+import { SupplierReportComponent } from './layouts/admin/components/reports/supplier-report/supplier-report.component';
+import { CustomerReportComponent } from './layouts/admin/components/reports/customer-report/customer-report.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -161,7 +163,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     PriceInvoiceDetailsComponent,
     PriceInvoiceDetailsFormDialogComponent,
     PriceInvoiceFormDialogComponent,
-    PriceInvoicesComponent
+    PriceInvoicesComponent,
+    SupplierReportComponent,
+    CustomerReportComponent
 
   ],
   imports: [

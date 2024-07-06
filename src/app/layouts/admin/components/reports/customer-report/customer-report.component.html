@@ -1,0 +1,111 @@
+<form  (ngSubmit)="onSubmitSearch()" [formGroup]="searchForm" fxLayout="row-reverse wrap" fxLayoutGap="15">
+
+  <mat-form-field fxFlex="16" fxFlex.sm="100" fxFlex.xs="100">
+    <mat-label>بحث بالعملاء</mat-label>
+
+    <input type="text" placeholder="العميل" matInput [formControl]="customerFormControl"
+      [matAutocomplete]="customerAutoComplete">
+
+    <mat-autocomplete #customerAutoComplete="matAutocomplete" [displayWith]="customerDisplayFn"
+    (optionSelected)="selectedCustomer($event)"
+    >
+      <ng-container *ngFor="let option of filteredSuppliers | async; trackBy: customerDisplayFn">
+        <mat-option [value]="option">{{ option.name }}</mat-option>
+      </ng-container>
+    </mat-autocomplete>
+
+
+  </mat-form-field>
+
+  <mat-form-field fxFlex="16" fxFlex.sm="100" fxFlex.xs="100">
+    <mat-label>بحث من تاريخ</mat-label>
+    <input matInput [matDatepicker]="fromDatePicker" formControlName="fromDate" placeholder="بحث من تاريخ">
+    <mat-datepicker-toggle matIconSuffix [for]="fromDatePicker">
+      <mat-icon matDatepickerToggleIcon>date_range</mat-icon>
+    </mat-datepicker-toggle>
+    <mat-datepicker #fromDatePicker></mat-datepicker>
+  </mat-form-field>
+
+
+  <mat-form-field fxFlex="16" fxFlex.sm="100" fxFlex.xs="100">
+    <mat-label>بحث الي تاريخ</mat-label>
+    <input matInput [matDatepicker]="toDatePicker" formControlName="toDate" placeholder="بحث الي تاريخ">
+    <mat-datepicker-toggle matIconSuffix [for]="toDatePicker">
+      <mat-icon matDatepickerToggleIcon>date_range</mat-icon>
+    </mat-datepicker-toggle>
+    <mat-datepicker #toDatePicker></mat-datepicker>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">
+    بحث
+    <mat-icon>search</mat-icon>
+  </button>
+</form>
+
+
+
+<div class=" m-2" id="print-section">
+
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <img src="/assets/images/logo.png" alt="logo" style="height: 80px;">
+    <span></span>
+    <div>
+      <h3 class="inv-title">كشف حساب عميل / {{customer.name }}</h3>
+     </div>
+  </div>
+
+  <table>
+    <tbody>
+      <tr>
+        <td>رصيد العميل حاليا	</td>
+
+        <td>
+          <span *ngIf="data.finalBalance > 0"> مدين ب ({{ data.finalBalance*1 }}) جنيه
+          </span>
+
+          <span *ngIf="data.finalBalance < 0"> دائن ب ({{ data.finalBalance* -1 }}) جنيه
+          </span>
+
+          <span *ngIf="data.finalBalance < 1 && data.finalBalance >-1">
+              متزن
+          </span>
+        </td>
+
+
+      </tr>
+
+      <tr>
+        <td>المبيعات</td>
+        <td>عدد ({{data.salesCounter}}) فاتورة مبيعات بقيمة ({{data.salesTotalMoney}}) جنيه
+        </td>
+      </tr>
+
+      <tr>
+        <td>مرتجع المبيعات	</td>
+        <td>عدد ({{data.salesReturnCounter}}) فاتورة مرتجع المبيعات	 بقيمة ({{data.salesReturnTotalMoney}}) جنيه
+        </td>
+      </tr>
+
+      <tr>
+        <td>اجمالي صرف النقدية للعميل	</td>
+        <td>({{data.transactionsExchange}}) جنيه
+        </td>
+      </tr>
+
+      <tr>
+        <td>اجمالي تحصيل النقدية من العميل	</td>
+        <td>({{data.transactionsCollect * -1}}) جنيه
+        </td>
+      </tr>
+
+
+
+    </tbody>
+  </table>
+
+</div>
+
+<button mat-raised-button color="primary" class="mx-2" [useExistingCss]="true"
+    [printStyle]="{div : {'direction': 'rtl'}}" [printTitle]="'asdasd'" printSectionId="print-section" ngxPrint>
+    طباعة
+    <mat-icon class="mx-2">cloud_download</mat-icon></button>

@@ -33,6 +33,8 @@ import { SarfPermissionsComponent } from './components/sarf-permission/sarf-perm
 import { SarfPermissionDetailsComponent } from './components/sarf-permission/sarf-permission-details/sarf-permission-details.component';
 import { PriceInvoicesComponent } from './components/priceInvoice/price-invoices/price-invoices.component';
 import { PriceInvoiceDetailsComponent } from './components/priceInvoice/price-invoice-details/price-invoice-details.component';
+import { SupplierReportComponent } from './components/reports/supplier-report/supplier-report.component';
+import { CustomerReportComponent } from './components/reports/customer-report/customer-report.component';
 
 const routes: Routes = [
   {
@@ -101,6 +103,10 @@ const routes: Routes = [
 
       {path:'sarfPermissions', component: SarfPermissionsComponent},
       {path:'sarfPermissionDetails/:id', component: SarfPermissionDetailsComponent},
+
+
+      {path:'supplierReport', component: SupplierReportComponent},
+      {path:'customerReport', component: CustomerReportComponent},
 
 
 

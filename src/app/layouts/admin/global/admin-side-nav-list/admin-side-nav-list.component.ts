@@ -163,7 +163,26 @@ const TREE_DATA: FoodNode[] = [
         url: '/admin/priceInvoices'
       },
     ],
-  }, {
+  },
+  {
+    name: 'تقارير',
+    icon: 'menu',
+    iconColor: 'success',
+    children: [
+      {
+        name: 'كشف حساب مورد',
+        icon: 'menu',
+        url: '/admin/supplierReport'
+      },
+
+      {
+        name: 'كشف حساب عميل',
+        icon: 'menu',
+        url: '/admin/customerReport'
+      },
+    ]
+  },
+  {
     name: 'الضبط العام',
     icon: 'settings',
     iconColor: 'primary',
