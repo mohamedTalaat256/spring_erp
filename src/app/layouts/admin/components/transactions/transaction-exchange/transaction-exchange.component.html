@@ -175,7 +175,14 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <mat-paginator [pageSizeOptions]="[10, 30, 100]" showFirstLastButtons aria-label="Select page of periodic elements">
+    <mat-paginator
+    [pageSizeOptions]="[10, 30, 100]"
+    [length]="totalElements"
+    [pageIndex]="pageIndex"
+    [pageSize]="pageSize"
+    (page)="handlePageEvent($event)"
+    showFirstLastButtons
+        aria-label="Select page of periodic elements">
     </mat-paginator>
   </div>
 </form>

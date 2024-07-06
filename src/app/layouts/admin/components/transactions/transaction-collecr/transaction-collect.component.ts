@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { PageEvent } from '@angular/material/paginator';
 import { MatSelectChange } from '@angular/material/select';
 import { MatTableDataSource } from '@angular/material/table';
 import { MovType, movTypes } from 'src/app/model/MovType';
@@ -14,6 +15,9 @@ import Swal from 'sweetalert2';
   styleUrls: ['./transaction-collect.component.scss']
 })
 export class TransactionCollectComponent implements OnInit {
+  pageIndex:number = 0;
+  pageSize: number  = 10;
+  totalElements: number  =0;
 
   collectTransactionForm: FormGroup;
   availableBalance: number=0;
@@ -46,16 +50,17 @@ export class TransactionCollectComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.findAll();
+    this.findAll(this.pageIndex, this.pageSize);
   }
 
-  findAll(){
+  findAll(pageIndex,pageSize){
 
-    this.transactionService.collectFindAll().subscribe({
+    this.transactionService.collectFindAll(pageIndex,pageSize).subscribe({
       next: (response: AppResponse) => {
         if (response.ok) {
           this.accounts = response.data.accounts;
-          this.transactions = response.data.treasuresTransactions;
+          this.transactions = response.data.treasuresTransactions.content;
+          this.totalElements = response.data.treasuresTransactions.totalElements;
           this.availableBalance = response.data.availableBalance;
           this.dataSource = new MatTableDataSource<any>(this.transactions);
         }
@@ -107,5 +112,12 @@ export class TransactionCollectComponent implements OnInit {
     });
 
   }
+  handlePageEvent(e: PageEvent) {
+    this.pageSize = e.pageSize;
+    this.pageIndex = e.pageIndex;
+    this.totalElements = e.length;
 
+
+    this.findAll(this.pageIndex, this.pageSize);
+  }
 }
