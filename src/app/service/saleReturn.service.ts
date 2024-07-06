@@ -10,8 +10,8 @@ export class SalesReturnService {
 
 
 
-  findAll(): Observable<any> {
-    return this.http.get(baseURL + '/salesInvoiceReturn');
+  findAll(pageIndex, pageSize): Observable<any> {
+    return this.http.get(baseURL + '/salesInvoiceReturn?pageIndex='+pageIndex+'&pageSize='+pageSize);
   }
 
   findById(id : number):Observable<any> {

@@ -10,8 +10,8 @@ export class SalesService {
 
 
 
-  findAll(): Observable<any> {
-    return this.http.get(baseURL + '/salesInvoice');
+  findAll(pageIndex, pageSize): Observable<any> {
+    return this.http.get(baseURL + '/salesInvoice?pageIndex='+pageIndex+'&pageSize='+pageSize);
   }
 
   findById(id : number):Observable<any> {

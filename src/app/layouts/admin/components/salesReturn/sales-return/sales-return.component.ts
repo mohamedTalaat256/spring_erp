@@ -6,7 +6,7 @@ import { FormMode } from 'src/app/constants/constants';
 import Swal from 'sweetalert2';
 import { AppResponse } from 'src/app/model/app_response.model';
 import { Account } from 'src/app/model/accounty';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
  import { SalesService } from 'src/app/service/sale.service';
 import { SaleReturnFormDialogComponent } from '../sale-return-form-dialog/sale-return-form-dialog.component';
@@ -18,6 +18,10 @@ import { SalesReturnService } from 'src/app/service/saleReturn.service';
   styleUrls: ['./sales-return.component.scss']
 })
 export class SalesReturnComponent {
+  pageIndex:number = 0;
+  pageSize: number  = 10;
+  totalElements: number  =0;
+
   customerFormControl = new FormControl<string | any>('');
   storeFormControl = new FormControl<string | any>('');
 
@@ -47,7 +51,7 @@ export class SalesReturnComponent {
     private salesReturnService: SalesReturnService,
     private fb: FormBuilder
 
-    ) { 
+    ) {
       this.searchForm = this.fb.group({
         barCode: [null],
         store: [null],
@@ -59,16 +63,17 @@ export class SalesReturnComponent {
 
 
 
-  ngOnInit(): void {
-    this.findAll();
-  }
+    ngOnInit(): void {
+      this.findAll(this.pageIndex, this.pageSize);
+    }
 
-  findAll() {
-    this.salesReturnService.findAll().subscribe({
+    findAll(pageIndex, pageSize) {
+    this.salesReturnService.findAll(pageIndex, pageSize).subscribe({
       next: (response: AppResponse) => {
         if (response.ok) {
           this.customers = response.data.customers;
-          this.salesReturn = response.data.salesReturn;
+          this.salesReturn = response.data.salesReturn.content;
+          this.totalElements = response.data.salesReturn.totalElements;
 
           this.dataSource = new MatTableDataSource<any>(this.salesReturn);
           this.dataSource.paginator = this.paginator;
@@ -101,7 +106,7 @@ export class SalesReturnComponent {
       width: '650px',
       height: 'auto',
       data: data
-    }); 
+    });
   }
 
 
@@ -196,6 +201,12 @@ export class SalesReturnComponent {
 
   }
 
+  handlePageEvent(e: PageEvent) {
+    this.pageSize = e.pageSize;
+    this.pageIndex = e.pageIndex;
+    this.totalElements = e.length;
 
 
+    this.findAll(this.pageIndex, this.pageSize);
+  }
 }

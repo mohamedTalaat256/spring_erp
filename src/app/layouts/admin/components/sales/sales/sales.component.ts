@@ -5,8 +5,7 @@ import { Observable, map, startWith, take } from 'rxjs';
 import { FormMode } from 'src/app/constants/constants';
 import Swal from 'sweetalert2';
 import { AppResponse } from 'src/app/model/app_response.model';
-import { Account } from 'src/app/model/accounty';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { SaleFormDialogComponent } from '../sale-form-dialog/sale-form-dialog.component';
 import { SalesService } from 'src/app/service/sale.service';
@@ -17,6 +16,11 @@ import { SalesService } from 'src/app/service/sale.service';
   styleUrls: ['./sales.component.scss']
 })
 export class SalesComponent implements OnInit {
+
+  pageIndex:number = 0;
+  pageSize: number  = 10;
+  totalElements: number  =0;
+
   customerFormControl = new FormControl<string | any>('');
   storeFormControl = new FormControl<string | any>('');
 
@@ -58,15 +62,16 @@ export class SalesComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.findAll();
+    this.findAll(this.pageIndex, this.pageSize);
   }
 
-  findAll() {
-    this.salesService.findAll().subscribe({
+  findAll(pageIndex, pageSize) {
+    this.salesService.findAll(pageIndex, pageSize).subscribe({
       next: (response: AppResponse) => {
         if (response.ok) {
           this.customers = response.data.customers;
-          this.sales = response.data.sales;
+          this.sales = response.data.sales.content;
+          this.totalElements = response.data.sales.totalElements;
 
           this.dataSource = new MatTableDataSource<any>(this.sales);
           this.dataSource.paginator = this.paginator;
@@ -87,7 +92,6 @@ export class SalesComponent implements OnInit {
 
   onSubmitSearch(){}
 
-
   openAddNew() {
 
     const data = {
@@ -101,7 +105,6 @@ export class SalesComponent implements OnInit {
       data: data
     });
   }
-
 
   openEditDialog(order: any) {
     const data = {
@@ -117,9 +120,6 @@ export class SalesComponent implements OnInit {
       data: data
     });
   }
-
-
-
 
   setFilters(){
     this.filteredcustomer = this.customerFormControl.valueChanges.pipe(
@@ -141,7 +141,6 @@ export class SalesComponent implements OnInit {
     const filterValue = name.toLowerCase();
     return this.customers.filter(option => option.name.toLowerCase().includes(filterValue));
   }
-
 
   deleteInvoice(invoiceId: number){
 
@@ -194,7 +193,14 @@ export class SalesComponent implements OnInit {
 
   }
 
+  handlePageEvent(e: PageEvent) {
+    this.pageSize = e.pageSize;
+    this.pageIndex = e.pageIndex;
+    this.totalElements = e.length;
 
+
+    this.findAll(this.pageIndex, this.pageSize);
+  }
 
 
 

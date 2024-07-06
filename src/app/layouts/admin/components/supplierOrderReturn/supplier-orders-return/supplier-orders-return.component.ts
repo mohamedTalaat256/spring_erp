@@ -6,7 +6,7 @@ import { FormMode } from 'src/app/constants/constants';
 import Swal from 'sweetalert2';
 import { AppResponse } from 'src/app/model/app_response.model';
 import { Account } from 'src/app/model/accounty';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { SupplierOrdersReturnDetailsFormDialogComponent } from '../supplier-orders-return-details-form-dialog/supplier-orders-return-details-form-dialog.component';
 import { SupplierOrderReturnService } from 'src/app/service/supplierOrderReturn.service';
@@ -20,6 +20,9 @@ import { SupplierOrder } from 'src/app/model/supplierOrder';
   styleUrls: ['./supplier-orders-return.component.scss']
 })
 export class SupplierOrdersReturnComponent {
+  pageIndex:number = 0;
+  pageSize: number  = 10;
+  totalElements: number  =0;
 
   supplierFormControl = new FormControl<string | any>('');
   storeFormControl = new FormControl<string | any>('');
@@ -63,19 +66,18 @@ export class SupplierOrdersReturnComponent {
 
 
 
-  ngOnInit(): void {
-    this.findAll();
+    ngOnInit(): void {
+      this.findAll(this.pageIndex, this.pageSize);
+    }
 
-
-
-  }
-
-  findAll() {
-    this.supplierOrderReturnService.findAll().subscribe({
+    findAll(pageIndex, pageSize) {
+    this.supplierOrderReturnService.findAll(pageIndex, pageSize).subscribe({
       next: (response: AppResponse) => {
         if (response.ok) {
           this.suppliers = response.data.suppliers;
-          this.supplierOrdersReturn = response.data.suppliersWithOrdersReturns;
+          this.supplierOrdersReturn = response.data.suppliersWithOrdersReturns.content;
+          this.totalElements = response.data.suppliersWithOrdersReturns.totalElements;
+
           this.stores = response.data.stores;
 
           this.dataSource = new MatTableDataSource<SupplierOrderReturn>(this.supplierOrdersReturn);
@@ -242,6 +244,14 @@ export class SupplierOrdersReturnComponent {
         this.dataSource = new MatTableDataSource<Account>(this.accounts);
       }
     }); */
+  }
+  handlePageEvent(e: PageEvent) {
+    this.pageSize = e.pageSize;
+    this.pageIndex = e.pageIndex;
+    this.totalElements = e.length;
+
+
+    this.findAll(this.pageIndex, this.pageSize);
   }
 
 }

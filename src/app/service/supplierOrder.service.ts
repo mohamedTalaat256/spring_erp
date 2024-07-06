@@ -10,8 +10,8 @@ export class SupplierOrderService {
 
 
 
-  findAll(): Observable<any> {
-    return this.http.get(baseURL + '/supplierOrder');
+  findAll(pageIndex, pageSize): Observable<any> {
+    return this.http.get(baseURL + '/supplierOrder?pageIndex='+pageIndex+'&pageSize='+pageSize);
   }
 
   findById(id : number):Observable<any> {

@@ -10,8 +10,8 @@ export class SupplierOrderReturnService {
 
 
 
-  findAll(): Observable<any> {
-    return this.http.get(baseURL + '/supplierOrderReturn');
+  findAll(pageIndex, pageSize): Observable<any> {
+    return this.http.get(baseURL + '/supplierOrderReturn?pageIndex='+pageIndex+'&pageSize='+pageSize);
   }
 
   findById(id : number):Observable<any> {

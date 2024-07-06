@@ -5,7 +5,7 @@ import { Observable, map, startWith, take } from 'rxjs';
 import { FormMode } from 'src/app/constants/constants';
 import Swal from 'sweetalert2';
 import { AppResponse } from 'src/app/model/app_response.model';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { SupplierOrder } from 'src/app/model/supplierOrder';
 import { SupplierOrderService } from 'src/app/service/supplierOrder.service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
@@ -17,7 +17,9 @@ import { SuppliersOrderFormDialogComponent } from '../suppliers-order-form-dialo
   styleUrls: ['./suppliers-orders.component.scss']
 })
 export class SuppliersOrdersComponent {
-
+  pageIndex:number = 0;
+  pageSize: number  = 10;
+  totalElements: number  =0;
   supplierFormControl = new FormControl<string | any>('');
 
 
@@ -61,16 +63,18 @@ export class SuppliersOrdersComponent {
 
     }
 
-  ngOnInit(): void {
-    this.findAll();
-  }
+    ngOnInit(): void {
+      this.findAll(this.pageIndex, this.pageSize);
+    }
 
-  findAll() {
-    this.supplierOrderService.findAll().subscribe({
+    findAll(pageIndex, pageSize) {
+    this.supplierOrderService.findAll(pageIndex, pageSize).subscribe({
       next: (response: AppResponse) => {
         if (response.ok) {
           this.suppliers = response.data.suppliers;
-          this.supplierOrders = response.data.suppliersWithOrders;
+          this.supplierOrders = response.data.suppliersWithOrders.content;
+          this.totalElements = response.data.suppliersWithOrders.totalElements;
+
           this.stores = response.data.stores;
 
           this.dataSource = new MatTableDataSource<SupplierOrder>(this.supplierOrders);
@@ -125,15 +129,6 @@ export class SuppliersOrdersComponent {
       height: 'auto',
       data: data
     });
-
-
-   /*
-    dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
-      if (result) {
-        this.accounts.push(result);
-        this.dataSource = new MatTableDataSource<Account>(this.accounts);
-      }
-    }); */
   }
 
 
@@ -208,6 +203,15 @@ export class SuppliersOrdersComponent {
        }}
       );
 
+  }
+
+  handlePageEvent(e: PageEvent) {
+    this.pageSize = e.pageSize;
+    this.pageIndex = e.pageIndex;
+    this.totalElements = e.length;
+
+
+    this.findAll(this.pageIndex, this.pageSize);
   }
 
 }
