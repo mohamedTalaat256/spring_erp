@@ -3,7 +3,7 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="exchangeTransactionForm" fxLayout="row-reverse wrap" fxLayoutGap="15"
   class="p-5">
 
-  <mat-form-field fxFlex="32" fxFlex.sm="100" fxFlex.xs="100">
+  <mat-form-field fxFlex="16" fxFlex.sm="100" fxFlex.xs="100">
     <mat-label>تاريخ الحركة</mat-label>
     <input matInput [matDatepicker]="datePicker" formControlName="moveDate">
     <mat-datepicker-toggle matIconSuffix [for]="datePicker">
@@ -16,7 +16,7 @@
   </mat-form-field>
 
 
-  <mat-form-field fxFlex="32" fxFlex.sm="100" fxFlex.xs="100">
+  <mat-form-field fxFlex="16" fxFlex.sm="100" fxFlex.xs="100">
     <mat-label> الحسابات المالية</mat-label>
     <mat-select formControlName="account" (selectionChange)="onAccountChange($event)">
 
@@ -27,7 +27,16 @@
     </mat-error>
   </mat-form-field>
 
-  <div fxFlex="32" fxFlex.sm="100" fxFlex.xs="100">
+  <mat-form-field fxFlex="16" fxFlex.sm="100" fxFlex.xs="100">
+    <mat-label>قيمة المبلغ المحصل </mat-label>
+    <input matInput formControlName="money" placeholder="قيمة المبلغ المحصل " type="number">
+    <mat-error>
+      <app-validation-msg [control]="exchangeTransactionForm.get('money')"
+        fieldName="قيمة المبلغ المحصل "></app-validation-msg>
+    </mat-error>
+  </mat-form-field>
+
+  <div fxFlex="10" fxFlex.sm="100" fxFlex.xs="100">
 
     <span *ngIf="currentBalance > 0"> مدين ب ({{ currentBalance*1 }}) جنيه
     </span>
@@ -38,6 +47,12 @@
     <span *ngIf="currentBalance < 1 && currentBalance >-1">
       متزن
     </span>
+
+  </div>
+
+  <div fxFlex="10" fxFlex.sm="100" fxFlex.xs="100">
+    <p>الرصيد المتاح بالخزنة</p>
+    {{availableBalance}}
 
   </div>
 
@@ -53,22 +68,11 @@
   </mat-form-field>
 
 
-  <mat-form-field fxFlex="32" fxFlex.sm="100" fxFlex.xs="100">
-    <mat-label>قيمة المبلغ المحصل </mat-label>
-    <input matInput formControlName="money" placeholder="قيمة المبلغ المحصل " type="number">
-    <mat-error>
-      <app-validation-msg [control]="exchangeTransactionForm.get('money')"
-        fieldName="قيمة المبلغ المحصل "></app-validation-msg>
-    </mat-error>
-  </mat-form-field>
-  <div fxFlex="32" fxFlex.sm="100" fxFlex.xs="100">
-    <p>الرصيد المتاح بالخزنة</p>
-    {{availableBalance}}
-
-  </div>
 
 
-  <mat-form-field fxFlex="100">
+
+
+  <mat-form-field fxFlex="65">
     <mat-label>البيان</mat-label>
     <textarea matInput formControlName="byan" placeholder="البيان"></textarea>
 
@@ -78,10 +82,62 @@
   </mat-form-field>
 
   <mat-dialog-actions fxLayoutAlign="center">
-    <button mat-button mat-dialog-close color="danger">الغاء</button>
     <button [disabled]="!exchangeTransactionForm.valid" mat-raised-button color="primary" type="submit"> حفظ</button>
   </mat-dialog-actions>
+  </form>
 
+
+  <form  (ngSubmit)="onSubmitSearch()" [formGroup]="searchForm" fxLayout="row-reverse wrap" fxLayoutGap="15" class="mt-3">
+    <mat-form-field fxFlex="16" fxFlex.sm="100" fxFlex.xs="100">
+      <mat-label>رقو الايصال</mat-label>
+      <input matInput type="number" formControlName="id" placeholder="رقم الايصال">
+    </mat-form-field>
+
+
+
+    <mat-form-field fxFlex="16" fxFlex.sm="100" fxFlex.xs="100">
+      <mat-label> الحسابات المالية</mat-label>
+      <mat-select formControlName="account" (selectionChange)="onAccountChange($event)">
+
+        <mat-option *ngFor="let account of accounts" [value]="account.id"> {{account.name}}</mat-option>
+      </mat-select>
+
+    </mat-form-field>
+
+    <mat-form-field fxFlex="20" fxFlex.sm="100" fxFlex.xs="100">
+      <mat-label> نوع الحركة</mat-label>
+      <mat-select formControlName="movType">
+
+        <mat-option *ngFor="let movType of movTypes" [value]="movType.id"> {{movType.name}}</mat-option>
+      </mat-select>
+
+    </mat-form-field>
+
+
+    <mat-form-field fxFlex="16" fxFlex.sm="100" fxFlex.xs="100">
+      <mat-label>بحث من تاريخ</mat-label>
+      <input matInput [matDatepicker]="fromDatePicker" formControlName="fromDate" placeholder="بحث من تاريخ">
+      <mat-datepicker-toggle matIconSuffix [for]="fromDatePicker">
+        <mat-icon matDatepickerToggleIcon>date_range</mat-icon>
+      </mat-datepicker-toggle>
+      <mat-datepicker #fromDatePicker></mat-datepicker>
+    </mat-form-field>
+
+
+    <mat-form-field fxFlex="16" fxFlex.sm="100" fxFlex.xs="100">
+      <mat-label>بحث الي تاريخ</mat-label>
+      <input matInput [matDatepicker]="toDatePicker" formControlName="toDate" placeholder="بحث الي تاريخ">
+      <mat-datepicker-toggle matIconSuffix [for]="toDatePicker">
+        <mat-icon matDatepickerToggleIcon>date_range</mat-icon>
+      </mat-datepicker-toggle>
+      <mat-datepicker #toDatePicker></mat-datepicker>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">
+      بحث
+      <mat-icon>search</mat-icon>
+    </button>
+  </form>
   <div class="w-100 mt-2 rounded-2 shadow-sm overflow-x-scroll">
 
     <table mat-table [dataSource]="dataSource" style="direction: rtl;">
@@ -185,5 +241,3 @@
         aria-label="Select page of periodic elements">
     </mat-paginator>
   </div>
-</form>
-

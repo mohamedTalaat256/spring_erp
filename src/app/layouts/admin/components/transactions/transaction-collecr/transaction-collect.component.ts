@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { PageEvent } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSelectChange } from '@angular/material/select';
 import { MatTableDataSource } from '@angular/material/table';
 import { MovType, movTypes } from 'src/app/model/MovType';
@@ -29,11 +29,14 @@ export class TransactionCollectComponent implements OnInit {
   currentBalance: number= 0;
 
   transactions: any[]=[];
-
+  searchForm: FormGroup;
 
   displayedColumns: string[] = ['id', 'treasure', 'money', 'moveType', 'account', 'bayan', 'by'];
   dataSource = new MatTableDataSource<any>(this.transactions);
 
+
+  createData: any;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private fb: FormBuilder
     ,private transactionService: TransactionService
@@ -45,6 +48,14 @@ export class TransactionCollectComponent implements OnInit {
       movType: [null, [Validators.required]],
       money:   [null, [Validators.required]],
       byan:   [null, [Validators.required]],
+    });
+
+    this.searchForm = this.fb.group({
+      id: [null],
+      account: [null],
+      movType: [null],
+      fromDate: [null],
+      toDate: [null]
     });
 
   }
@@ -76,6 +87,30 @@ export class TransactionCollectComponent implements OnInit {
     });
   }
 
+
+  onSubmitSearch(){
+    console.log(this.searchForm.value);
+    this.transactionService.search(this.searchForm.value, 1).subscribe({
+      next: (response: AppResponse) => {
+        if (response.ok) {
+
+          this.transactions = response.data;
+          this.totalElements = this.transactions.length;
+
+          this.dataSource = new MatTableDataSource<any>(this.transactions);
+          this.dataSource.paginator = this.paginator;
+        }
+      },
+      error: (error: Error) => {
+        Swal.fire({
+          icon: "error",
+          title: error.message,
+          showConfirmButton: true
+        });
+      }
+
+    });
+  }
 
 
   onAccountChange(event: MatSelectChange){
