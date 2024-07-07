@@ -9,6 +9,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { SaleFormDialogComponent } from '../sale-form-dialog/sale-form-dialog.component';
 import { SalesService } from 'src/app/service/sale.service';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-sales',
@@ -51,9 +52,8 @@ export class SalesComponent implements OnInit {
     private fb: FormBuilder
     ) {
       this.searchForm = this.fb.group({
-        barCode: [null],
-        store: [null],
-        supplier: [null],
+        id: [null],
+        customer: [null],
         fromDate: [null],
         toDate: [null]
       });
@@ -90,7 +90,26 @@ export class SalesComponent implements OnInit {
     });
   }
 
-  onSubmitSearch(){}
+  onSubmitSearch(){
+    this.salesService.search(this.searchForm.value).subscribe({
+      next: (response: AppResponse) => {
+        if (response.ok) {
+          this.sales=response.data;
+          this.totalElements = response.data.length;
+          this.dataSource = new MatTableDataSource<any>(this.sales);
+          this.dataSource.paginator = this.paginator;
+        }
+      },
+      error: (error: Error) => {
+        Swal.fire({
+          icon: "error",
+          title: error.message,
+          showConfirmButton: true
+        });
+      }
+
+    });
+  }
 
   openAddNew() {
 
@@ -202,6 +221,12 @@ export class SalesComponent implements OnInit {
     this.findAll(this.pageIndex, this.pageSize);
   }
 
+  selectedCustomer(event: MatAutocompleteSelectedEvent) {
+
+    this.searchForm.patchValue({
+      customer: event.option.value.id
+    }, { onlySelf: true, emitEvent: true });
+  }
 
 
 }

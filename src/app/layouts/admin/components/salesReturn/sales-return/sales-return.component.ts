@@ -11,6 +11,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
  import { SalesService } from 'src/app/service/sale.service';
 import { SaleReturnFormDialogComponent } from '../sale-return-form-dialog/sale-return-form-dialog.component';
 import { SalesReturnService } from 'src/app/service/saleReturn.service';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-sales-return',
@@ -53,9 +54,8 @@ export class SalesReturnComponent {
 
     ) {
       this.searchForm = this.fb.group({
-        barCode: [null],
-        store: [null],
-        supplier: [null],
+        id: [null],
+        customer: [null],
         fromDate: [null],
         toDate: [null]
       });
@@ -68,7 +68,7 @@ export class SalesReturnComponent {
     }
 
     findAll(pageIndex, pageSize) {
-    this.salesReturnService.findAll(pageIndex, pageSize).subscribe({
+      this.salesReturnService.findAll(pageIndex, pageSize).subscribe({
       next: (response: AppResponse) => {
         if (response.ok) {
           this.customers = response.data.customers;
@@ -92,7 +92,26 @@ export class SalesReturnComponent {
     });
   }
 
-  onSubmitSearch(){}
+  onSubmitSearch(){
+    this.salesReturnService.search(this.searchForm.value).subscribe({
+      next: (response: AppResponse) => {
+        if (response.ok) {
+          this.salesReturn=response.data;
+          this.totalElements = response.data.length;
+          this.dataSource = new MatTableDataSource<any>(this.salesReturn);
+          this.dataSource.paginator = this.paginator;
+        }
+      },
+      error: (error: Error) => {
+        Swal.fire({
+          icon: "error",
+          title: error.message,
+          showConfirmButton: true
+        });
+      }
+
+    });
+  }
 
 
   openAddNew() {
@@ -208,5 +227,14 @@ export class SalesReturnComponent {
 
 
     this.findAll(this.pageIndex, this.pageSize);
+  }
+
+  selectedCustomer(event: MatAutocompleteSelectedEvent) {
+
+    this.searchForm.patchValue({
+      customer: event.option.value.id
+    }, { onlySelf: true, emitEvent: true });
+
+
   }
 }

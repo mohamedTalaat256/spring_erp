@@ -9,15 +9,17 @@
     <form  (ngSubmit)="onSubmitSearch()" [formGroup]="searchForm" fxLayout="row-reverse wrap" fxLayoutGap="15">
       <mat-form-field fxFlex="16" fxFlex.sm="100" fxFlex.xs="100">
         <mat-label>الكود</mat-label>
-        <input matInput formControlName="barCode" placeholder="الكود">
+        <input matInput type="number" formControlName="id" placeholder="الكود">
       </mat-form-field>
+
       <mat-form-field fxFlex="16" fxFlex.sm="100" fxFlex.xs="100">
         <mat-label>بحث بالموردين</mat-label>
 
         <input type="text" placeholder="المورد" matInput [formControl]="supplierFormControl"
           [matAutocomplete]="supplierAutoComplete">
 
-        <mat-autocomplete #supplierAutoComplete="matAutocomplete" [displayWith]="supplierDisplayFn">
+        <mat-autocomplete #supplierAutoComplete="matAutocomplete" [displayWith]="supplierDisplayFn"
+        (optionSelected)="selectedSupplier($event)">
           <ng-container *ngFor="let option of filteredSuppliers | async; trackBy: supplierDisplayFn">
             <mat-option [value]="option">{{ option.name }}</mat-option>
           </ng-container>

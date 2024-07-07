@@ -132,8 +132,8 @@ const TREE_DATA: FoodNode[] = [
   },
   {
     name: 'اذن صرف',
-    icon: 'shopping_cart',
-    iconColor: 'success',
+    icon: 'insert_drive_file',
+    iconColor: 'warn',
     children: [
       {
         name: 'اذن صرف',
@@ -166,8 +166,8 @@ const TREE_DATA: FoodNode[] = [
   },
   {
     name: 'تقارير',
-    icon: 'menu',
-    iconColor: 'success',
+    icon: 'list',
+    iconColor: 'danger',
     children: [
       {
         name: 'كشف حساب مورد',

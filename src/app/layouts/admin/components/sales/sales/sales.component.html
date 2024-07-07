@@ -9,7 +9,7 @@
       <form  (ngSubmit)="onSubmitSearch()" [formGroup]="searchForm" fxLayout="row-reverse wrap" fxLayoutGap="15">
         <mat-form-field fxFlex="16" fxFlex.sm="100" fxFlex.xs="100">
           <mat-label>الكود</mat-label>
-          <input matInput formControlName="barCode" placeholder="الكود">
+          <input matInput type="number" formControlName="id" placeholder="الكود">
         </mat-form-field>
         <mat-form-field fxFlex="16" fxFlex.sm="100" fxFlex.xs="100">
           <mat-label>بحث بالعملاء</mat-label>
@@ -17,7 +17,9 @@
           <input type="text" placeholder="العميل" matInput [formControl]="customerFormControl"
             [matAutocomplete]="supplierAutoComplete">
 
-          <mat-autocomplete #supplierAutoComplete="matAutocomplete" [displayWith]="customerDisplayFn">
+          <mat-autocomplete #supplierAutoComplete="matAutocomplete" [displayWith]="customerDisplayFn"
+          (optionSelected)="selectedCustomer($event)"
+          >
             <ng-container *ngFor="let option of filteredcustomer | async; trackBy: customerDisplayFn">
               <mat-option [value]="option">{{ option.name }}</mat-option>
             </ng-container>

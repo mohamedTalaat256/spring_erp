@@ -13,6 +13,7 @@ import { SupplierOrderReturnService } from 'src/app/service/supplierOrderReturn.
 import { SupplierOrdersReturnFormDialogComponent } from '../supplier-orders-return-form-dialog/supplier-orders-return-form-dialog.component';
 import { SupplierOrderReturn } from 'src/app/model/supplierOrderReturn';
 import { SupplierOrder } from 'src/app/model/supplierOrder';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-supplier-orders-return',
@@ -57,8 +58,9 @@ export class SupplierOrdersReturnComponent {
 
     ) {
       this.searchForm = this.fb.group({
-        barCode: [null],
+        id: [null],
         supplier: [null],
+        store: [null],
         fromDate: [null],
         toDate: [null]
       });
@@ -98,7 +100,24 @@ export class SupplierOrdersReturnComponent {
   }
 
   onSubmit(){}  onSubmitSearch(){
-    console.log(this.searchForm.value);
+    this.supplierOrderReturnService.search(this.searchForm.value).subscribe({
+      next: (response: AppResponse) => {
+        if (response.ok) {
+          this.supplierOrdersReturn = response.data;
+          this.totalElements = response.data.length;
+          this.dataSource = new MatTableDataSource<any>(this.supplierOrdersReturn);
+          this.dataSource.paginator = this.paginator;
+        }
+      },
+      error: (error: Error) => {
+        Swal.fire({
+          icon: "error",
+          title: error.message,
+          showConfirmButton: true
+        });
+      }
+
+    });
   }
 
 
@@ -254,4 +273,10 @@ export class SupplierOrdersReturnComponent {
     this.findAll(this.pageIndex, this.pageSize);
   }
 
+  selectedSupplier(event: MatAutocompleteSelectedEvent) {
+
+    this.searchForm.patchValue({
+      supplier: event.option.value.id
+    }, { onlySelf: true, emitEvent: true });
+  }
 }

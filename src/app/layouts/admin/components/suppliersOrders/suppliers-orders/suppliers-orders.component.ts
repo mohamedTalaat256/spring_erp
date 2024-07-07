@@ -10,6 +10,7 @@ import { SupplierOrder } from 'src/app/model/supplierOrder';
 import { SupplierOrderService } from 'src/app/service/supplierOrder.service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { SuppliersOrderFormDialogComponent } from '../suppliers-order-form-dialog/suppliers-order-form-dialog.component';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-suppliers-orders',
@@ -55,7 +56,8 @@ export class SuppliersOrdersComponent {
     ) {
 
       this.searchForm = this.fb.group({
-        barCode: [null],
+        id: [null],
+        store: [null],
         supplier: [null],
         fromDate: [null],
         toDate: [null]
@@ -96,6 +98,25 @@ export class SuppliersOrdersComponent {
 
   onSubmitSearch(){
     console.log(this.searchForm.value);
+
+    this.supplierOrderService.search(this.searchForm.value).subscribe({
+      next: (response: AppResponse) => {
+        if (response.ok) {
+          this.supplierOrders = response.data;
+          this.totalElements = response.data.length;
+          this.dataSource = new MatTableDataSource<any>(this.supplierOrders);
+          this.dataSource.paginator = this.paginator;
+        }
+      },
+      error: (error: Error) => {
+        Swal.fire({
+          icon: "error",
+          title: error.message,
+          showConfirmButton: true
+        });
+      }
+
+    });
   }
 
 
@@ -214,4 +235,10 @@ export class SuppliersOrdersComponent {
     this.findAll(this.pageIndex, this.pageSize);
   }
 
+  selectedSupplier(event: MatAutocompleteSelectedEvent) {
+
+    this.searchForm.patchValue({
+      supplier: event.option.value.id
+    }, { onlySelf: true, emitEvent: true });
+  }
 }
