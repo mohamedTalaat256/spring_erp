@@ -146,7 +146,6 @@ export class PriceInvoiceDetailsFormDialogComponent implements OnInit {
   }
 
   selectedInvUom(event) {
-    console.log(event);
 
     this.setSelectedItem(this.selectedItem.id);
     this.selectedUom = this.newInvItemForm.value.uom;

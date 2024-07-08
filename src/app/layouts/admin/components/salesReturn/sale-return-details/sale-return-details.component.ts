@@ -161,7 +161,7 @@ export class SaleReturnDetailsComponent {
 
     dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
 
-      if (result !== null) {
+      if (result &&result !== null) {
         let index = this.salesInvoicesReturnDetails.find(i => i.item.invItemCard.id === result.invItemId);
         if (index) {
           Swal.fire({

@@ -154,7 +154,6 @@ export class SupplierOrdersReturnDetailsFormDialogComponent {
   }
 
   selectedInvUom(event) {
-    console.log(event);
 
     this.setSelectedItem(this.selectedItem.id);
     this.selectedUom = this.newInvItemForm.value.uom;
@@ -170,19 +169,10 @@ export class SupplierOrdersReturnDetailsFormDialogComponent {
       uomId: this.newInvItemForm.value.uom
     }
 
+
     if( this.newInvItemForm.value.uom !== null && this.newInvItemForm.value.store !== null){
 
-      if(this.selectedUom.master){
-        this.newInvItemForm.patchValue({
-          unitPrice: this.selectedItem.priceRetail
-        });
-      }else{
       
-
-        this.newInvItemForm.patchValue({
-          unitPrice: this.selectedItem.price
-        });
-      }
       
 
       this.itemsBalanceService.getItemBatches(formData).subscribe(
@@ -192,7 +182,17 @@ export class SupplierOrdersReturnDetailsFormDialogComponent {
               this.itemBatches = response.data.invItemCardBatch;
               this.selectedUom = response.data.uom;
 
-              console.log(response.data);
+              if(this.selectedUom.master){
+                this.newInvItemForm.patchValue({
+                  unitPrice: this.selectedItem.price
+                });
+              }else{
+              
+        
+                this.newInvItemForm.patchValue({
+                  unitPrice: this.selectedItem.priceRetail
+                });
+              }
 
             }
           },
