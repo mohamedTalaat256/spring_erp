@@ -197,6 +197,32 @@
         </tr>
       </tbody>
   </table>
+
+  <mat-divider></mat-divider>
+  <h3>العمليات علي الخزنة</h3>
+
+  <table class="w-100">
+  
+      <thead>
+        <tr>
+        <td>رقم الايصال</td>
+        <td>التاريخ</td>
+        <td>المبلغ</td>
+        <td>نوع الحركة</td>
+        <td>البيان</td>
+      </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let i of data.transactions">
+          <td>{{i.id}}</td>
+          <td>{{i.moveDate}}</td>
+          <td>{{i.moneyForAccount  }}</td>
+          <td>{{i.movType.name}}</td>
+          <td>{{i.byan}}</td>
+          
+        </tr>
+      </tbody>
+  </table>
   <app-system-info-card></app-system-info-card>
 
 </div>
