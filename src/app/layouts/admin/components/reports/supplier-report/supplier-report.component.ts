@@ -24,15 +24,7 @@ export class SupplierReportComponent {
   suppliers: Supplier[] = [];
   supplier = emptySupplier;
 
-  data: any = {
-    finalBalance: 0,
-    purchaseCounter: 0,
-    purchaseTotalMoney: 0,
-    purchaseReturnCounter: 0,
-    purchaseReturnTotalMoney: 0,
-    transactionsExchange: 0,
-    transactionsCollect: 0,
-  };
+  data: any = null;
 
   constructor(public dialog: MatDialog,
     private fb: FormBuilder,
