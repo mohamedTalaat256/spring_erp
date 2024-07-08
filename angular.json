@@ -31,6 +31,7 @@
             "styles": [
               "src/styles.scss",
               "src/assets/css/spacing.css",
+              "src/assets/css/grid.css",
               
               "src/theme/my-theme.scss"
             ],
