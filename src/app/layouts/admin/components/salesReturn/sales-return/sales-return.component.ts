@@ -99,7 +99,8 @@ export class SalesReturnComponent {
           this.salesReturn=response.data;
           this.totalElements = response.data.length;
           this.dataSource = new MatTableDataSource<any>(this.salesReturn);
-          this.dataSource.paginator = this.paginator;
+          this.pageIndex =0;
+          this.pageSize=this.totalElements;
         }
       },
       error: (error: Error) => {

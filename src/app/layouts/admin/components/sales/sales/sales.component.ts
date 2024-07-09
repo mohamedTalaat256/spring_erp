@@ -97,7 +97,8 @@ export class SalesComponent implements OnInit {
           this.sales=response.data;
           this.totalElements = response.data.length;
           this.dataSource = new MatTableDataSource<any>(this.sales);
-          this.dataSource.paginator = this.paginator;
+          this.pageIndex =0;
+          this.pageSize=this.totalElements;
         }
       },
       error: (error: Error) => {

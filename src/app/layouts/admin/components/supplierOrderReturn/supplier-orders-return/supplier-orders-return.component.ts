@@ -22,7 +22,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 })
 export class SupplierOrdersReturnComponent {
   pageIndex:number = 0;
-  pageSize: number  = 10;
+  pageSize: number  = 2;
   totalElements: number  =0;
 
   supplierFormControl = new FormControl<string | any>('');
@@ -37,7 +37,7 @@ export class SupplierOrdersReturnComponent {
   supplierOrdersReturn: SupplierOrderReturn[] = [];
 
   createData: any;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild('paginator', { static: true }) paginator: MatPaginator;  
 
 
   displayedColumns: string[] = [
@@ -99,14 +99,13 @@ export class SupplierOrdersReturnComponent {
     });
   }
 
-  onSubmit(){}  onSubmitSearch(){
+  onSubmitSearch(){
     this.supplierOrderReturnService.search(this.searchForm.value).subscribe({
       next: (response: AppResponse) => {
         if (response.ok) {
           this.supplierOrdersReturn = response.data;
           this.totalElements = response.data.length;
           this.dataSource = new MatTableDataSource<any>(this.supplierOrdersReturn);
-          this.dataSource.paginator = this.paginator;
         }
       },
       error: (error: Error) => {
@@ -219,7 +218,7 @@ export class SupplierOrdersReturnComponent {
                 });
                 this.supplierOrdersReturn = this.supplierOrdersReturn.filter(i=> i.id !== invoiceId);
                 this.dataSource = new MatTableDataSource<any>(this.supplierOrdersReturn);
-                this.dataSource.paginator = this.paginator;
+ 
               }
 
 
@@ -265,10 +264,9 @@ export class SupplierOrdersReturnComponent {
     }); */
   }
   handlePageEvent(e: PageEvent) {
+    this.pageIndex = this.pageSize !== e.pageSize? 0 : e.pageIndex; // if pageSize changed go back to page 0
     this.pageSize = e.pageSize;
-    this.pageIndex = e.pageIndex;
     this.totalElements = e.length;
-
 
     this.findAll(this.pageIndex, this.pageSize);
   }
