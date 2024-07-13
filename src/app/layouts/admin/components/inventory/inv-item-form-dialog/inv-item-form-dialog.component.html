@@ -8,7 +8,7 @@
             <mat-error>
                 <app-validation-msg [control]="invItemForm.get('barcode')" fieldName="الباركود"></app-validation-msg>
             </mat-error>
-        </mat-form-field> 
+        </mat-form-field>
 
 
         <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100">
@@ -30,7 +30,7 @@
             </mat-error>
         </mat-form-field>
 
-        
+
         <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100">
             <mat-label>فئة الصنف</mat-label>
             <mat-select formControlName="invItemCategory">
@@ -45,18 +45,18 @@
         <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100">
             <mat-label>الصنف له اب ؟</mat-label>
             <mat-select formControlName="parentInvItemCard">
-                <mat-option value="null">هو أب </mat-option>
+                <mat-option [value]="null">هو أب </mat-option>
                 <mat-option *ngFor="let i of invItems" [value]="i.id">{{i.name}} </mat-option>
             </mat-select>
             <mat-error>
                 <app-validation-msg [control]="invItemForm.get('parentInvItemCard')"
                     fieldName="الحقل"></app-validation-msg>
             </mat-error>
-        </mat-form-field>  
+        </mat-form-field>
 
         <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100">
             <mat-label>وحدة قياس الأب</mat-label>
-            <mat-select formControlName="uom" (selectionChange)="uomChange($event)"> 
+            <mat-select formControlName="uom" (selectionChange)="uomChange($event)">
                 <mat-option *ngFor="let i of invUomsParent" [value]="i.id">{{i.name}} </mat-option>
             </mat-select>
             <mat-error>
@@ -65,10 +65,10 @@
             </mat-error>
         </mat-form-field>
 
- 
+
         <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100">
             <mat-label>هل للصنف وحدة تجزئة ابن</mat-label>
-            <mat-select formControlName="doesHasRetailUnit" (selectionChange)="doesHasRetailUnitChange($event)"> 
+            <mat-select formControlName="doesHasRetailUnit" (selectionChange)="doesHasRetailUnitChange($event)">
                 <mat-option [value]="false">لا</mat-option>
                 <mat-option [value]="true">نعم</mat-option>
             </mat-select>
@@ -81,7 +81,7 @@
 
         <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100" *ngIf="doesHasRetailUnit">
             <mat-label> وحدة القياس التجزئة الابن بالنسبة للأب({{parentUomName}})</mat-label>
-            <mat-select formControlName="retailUom" (selectionChange)="retialUomChange($event)"> 
+            <mat-select formControlName="retailUom" (selectionChange)="retialUomChange($event)">
                 <mat-option *ngFor="let i of invUomsChild" [value]="i.id">{{i.name}} </mat-option>
             </mat-select>
             <mat-error>
@@ -101,7 +101,7 @@
             </mat-error>
         </mat-form-field>
 
-        
+
         <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100" >
             <mat-label>  سعر القطاعي بوحدة ({{parentUomName}}) </mat-label>
             <input matInput formControlName="price" placeholder="سعر القطاعي بوحدة ({{parentUomName}})" type="number">
@@ -132,7 +132,7 @@
             <mat-error>
                 <app-validation-msg [control]="invItemForm.get('costPrice')" fieldName="سعر القطاعي"></app-validation-msg>
             </mat-error>
-        </mat-form-field> 
+        </mat-form-field>
 
         <!-- retail -->
 
@@ -166,11 +166,11 @@
             <mat-error>
                 <app-validation-msg [control]="invItemForm.get('costPriceRetail')" fieldName="سعر القطاعي"></app-validation-msg>
             </mat-error>
-        </mat-form-field> 
+        </mat-form-field>
 
         <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100">
             <mat-label>هل للصنف سعر ثابت</mat-label>
-            <mat-select formControlName="hasFixcedPrice"> 
+            <mat-select formControlName="hasFixcedPrice">
                 <mat-option [value]="true">نعم</mat-option>
                 <mat-option [value]="false">لا وقابل للتغير بالفواتير</mat-option>
             </mat-select>
@@ -179,11 +179,11 @@
                     fieldName="الحقل"></app-validation-msg>
             </mat-error>
         </mat-form-field>
- 
-       
+
+
         <mat-form-field fxFlex="48" fxFlex.sm="100" fxFlex.xs="100">
             <mat-label>حالة التفعيل</mat-label>
-            <mat-select formControlName="active"> 
+            <mat-select formControlName="active">
                 <mat-option [value]="true">نعم</mat-option>
                 <mat-option [value]="false">لا</mat-option>
             </mat-select>
@@ -192,7 +192,7 @@
                     fieldName="حالة التفعيل"></app-validation-msg>
             </mat-error>
         </mat-form-field>
- 
+
 
     <mat-dialog-actions fxLayoutAlign="center">
         <button mat-button mat-dialog-close color="danger">الغاء</button>

@@ -8,13 +8,13 @@ import { FormGroup } from "@angular/forms";
 export class SupplierService {
 
   constructor(private http: HttpClient) { }
-  
+
 
   getSupplierCategories(): Observable<any> {
     return this.http.get(baseURL + '/supplierCategory');
   }
 
-  
+
 
   public saveSupplierCategory(data: any, formMode: FormMode): Observable<any> {
 
@@ -26,7 +26,7 @@ export class SupplierService {
     }
   }
 
- 
+
 
   findAll(): Observable<any> {
     return this.http.get(baseURL + '/suppliers');
@@ -39,7 +39,7 @@ export class SupplierService {
       const payLoad = {
         name: data.name,
         supplierCategory:{
-          id: 1
+          id: data.supplierCategory
         },
         startBalanceStatus: data.startBalanceStatus,
         startBalance: data.startBalance,
@@ -48,15 +48,15 @@ export class SupplierService {
         phones: data.phones,
         active: data.active
         }
-      
-      
+
+
       return this.http.post<any>(baseURL + '/suppliers/create',  payLoad);
     }else{
       const payLoad = {
         id: data.id,
         name: data.name,
         supplierCategory:{
-          id: 1
+          id: data.supplierCategory
         },
         startBalanceStatus: data.startBalanceStatus,
         startBalance: data.startBalance,
@@ -65,12 +65,12 @@ export class SupplierService {
         phones: data.phones,
         active: data.active
         }
-      
-      
+
+
       return this.http.put<any>(baseURL + '/suppliers/update',  payLoad);
     }
-    
+
   }
- 
+
 
 }

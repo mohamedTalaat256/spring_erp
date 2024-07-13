@@ -17,12 +17,12 @@ import { SupplierService } from 'src/app/service/supplier.service';
   styleUrls: ['./supplier-form-dialog.component.scss']
 })
 export class SupplierFormDialogComponent {
- 
+
   supplierForm: FormGroup;
   title:string;
   startBalanceReadOnly: boolean = false;
 
- 
+
   supplierCategories: SupplierCategory[] = [];
   formMode: FormMode;
 
@@ -38,7 +38,7 @@ export class SupplierFormDialogComponent {
       this.supplierForm =  this.supplierFormControl.createForm();
     }else{
       this.supplierForm =  this.supplierFormControl.setForm(this.data.supplier);
-    } 
+    }
     this.title = this.data.title;
     this.supplierCategories = this.data.supplierCategories;
     this.formMode = this.data.formMode;
@@ -47,16 +47,16 @@ export class SupplierFormDialogComponent {
 
   filteredIems: Observable<any[]>;
 
-  ngOnInit() { 
-    
- 
-  } 
- 
+  ngOnInit() {
 
-  onSubmit(){ 
+
+  }
+
+
+  onSubmit(){
 
     this.supplierService.save(this.supplierForm.value, this.data.formMode).subscribe({
-      next:(response: AppResponse)=>{  
+      next:(response: AppResponse)=>{
         if(response.ok){
           Swal.fire({
             icon: "success",
@@ -75,16 +75,16 @@ export class SupplierFormDialogComponent {
         });
       }
 
-    }); 
+    });
   }
- 
+
   balanceStatusChange(event:MatSelectChange){
 
     if(event.value === 3){
       this.supplierForm.patchValue({
         startBalance: 0
       });
-      this.startBalanceReadOnly = true; 
+      this.startBalanceReadOnly = true;
 
     }
     else{
