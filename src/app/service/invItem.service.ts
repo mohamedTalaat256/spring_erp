@@ -16,8 +16,8 @@ export class InvItemService {
   findCreateData(): Observable<any> {
     return this.http.get(baseURL + '/itemcards/createData');
   }
-    
-  
+
+
   public save(form: FormGroup, formMode:FormMode): Observable<any> {
 
     const payLoad =  {
@@ -28,9 +28,8 @@ export class InvItemService {
         invItemCategory:{
           id: form.value.invItemCategory
         },
-        parentInvItemCard:{
-          id: form.value.parentInvItemcard
-        },
+        parentInvItemCard: form.value.parentInvItemCard === 0 ? null : { id: form.value.parentInvItemCard} ,
+
         uom:{
           id: form.value.uom
         },
@@ -51,13 +50,14 @@ export class InvItemService {
         active:                form.value.active
     }
 
+    console.log(payLoad);
     if(formMode===FormMode.CREATE){
       return this.http.post<any>(baseURL + '/itemcards/save', payLoad);
     }else{
     return this.http.put<any>(baseURL + '/itemcards/update', payLoad);
     }
-    
-  } 
+
+  }
 
 
 }

@@ -84,7 +84,7 @@ export class InvItemForm {
         name:                    [data.name, [Validators.required, Validators.maxLength(255)]],
         itemType:                [data.itemType, [Validators.required ]],
         invItemCategory:         [data.invItemCategory?  data.invItemCategory.id: null, [Validators.required ]],
-        parentInvItemCard:       [data.parentInvItemCard? data.parentInvItemCard.id : null],
+        parentInvItemCard:       [data.parentInvItemCard? data.parentInvItemCard.id : 0],
         uom:                     [data.uom ? data.uom.id: null, [Validators.required ]],
         doesHasRetailUnit:       [data.doesHasRetailUnit, [Validators.required ]],
         retailUom:               [data.retailUom ? data.retailUom.id: null,           ],      // <=========
