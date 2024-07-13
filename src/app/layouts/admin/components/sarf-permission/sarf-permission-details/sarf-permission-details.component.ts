@@ -8,7 +8,6 @@ import Swal from 'sweetalert2';
  import { AppResponse } from 'src/app/model/app_response.model';
 import { ActivatedRoute } from '@angular/router';
 import { emptySalesOrder } from 'src/app/model/sales-order.model';
-import { SarfPermissionDetailsFormDialogComponent } from '../sarf-permission-details-form-dialog/sarf-permission-details-form-dialog.component';
 import { SarfPermissionService } from 'src/app/service/sarfPermission.service';
 import { SalesService } from 'src/app/service/sale.service';
 @Component({

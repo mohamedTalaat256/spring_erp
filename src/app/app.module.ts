@@ -77,10 +77,7 @@ import { PrintSalesComponent } from './layouts/admin/components/print/print-sale
 import { PrintSalesReturnComponent } from './layouts/admin/components/print/print-sales-return/print-sales-return.component';
 import { PrintSupplierOrderComponent } from './layouts/admin/components/print/print-supplier-order/print-supplier-order.component';
 import { PrintSupplierOrderReturnComponent } from './layouts/admin/components/print/print-supplier-order-return/print-supplier-order-return.component';
-import { SarfPermissionsComponent } from './layouts/admin/components/sarf-permission/sarf-permissions/sarf-permissions.component';
-import { SarfPermissionsFormDialogComponent } from './layouts/admin/components/sarf-permission/sarf-permissions-form-dialog/sarf-permissions-form-dialog.component';
 import { SarfPermissionDetailsComponent } from './layouts/admin/components/sarf-permission/sarf-permission-details/sarf-permission-details.component';
-import { SarfPermissionDetailsFormDialogComponent } from './layouts/admin/components/sarf-permission/sarf-permission-details-form-dialog/sarf-permission-details-form-dialog.component';
 import { PriceInvoiceDetailsComponent } from './layouts/admin/components/priceInvoice/price-invoice-details/price-invoice-details.component';
 import { PriceInvoiceDetailsFormDialogComponent } from './layouts/admin/components/priceInvoice/price-invoice-details-form-dialog/price-invoice-details-form-dialog.component';
 import { PriceInvoiceFormDialogComponent } from './layouts/admin/components/priceInvoice/price-invoice-form-dialog/price-invoice-invoice-form-dialog.component';
@@ -157,10 +154,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     PrintSalesReturnComponent,
     PrintSupplierOrderComponent,
     PrintSupplierOrderReturnComponent,
-    SarfPermissionsComponent,
-    SarfPermissionsFormDialogComponent,
     SarfPermissionDetailsComponent,
-    SarfPermissionDetailsFormDialogComponent,
     PriceInvoiceDetailsComponent,
     PriceInvoiceDetailsFormDialogComponent,
     PriceInvoiceFormDialogComponent,

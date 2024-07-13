@@ -130,18 +130,7 @@ const TREE_DATA: FoodNode[] = [
       }
     ],
   },
-  {
-    name: 'اذن صرف',
-    icon: 'insert_drive_file',
-    iconColor: 'warn',
-    children: [
-      {
-        name: 'اذن صرف',
-        icon: 'menu',
-        url: '/admin/sarfPermissions'
-      }
-    ],
-  },
+
   {
     name: 'المبيعات',
     icon: 'shopping_cart',
