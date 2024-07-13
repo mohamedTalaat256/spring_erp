@@ -68,6 +68,8 @@ export class SettingsComponent implements OnInit {
           });
 
           this.adminSettingForm = this.adminSettingFormControl.setForm(response.data);
+
+          localStorage.setItem('systemData', JSON.stringify(response.data));
         }
       },
       error: (error: Error) => {

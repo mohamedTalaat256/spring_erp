@@ -4,16 +4,14 @@
   <div id="print-section">
     <div class="my-3" fxLayout="row" fxLayoutAlign="space-between center">
 
-      <span>التاريخ : {{permission.permissionDate }}</span>
-      <span>العميل : {{permission.customer.name}}</span>
+      <span>التاريخ : {{permission.invoiceDate }}</span>
+      <span>العميل : {{ permission.isHasCustomer ? permission.customer.name: 'طياري' }}</span>
 
       <br>
-      <span> اسم المستلم :  {{permission.receiverName}}</span>
+      <span> : اسم المستلم    </span>
 
 
     </div>
-    <button *ngIf="!permission.isApproved" mat-raised-button type="button" color="warn" class="no-print"
-      (click)="openAddInvItemDialog()"> اضافة اصناف </button>
 
 
 
@@ -46,16 +44,6 @@
       </ng-container>
 
 
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let orderItem">
-
-
-          <button *ngIf="!permission.isApproved" mat-icon-button (click)="deleteInvItem(orderItem)">
-            <mat-icon color="danger">delete</mat-icon>
-          </button>
-        </td>
-      </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
@@ -77,8 +65,7 @@
 
 
         <div fxLayout="row-reverse" fxLayoutAlign="space-between center">
-          <button *ngIf="!permission.isApproved" (cdkAutofill)="onSubmit()" mat-raised-button color="primary" type="submit">حفظ و إعتماد
-            الفاتورة</button>
+
 
             <button mat-raised-button color="primary" class="mx-2 no-print" [useExistingCss]="true"
             [printStyle]="{
