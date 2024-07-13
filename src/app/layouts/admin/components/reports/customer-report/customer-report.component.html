@@ -44,7 +44,7 @@
 
 
 
-<div class=" m-2" id="print-section">
+<div class=" m-2" id="print-section" *ngIf="data !== null">
 
   <div fxLayout="row" fxLayoutAlign="space-between center">
     <img src="/assets/images/logo.png" alt="logo" style="height: 80px;">
@@ -103,9 +103,131 @@
     </tbody>
   </table>
 
+  <mat-divider></mat-divider>
+  <h3>فواتير المبيعات</h3>
+
+  <table class="w-100">
+  
+      <thead>
+        <tr>
+        <td>الكود</td>
+        <td>التاريخ</td>
+        <td>الاجمالي</td>
+        <td>الحالة</td>
+        <td>النوع</td>
+        <td class="no-print"></td>
+      </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let i of data.salesInvoices">
+          <td>{{i.id}}</td>
+          <td>{{i.invoiceDate}}</td>
+          <td>{{i.totalCost}}</td>
+          <td>
+            <span *ngIf="i.isApproved" color="danger">
+              معتمدة
+          </span>
+          <span *ngIf="!i.isApproved" color="light-success">
+              مفتوحة
+          </span>
+          </td>
+          
+          <td>
+            <span *ngIf="i.pillType===1" color="success">
+              كاش
+          </span>
+          <span *ngIf="i.pillType===2" color="danger">
+              اّجل
+          </span>
+          </td>
+          <td class="no-print">
+            <button mat-icon-button [routerLink]="['/admin/salseDetails', i.id]">
+              <mat-icon color="danger">remove_red_eye</mat-icon>
+          </button>
+          </td>
+         
+        </tr>
+      </tbody>
+  </table>
+
+
+  <mat-divider></mat-divider>
+  <h3>فواتير مرتجع المبيعات</h3>
+
+  <table class="w-100">
+  
+      <thead>
+        <tr>
+        <td>الكود</td>
+        <td>التاريخ</td>
+        <td>الاجمالي</td>
+        <td>الحالة</td>
+        <td>النوع</td>
+        <td class="no-print"></td>
+      </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let i of data.salesReturnInvoices">
+          <td>{{i.id}}</td>
+          <td>{{i.invoiceDate}}</td>
+          <td>{{i.totalCost}}</td>
+          <td>
+            <span *ngIf="i.isApproved" color="danger">
+              معتمدة
+          </span>
+          <span *ngIf="!i.isApproved" color="light-success">
+              مفتوحة
+          </span>
+          </td>
+          
+          <td>
+            <span *ngIf="i.pillType===1" color="success">
+              كاش
+          </span>
+          <span *ngIf="i.pillType===2" color="danger">
+              اّجل
+          </span>
+          </td>
+          <td class="no-print">
+            <button mat-icon-button [routerLink]="['/admin/salseReturnDetails', i.id]">
+              <mat-icon color="danger">remove_red_eye</mat-icon>
+          </button>
+          </td>
+         
+        </tr>
+      </tbody>
+  </table>
+
+  <mat-divider></mat-divider>
+  <h3>العمليات علي الخزنة</h3>
+
+  <table class="w-100">
+  
+      <thead>
+        <tr>
+        <td>رقم الايصال</td>
+        <td>التاريخ</td>
+        <td>المبلغ</td>
+        <td>نوع الحركة</td>
+        <td>البيان</td>
+      </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let i of data.transactions">
+          <td>{{i.id}}</td>
+          <td>{{i.moveDate}}</td>
+          <td>{{i.moneyForAccount * -1}}</td>
+          <td>{{i.movType.name}}</td>
+          <td>{{i.byan}}</td>
+          
+        </tr>
+      </tbody>
+  </table>
+  <app-system-info-card></app-system-info-card>
+
 </div>
 
-<button mat-raised-button color="primary" class="mx-2" [useExistingCss]="true"
+<button *ngIf="data !== null" mat-raised-button color="primary" class="mx-2" [useExistingCss]="true"
     [printStyle]="{div : {'direction': 'rtl'}}" [printTitle]="'asdasd'" printSectionId="print-section" ngxPrint>
     طباعة
     <mat-icon class="mx-2">cloud_download</mat-icon></button>

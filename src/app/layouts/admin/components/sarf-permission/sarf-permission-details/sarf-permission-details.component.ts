@@ -145,7 +145,7 @@ export class SarfPermissionDetailsComponent {
 
     dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
 
-      if (result !== null) {
+      if (result &&result !== null) {
 
         this.permission = result;
         this.detailsItems = this.permission.detailsItems;

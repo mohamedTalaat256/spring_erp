@@ -24,15 +24,7 @@ export class CustomerReportComponent {
   customers: Customer[] = [];
   customer = emptySupplier;
 
-  data: any = {
-    finalBalance: 0,
-    salesCounter: 0,
-    salesTotalMoney: 0,
-    salesReturnCounter: 0,
-    salesReturnTotalMoney: 0,
-    transactionsExchange: 0,
-    transactionsCollect: 0,
-  };
+  data: any = null;
 
   constructor(public dialog: MatDialog,
     private fb: FormBuilder,

@@ -95,7 +95,7 @@ export class PriceInvoiceDetailsComponent {
 
     dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
 
-      if (result !== null) {
+      if (result &&result !== null) {
 
         this.priceInvoice = result;
         this.priceInvoiceDetails = this.priceInvoice.priceInvoiceDetails;

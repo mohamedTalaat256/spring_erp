@@ -98,7 +98,8 @@ export class TransactionCollectComponent implements OnInit {
           this.totalElements = this.transactions.length;
 
           this.dataSource = new MatTableDataSource<any>(this.transactions);
-          this.dataSource.paginator = this.paginator;
+          this.pageIndex =0;
+          this.pageSize=this.totalElements;
         }
       },
       error: (error: Error) => {

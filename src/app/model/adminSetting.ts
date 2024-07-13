@@ -12,3 +12,14 @@ export interface AdminSetting{
     notes: string
 
 }
+
+export const emptySystemData={
+    id: 0,
+    systemName: '',
+    address: '',
+    phone: '',
+    photo: '',
+    customerParentAccountNumber: 0,
+    suppliersParentAccountNumber: 0,
+    notes: ''
+}

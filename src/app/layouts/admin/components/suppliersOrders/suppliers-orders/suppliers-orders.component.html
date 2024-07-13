@@ -145,7 +145,8 @@
       </table>
 
       <mat-paginator
-      [pageSizeOptions]="[10, 30, 100]"
+      #paginator
+      [pageSizeOptions]="[2,10, 30, 100]"
       [length]="totalElements"
       [pageIndex]="pageIndex"
       [pageSize]="pageSize"

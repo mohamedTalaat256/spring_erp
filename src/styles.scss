@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import url(/src/assets/css/footer.css);
+@import url(/src/assets/css/grid.css);
 
 @font-face {
     font-family: Rubik;
@@ -366,3 +367,28 @@ body {
         display: none !important;
     }
 }
+.d-flex{
+  display: flex;
+}
+.justify-content-center{
+  justify-content: center;
+}
+
+.justify-content-between{
+  justify-content: space-between;
+}
+
+.justify-content-arround{
+  justify-content: space-arround;
+}
+
+@media (min-width: 768px) {
+  .d-sm-none{
+    display: none;
+  }
+  .d-sx-none{
+    display: none;
+  }
+}
+ 
+

@@ -31,7 +31,7 @@ export class SuppliersOrdersComponent {
   supplierOrders: SupplierOrder[] = [];
 
   createData: any;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild('paginator', { static: true }) paginator: MatPaginator;  
 
 
   searchForm: FormGroup;
@@ -80,7 +80,7 @@ export class SuppliersOrdersComponent {
           this.stores = response.data.stores;
 
           this.dataSource = new MatTableDataSource<SupplierOrder>(this.supplierOrders);
-          this.dataSource.paginator = this.paginator;
+          // this.dataSource.paginator = this.paginator;
           this.setFilters();
 
         }
@@ -105,7 +105,8 @@ export class SuppliersOrdersComponent {
           this.supplierOrders = response.data;
           this.totalElements = response.data.length;
           this.dataSource = new MatTableDataSource<any>(this.supplierOrders);
-          this.dataSource.paginator = this.paginator;
+          this.pageIndex =0;
+          this.pageSize=this.totalElements;
         }
       },
       error: (error: Error) => {
@@ -227,10 +228,9 @@ export class SuppliersOrdersComponent {
   }
 
   handlePageEvent(e: PageEvent) {
+    this.pageIndex = this.pageSize !== e.pageSize? 0 : e.pageIndex; // if pageSize changed go back to page 0
     this.pageSize = e.pageSize;
-    this.pageIndex = e.pageIndex;
     this.totalElements = e.length;
-
 
     this.findAll(this.pageIndex, this.pageSize);
   }
