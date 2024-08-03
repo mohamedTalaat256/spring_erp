@@ -34,6 +34,9 @@ import { PriceInvoicesComponent } from './components/priceInvoice/price-invoices
 import { PriceInvoiceDetailsComponent } from './components/priceInvoice/price-invoice-details/price-invoice-details.component';
 import { SupplierReportComponent } from './components/reports/supplier-report/supplier-report.component';
 import { CustomerReportComponent } from './components/reports/customer-report/customer-report.component';
+import { WorkersComponent } from './components/workers/workers/workers.component';
+import { ProjectsComponent } from './components/workers/projects/projects.component';
+import { PaymentsComponent } from './components/workers/payments/payments.component';
 
 const routes: Routes = [
   {
@@ -112,6 +115,9 @@ const routes: Routes = [
 
 
 
+      {path:'workers', component: WorkersComponent},
+      {path:'projects', component: ProjectsComponent},
+      {path:'payments', component: PaymentsComponent},
 
 
       { path: '**', pathMatch :'full' , component: Page404Component},

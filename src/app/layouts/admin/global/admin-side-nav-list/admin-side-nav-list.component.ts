@@ -172,6 +172,31 @@ const TREE_DATA: FoodNode[] = [
     ]
   },
   {
+    name: 'العمالة',
+    icon: 'group',
+    iconColor: 'accent',
+    children: [
+      {
+        name: 'العمال',
+        icon: 'group',
+        iconColor: 'primary',
+        url: '/admin/workers',
+      },
+      {
+        name: 'المشاريع',
+        icon: 'group',
+        iconColor: 'primary',
+        url: '/admin/projects',
+      },
+      {
+        name: 'اليوميات',
+        icon: 'group',
+        iconColor: 'primary',
+        url: '/admin/payments',
+      }
+    ]
+  },
+  {
     name: 'الضبط العام',
     icon: 'settings',
     iconColor: 'primary',
