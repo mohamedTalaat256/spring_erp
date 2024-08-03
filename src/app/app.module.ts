@@ -85,6 +85,12 @@ import { PriceInvoicesComponent } from './layouts/admin/components/priceInvoice/
 import { SupplierReportComponent } from './layouts/admin/components/reports/supplier-report/supplier-report.component';
 import { CustomerReportComponent } from './layouts/admin/components/reports/customer-report/customer-report.component';
 import { SystemInfoCardComponent } from './layouts/admin/global/system-info-card/system-info-card.component';
+import { WorkersComponent } from './layouts/admin/components/workers/workers/workers.component';
+import { WorkerDialogComponent } from './layouts/admin/components/workers/worker-dialog/worker-dialog.component';
+import { ProjectsComponent } from './layouts/admin/components/workers/projects/projects.component';
+import { ProjectDialogComponent } from './layouts/admin/components/workers/project-dialog/project-dialog.component';
+import { PaymentsComponent } from './layouts/admin/components/workers/payments/payments.component';
+import { PaymentDialogComponent } from './layouts/admin/components/workers/payment-dialog/payment-dialog.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -161,7 +167,13 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     PriceInvoicesComponent,
     SupplierReportComponent,
     CustomerReportComponent,
-    SystemInfoCardComponent
+    SystemInfoCardComponent,
+    WorkersComponent,
+    WorkerDialogComponent,
+    ProjectsComponent,
+    ProjectDialogComponent,
+    PaymentsComponent,
+    PaymentDialogComponent
 
   ],
   imports: [

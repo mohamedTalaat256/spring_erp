@@ -1,0 +1,78 @@
+<h2 mat-dialog-title class="text-capitalize">{{title}}</h2>
+
+<form (ngSubmit)="onSubmit()" [formGroup]="paymentForm" fxLayout="column" fxLayoutGap="15" class="p-5">
+
+
+  <mat-form-field fxFlex="100">
+    <mat-label>العامل</mat-label>
+
+    <input type="text" placeholder="العامل" matInput [formControl]="workerFormControl"
+      [matAutocomplete]="workerAutoComplete">
+
+    <mat-autocomplete #workerAutoComplete="matAutocomplete" [displayWith]="workerDisplayFn"
+      (optionSelected)="selectedWorker($event)">
+      <ng-container *ngFor="let option of filteredWorkers | async; trackBy: workerDisplayFn">
+        <mat-option [value]="option">{{ option.name }}</mat-option>
+      </ng-container>
+    </mat-autocomplete>
+
+    <mat-error>
+      <app-validation-msg [control]="workerFormControl" fieldName="العامل"></app-validation-msg>
+    </mat-error>
+  </mat-form-field>
+
+
+  <mat-form-field fxFlex="100">
+    <mat-label>المشروع</mat-label>
+
+    <input type="text" placeholder="المشروع" matInput [formControl]="projectFormControl"
+      [matAutocomplete]="projectAutoComplete">
+
+    <mat-autocomplete #projectAutoComplete="matAutocomplete" [displayWith]="projectDisplayFn"
+      (optionSelected)="selectedProject($event)">
+      <ng-container *ngFor="let option of filteredProjects | async; trackBy: projectDisplayFn">
+        <mat-option [value]="option">{{ option.name }}</mat-option>
+      </ng-container>
+    </mat-autocomplete>
+
+    <mat-error>
+      <app-validation-msg [control]="projectFormControl" fieldName="المشروع"></app-validation-msg>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>المبلغ</mat-label>
+    <input matInput formControlName="amount" placeholder="المبلغ" type="number">
+    <mat-error>
+      <app-validation-msg [control]="paymentForm.get('amount')" fieldName="المبلغ"></app-validation-msg>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>البيان</mat-label>
+    <input matInput formControlName="description" placeholder="البيان">
+    <mat-error>
+      <app-validation-msg [control]="paymentForm.get('description')" fieldName="البيان"></app-validation-msg>
+    </mat-error>
+  </mat-form-field>
+
+
+
+  <mat-form-field fxFlex="48">
+    <mat-label>تاريخ الدفع</mat-label>
+    <input matInput [matDatepicker]="paymentDatePicker" formControlName="paymentDate">
+    <mat-datepicker-toggle matIconSuffix [for]="paymentDatePicker">
+      <mat-icon matDatepickerToggleIcon>date_range</mat-icon>
+    </mat-datepicker-toggle>
+    <mat-datepicker #paymentDatePicker></mat-datepicker>
+    <mat-error>
+      <app-validation-msg [control]="paymentForm.get('paymentDate')" fieldName="التاريخ"></app-validation-msg>
+    </mat-error>
+  </mat-form-field>
+
+
+  <mat-dialog-actions fxLayoutAlign="center">
+    <button mat-button mat-dialog-close color="danger">الغاء</button>
+    <button [disabled]="!paymentForm.valid" mat-raised-button color="primary" type="submit"> حفظ</button>
+  </mat-dialog-actions>
+</form>
