@@ -19,7 +19,7 @@ export class ProjectsComponent implements OnInit {
 
   projects:any[]=[];
 
-  displayedColumns: string[] = ['id', 'name', 'startDate', 'endDate',  'actions'];
+  displayedColumns: string[] = ['id', 'projectName', 'startDate', 'endDate',  'actions'];
   dataSource = new MatTableDataSource<any>(this.projects);
 
   ngOnInit(): void {
@@ -48,7 +48,7 @@ export class ProjectsComponent implements OnInit {
 
 
 
-  openAddWorkerDialog() {
+  openAddProjectDialog() {
 
     const data = {
       title: 'اضافة مشروع جديد',
@@ -69,11 +69,11 @@ export class ProjectsComponent implements OnInit {
   }
 
 
-  openEditWorkerDialog(worker: any){
+  openEditProjectDialog(project: any){
     const data = {
       title: 'تعديل المشروع',
       formMode: FormMode.EDIT,
-      worker: worker
+      project: project
     };
     const dialogRef = this.dialog.open(ProjectDialogComponent, {
       width: '400px',

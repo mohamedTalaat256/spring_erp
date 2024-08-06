@@ -51,7 +51,7 @@ export class PaymentDialogComponent implements OnInit {
 
       this.projectFormControl.setValue( {
         id: this.data.payment.project.id,
-        name: this.data.payment.project.name
+        name: this.data.payment.project.projectName
       });
 
 
@@ -125,7 +125,7 @@ export class PaymentDialogComponent implements OnInit {
     this.filteredProjects = this.projectFormControl.valueChanges.pipe(
       startWith(''),
       map(value => {
-        const name = typeof value === 'string' ? value : value?.name;
+        const name = typeof value === 'string' ? value : value?.projectName;
         return name ? this._ProjectFilter(name as string) : this.projects.slice();
       }),
     );
@@ -139,7 +139,7 @@ export class PaymentDialogComponent implements OnInit {
   }
 
   projectDisplayFn(project: any): string {
-    return project && project.name ? project.name : '';
+    return project && project.projectName ? project.projectName : '';
   }
 
 
@@ -150,7 +150,7 @@ export class PaymentDialogComponent implements OnInit {
 
   private _ProjectFilter(name: string): any[] {
     const filterValue = name.toLowerCase();
-    return this.projects.filter(option => option.name.toLowerCase().includes(filterValue));
+    return this.projects.filter(option => option.projectName.toLowerCase().includes(filterValue));
   }
 
   selectedWorker(event: MatAutocompleteSelectedEvent) {

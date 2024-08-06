@@ -5,16 +5,16 @@
 
     <mat-form-field>
         <mat-label>اسم العامل</mat-label>
-        <input matInput formControlName="name" placeholder="اسم المخزن"  >
+        <input matInput formControlName="name" placeholder="اسم العامل"  >
         <mat-error>
-            <app-validation-msg [control]="workerForm.get('name')" fieldName="اسم المخزن" ></app-validation-msg>
+            <app-validation-msg [control]="workerForm.get('name')" fieldName="اسم العامل" ></app-validation-msg>
         </mat-error>
     </mat-form-field>
 
 
     <mat-form-field>
         <mat-label>الوظيفة</mat-label>
-        <input matInput formControlName="address" placeholder="الوظيفة"  >
+        <input matInput formControlName="position" placeholder="الوظيفة"  >
         <mat-error>
             <app-validation-msg [control]="workerForm.get('position')" fieldName="الوظيفة" ></app-validation-msg>
         </mat-error>

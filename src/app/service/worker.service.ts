@@ -7,8 +7,8 @@ import { FormMode, baseURL } from "../constants/constants";
 export class WorkerService {
 
   constructor(private http: HttpClient) { }
-  findAll(): Observable<any> {
-    return this.http.get(baseURL + '/workers');
+  findAll(pageIndex, pageSize): Observable<any> {
+    return this.http.get(baseURL + '/workers?pageIndex='+pageIndex+'&pageSize='+pageSize);
   }
   public save(requestbody: any, formMode: FormMode): Observable<any> {
     if(formMode === FormMode.CREATE){

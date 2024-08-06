@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { AppResponse } from 'src/app/model/app_response.model';
 import { WorkerService } from 'src/app/service/worker.service';
 import { WorkerDialogComponent } from '../worker-dialog/worker-dialog.component';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-workers',
@@ -14,6 +15,10 @@ import { WorkerDialogComponent } from '../worker-dialog/worker-dialog.component'
   styleUrls: ['./workers.component.scss']
 })
 export class WorkersComponent implements OnInit {
+
+  pageIndex:number = 0;
+  pageSize: number  = 10;
+  totalElements: number  =0;
 
   constructor(public dialog: MatDialog, private workerService: WorkerService){}
 
@@ -23,12 +28,12 @@ export class WorkersComponent implements OnInit {
   dataSource = new MatTableDataSource<any>(this.workers);
 
   ngOnInit(): void {
-    this.findAll();
+    this.findAll(this.pageIndex, this.pageSize);
   }
 
 
-  findAll(){
-    this.workerService.findAll().subscribe({
+  findAll(pageIndex, pageSize){
+    this.workerService.findAll(pageIndex, pageSize).subscribe({
       next:(response: AppResponse)=>{
         if(response.ok){
            this.workers= response.data;
@@ -95,4 +100,14 @@ export class WorkersComponent implements OnInit {
     this.workers[indexToUpdate] = newItem;
    this.workers = Object.assign([], this.workers);
   }
+
+  handlePageEvent(e: PageEvent) {
+    this.pageSize = e.pageSize;
+    this.pageIndex = e.pageIndex;
+    this.totalElements = e.length;
+
+
+    this.findAll(this.pageIndex, this.pageSize);
+  }
+
 }

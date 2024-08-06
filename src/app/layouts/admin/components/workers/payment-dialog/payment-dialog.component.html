@@ -31,7 +31,7 @@
     <mat-autocomplete #projectAutoComplete="matAutocomplete" [displayWith]="projectDisplayFn"
       (optionSelected)="selectedProject($event)">
       <ng-container *ngFor="let option of filteredProjects | async; trackBy: projectDisplayFn">
-        <mat-option [value]="option">{{ option.name }}</mat-option>
+        <mat-option [value]="option">{{ option.projectName }}</mat-option>
       </ng-container>
     </mat-autocomplete>
 
@@ -48,16 +48,6 @@
     </mat-error>
   </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>البيان</mat-label>
-    <input matInput formControlName="description" placeholder="البيان">
-    <mat-error>
-      <app-validation-msg [control]="paymentForm.get('description')" fieldName="البيان"></app-validation-msg>
-    </mat-error>
-  </mat-form-field>
-
-
-
   <mat-form-field fxFlex="48">
     <mat-label>تاريخ الدفع</mat-label>
     <input matInput [matDatepicker]="paymentDatePicker" formControlName="paymentDate">
@@ -69,6 +59,18 @@
       <app-validation-msg [control]="paymentForm.get('paymentDate')" fieldName="التاريخ"></app-validation-msg>
     </mat-error>
   </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>البيان</mat-label>
+    <input matInput formControlName="description" placeholder="البيان">
+    <mat-error>
+      <app-validation-msg [control]="paymentForm.get('description')" fieldName="البيان"></app-validation-msg>
+    </mat-error>
+  </mat-form-field>
+
+
+
+  
 
 
   <mat-dialog-actions fxLayoutAlign="center">
