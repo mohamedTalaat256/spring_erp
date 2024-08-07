@@ -1,0 +1,90 @@
+<div fxLayout="row">
+
+
+  <div class="w-100 mt-2 rounded-2">
+
+    <div fxLayout="row" class="my-3 p-1" fxLayoutAlign="space-between center">
+      <button mat-raised-button color="primary" (click)="openAddExpensesDialog()">اضافة جديد</button>
+      <h1>المصروفات</h1>
+    </div>
+
+
+
+    <form (ngSubmit)="onSubmitSearch()" [formGroup]="searchFormProject" fxLayout="row-reverse wrap" fxLayoutGap="15">
+      <mat-form-field fxFlex="42">
+        <mat-label>المشروع</mat-label>
+
+        <input type="text" placeholder="المشروع" matInput [formControl]="projectFormControl"
+          [matAutocomplete]="projectAutoComplete">
+
+        <mat-autocomplete #projectAutoComplete="matAutocomplete" [displayWith]="projectDisplayFn"
+          (optionSelected)="selectedProject($event)">
+          <ng-container *ngFor="let option of filteredProjects | async; trackBy: projectDisplayFn">
+            <mat-option [value]="option">{{ option.projectName }}</mat-option>
+          </ng-container>
+        </mat-autocomplete>
+
+        <mat-error>
+          <app-validation-msg [control]="projectFormControl" fieldName="المشروع"></app-validation-msg>
+        </mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit">
+        بحث
+        <mat-icon>search</mat-icon>
+      </button>
+    </form>
+
+
+    <div class="w-100 mt-2 rounded-2 shadow-sm overflow-x-scroll">
+
+      <table mat-table [dataSource]="dataSource" style="direction: rtl;">
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> تسلسل </th>
+          <td mat-cell *matCellDef="let expens"> {{expens.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="category">
+          <th mat-header-cell *matHeaderCellDef>النوع</th>
+          <td mat-cell *matCellDef="let expens"> {{expens.category}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="project">
+          <th mat-header-cell *matHeaderCellDef> المشروع </th>
+          <td mat-cell *matCellDef="let expens"> {{expens.project.projectName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef>المبلغ</th>
+          <td mat-cell *matCellDef="let expens"> {{expens.amount}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expenseDate">
+          <th mat-header-cell *matHeaderCellDef> التاريخ  </th>
+          <td mat-cell *matCellDef="let expens"> {{expens.expenseDate}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef>بيان</th>
+          <td mat-cell *matCellDef="let expens"> {{expens.description}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let expens">
+
+
+            <button mat-icon-button (click)="openEditExpensesDialog(expens)">
+              <mat-icon color="primary">mode_edit</mat-icon>
+            </button>
+
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </div>
+</div>

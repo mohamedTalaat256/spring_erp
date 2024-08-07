@@ -18,14 +18,13 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 })
 export class PaymentsComponent implements OnInit {
 
-  searchForm: FormGroup;
+  searchFormWorker: FormGroup;
+  searchFormProject: FormGroup;
   constructor(public dialog: MatDialog, private paymentService: PaymentService,
     private workerService: WorkerService, private fb: FormBuilder
   ){
-    this.searchForm = fb.group({
-      project: [null],
-      worker: [null],
-    });
+    this.searchFormWorker = fb.group({ worker: [null] });
+    this.searchFormProject = fb.group({ project: [null] });
   }
 
   workerFormControl = new FormControl<string | any>('');
@@ -43,7 +42,7 @@ export class PaymentsComponent implements OnInit {
   ngOnInit(): void {
     this.getAllData();
   }
-  
+
   getAllData() {
     this.paymentService.getAllData().subscribe({
       next: (response: AppResponse) => {
@@ -64,10 +63,42 @@ export class PaymentsComponent implements OnInit {
     });
   }
 
-  onSubmitSearch(){
+  onSubmitSearchByWorker(){
+    this.paymentService.findAllByWorkerId(this.searchFormWorker.value.worker).subscribe({
+      next:(response: AppResponse)=>{
+        if(response.ok){
+           this.payments= response.data;
+           this.dataSource = new MatTableDataSource<any>(this.payments);
+        }
+      },
+      error:(error: Error)=>{
+        Swal.fire({
+          icon: "error",
+          title: error.message,
+          showConfirmButton: true
+        });
+      }
 
+    });
   }
+  onSubmitSearchByProject(){
+    this.paymentService.findAllByProjectId(this.searchFormProject.value.project).subscribe({
+      next:(response: AppResponse)=>{
+        if(response.ok){
+           this.payments= response.data;
+           this.dataSource = new MatTableDataSource<any>(this.payments);
+        }
+      },
+      error:(error: Error)=>{
+        Swal.fire({
+          icon: "error",
+          title: error.message,
+          showConfirmButton: true
+        });
+      }
 
+    });
+  }
 
   findAll(){
     this.paymentService.findAll().subscribe({
@@ -102,12 +133,12 @@ export class PaymentsComponent implements OnInit {
       data: data
     });
 
-    dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
+    /* dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
       if(result){
         this.payments.push(result);
         this.dataSource = new MatTableDataSource<any>(this.payments);
       }
-    });
+    }); */
   }
 
 
@@ -180,7 +211,7 @@ export class PaymentsComponent implements OnInit {
   }
 
   selectedWorker(event: MatAutocompleteSelectedEvent) {
-    this.searchForm.patchValue({
+    this.searchFormWorker.patchValue({
       worker: event.option.value.id
     }, { onlySelf: true, emitEvent: true });
     console.log(event.option.value);
@@ -188,10 +219,10 @@ export class PaymentsComponent implements OnInit {
   }
 
   selectedProject(event: MatAutocompleteSelectedEvent) {
-    this.searchForm.patchValue({
+    this.searchFormProject.patchValue({
       project: event.option.value.id
     }, { onlySelf: true, emitEvent: true });
-    
+
     console.log(event.option.value);
   }
 }

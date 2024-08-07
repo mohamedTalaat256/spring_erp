@@ -14,12 +14,20 @@ export class PaymentService {
   findAll(): Observable<any> {
     return this.http.get(baseURL + '/payments');
   }
+
+  findAllByProjectId(projectId: number): Observable<any> {
+    return this.http.get(baseURL + `/payments/project/${projectId}`);
+  }
+
+  findAllByWorkerId(workerId: number): Observable<any> {
+    return this.http.get(baseURL + `/payments/worker/${workerId}`);
+  }
   public save(requestbody: any, formMode: FormMode): Observable<any> {
     if(formMode === FormMode.CREATE){
       return this.http.post<any>(baseURL + '/payments', requestbody);
 
     }else{
-      return this.http.put<any>(baseURL + `/payments/${requestbody.id}`, requestbody);
+      return this.http.put<any>(baseURL + `/payments`, requestbody);
 
     }
   }

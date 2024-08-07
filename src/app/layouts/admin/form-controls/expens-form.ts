@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class PaymentForm {
+export class ExpensForm {
   constructor(public fb: FormBuilder ) {
   }
 
@@ -12,10 +12,10 @@ export class PaymentForm {
     return this.fb.group(
       {
         id:        [null],
-        worker:      [null, [Validators.required, Validators.maxLength(255)]],
         project: [null, [Validators.required]],
+        expenseDate: [null, [Validators.required]],
+        category:   [null, [Validators.required]],
         amount:   [null, [Validators.required]],
-        paymentDate:   [null, [Validators.required]],
         description:   [null,  ],
       }
     );
@@ -25,10 +25,10 @@ export class PaymentForm {
     return this.fb.group(
       {
         id:        [data.id],
-        worker:    [data.worker.id,  ],
         project:   [data.project.id,  ],
+        expenseDate: [data.expenseDate, [Validators.required]],
+        category:   [data.category, [Validators.required]],
         amount:    [data.amount, [Validators.required]],
-        paymentDate: [data.paymentDate, [Validators.required]],
         description:   [data.description, ],
       }
     );

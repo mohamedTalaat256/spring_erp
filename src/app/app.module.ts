@@ -91,6 +91,10 @@ import { ProjectsComponent } from './layouts/admin/components/workers/projects/p
 import { ProjectDialogComponent } from './layouts/admin/components/workers/project-dialog/project-dialog.component';
 import { PaymentsComponent } from './layouts/admin/components/workers/payments/payments.component';
 import { PaymentDialogComponent } from './layouts/admin/components/workers/payment-dialog/payment-dialog.component';
+import { ExpensesComponent } from './layouts/admin/components/workers/expenses/expenses.component';
+import { ExpensDialogComponent } from './layouts/admin/components/workers/expens-dialog/expens-dialog.component';
+import { SalariesComponent } from './layouts/admin/components/workers/salaries/salaries.component';
+import { SalaryDialogComponent } from './layouts/admin/components/workers/salary-dialog/salary-dialog.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline'
@@ -173,7 +177,11 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     ProjectsComponent,
     ProjectDialogComponent,
     PaymentsComponent,
-    PaymentDialogComponent
+    PaymentDialogComponent,
+    ExpensesComponent,
+    ExpensDialogComponent,
+    SalariesComponent,
+    SalaryDialogComponent
 
   ],
   imports: [
