@@ -199,6 +199,12 @@ const TREE_DATA: FoodNode[] = [
         icon: 'attach_money',
         iconColor: 'success',
         url: '/admin/expenses',
+      },
+      {
+        name: 'المرتبات',
+        icon: 'attach_money',
+        iconColor: 'success',
+        url: '/admin/salaries',
       }
     ]
   },

@@ -38,6 +38,7 @@ import { WorkersComponent } from './components/workers/workers/workers.component
 import { ProjectsComponent } from './components/workers/projects/projects.component';
 import { PaymentsComponent } from './components/workers/payments/payments.component';
 import { ExpensesComponent } from './components/workers/expenses/expenses.component';
+import { SalariesComponent } from './components/workers/salaries/salaries.component';
 
 const routes: Routes = [
   {
@@ -120,7 +121,7 @@ const routes: Routes = [
       {path:'projects', component: ProjectsComponent},
       {path:'payments', component: PaymentsComponent},
       {path:'expenses', component: ExpensesComponent},
-
+      {path:'salaries', component: SalariesComponent},
 
       { path: '**', pathMatch :'full' , component: Page404Component},
     ],

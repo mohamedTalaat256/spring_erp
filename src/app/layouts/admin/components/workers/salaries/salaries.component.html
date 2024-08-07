@@ -1,1 +1,124 @@
-<p>salaries works!</p>
+<div fxLayout="row">
+
+
+  <div class="w-100 mt-2 rounded-2">
+
+      <div fxLayout="row" class="my-3 p-1" fxLayoutAlign="space-between center">
+          <button mat-raised-button color="primary" (click)="openAddPaymentDialog()">اضافة جديد</button>
+          <h1>بيانات المرتبات</h1>
+      </div>
+
+
+      <form (ngSubmit)="onSubmitSearchByWorker()" [formGroup]="searchFormWorker" fxLayout="row-reverse wrap" fxLayoutGap="15">
+          <mat-form-field fxFlex="42">
+              <mat-label>العامل</mat-label>
+
+              <input type="text" placeholder="العامل" matInput [formControl]="workerFormControl"
+                  [matAutocomplete]="workerAutoComplete">
+
+              <mat-autocomplete #workerAutoComplete="matAutocomplete" [displayWith]="workerDisplayFn"
+                  (optionSelected)="selectedWorker($event)">
+                  <ng-container *ngFor="let option of filteredWorkers | async; trackBy: workerDisplayFn">
+                      <mat-option [value]="option">{{ option.name }}</mat-option>
+                  </ng-container>
+              </mat-autocomplete>
+
+              <mat-error>
+                  <app-validation-msg [control]="workerFormControl" fieldName="العامل"></app-validation-msg>
+              </mat-error>
+          </mat-form-field>
+
+
+
+          <button mat-raised-button color="primary" type="submit">
+              بحث
+              <mat-icon>search</mat-icon>
+            </button>
+      </form>
+
+      <form (ngSubmit)="onSubmitSearchByProject()" [formGroup]="searchFormProject" fxLayout="row-reverse wrap" fxLayoutGap="15">
+
+
+
+        <mat-form-field fxFlex="42">
+            <mat-label>المشروع</mat-label>
+
+            <input type="text" placeholder="المشروع" matInput [formControl]="projectFormControl"
+                [matAutocomplete]="projectAutoComplete">
+
+            <mat-autocomplete #projectAutoComplete="matAutocomplete" [displayWith]="projectDisplayFn"
+                (optionSelected)="selectedProject($event)">
+                <ng-container *ngFor="let option of filteredProjects | async; trackBy: projectDisplayFn">
+                    <mat-option [value]="option">{{ option.projectName }}</mat-option>
+                </ng-container>
+            </mat-autocomplete>
+
+            <mat-error>
+                <app-validation-msg [control]="projectFormControl" fieldName="المشروع"></app-validation-msg>
+            </mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit">
+            بحث
+            <mat-icon>search</mat-icon>
+          </button>
+    </form>
+
+
+      <div class="w-100 mt-2 rounded-2 shadow-sm overflow-x-scroll">
+
+          <table mat-table [dataSource]="dataSource" style="direction: rtl;">
+
+              <ng-container matColumnDef="id">
+                  <th mat-header-cell *matHeaderCellDef> تسلسل </th>
+                  <td mat-cell *matCellDef="let salary"> {{salary.id}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="worker">
+                  <th mat-header-cell *matHeaderCellDef>العامل</th>
+                  <td mat-cell *matCellDef="let salary"> {{salary.worker.name}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="project">
+                  <th mat-header-cell *matHeaderCellDef> المشروع </th>
+                  <td mat-cell *matCellDef="let salary"> {{salary.project.projectName}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="amount">
+                  <th mat-header-cell *matHeaderCellDef>المبلغ</th>
+                  <td mat-cell *matCellDef="let salary"> {{salary.amount}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="deduction">
+                <th mat-header-cell *matHeaderCellDef>الخصم</th>
+                <td mat-cell *matCellDef="let salary"> {{salary.deduction}} </td>
+            </ng-container>
+
+              <ng-container matColumnDef="salaryDate">
+                  <th mat-header-cell *matHeaderCellDef> تاريخ الدفع</th>
+                  <td mat-cell *matCellDef="let salary"> {{salary.salaryDate}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="isPaid">
+                  <th mat-header-cell *matHeaderCellDef>هل تم الدفع</th>
+                  <td mat-cell *matCellDef="let salary"> {{salary.isPaid ? 'نعم' : 'لا'}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td mat-cell *matCellDef="let salary">
+
+
+                      <button mat-icon-button (click)="openEditPaymentDialog(salary)">
+                          <mat-icon color="primary">mode_edit</mat-icon>
+                      </button>
+
+                  </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+      </div>
+  </div>
+</div>
